@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一般会員エリア｜宅建協会 松戸支部</title>
+<link rel="stylesheet" href="../assets/style.css?v=6">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="brand">
+      <span class="brand-mark"></span>
+      <span class="brand-text">
+        <span class="brand-title">宅建協会 松戸支部</span><br>
+        <span class="brand-sub">一般社団法人 千葉県宅地建物取引業協会</span>
+      </span>
+    </a>
+    <nav class="nav">
+      <a href="../index.html">ホーム</a>
+      <a href="../news.html">お知らせ</a>
+      <a href="index.html" class="btn-member">🔒 会員専用トップ</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-hero photo">
+  <img src="../assets/img/mori21.jpg" alt="">
+  <span class="ghost-sm">MEMBERS</span>
+  <div class="ph-inner">
+    <span class="en">Members Area</span>
+    <h1>① 一般会員エリア</h1>
+  </div>
+</div>
+
+<!-- 入り口の鍵 -->
+<div data-gate="ippan" data-pass="matsudo2026">
+  <div class="lockscreen">
+    <div class="mascot-wrap"><img class="mascot" src="../assets/img/mascot.svg" alt="マスコット"></div>
+    <h2>一般会員エリア</h2>
+    <p>事務局から配布されたパスワードを入力してください。</p>
+    <form>
+      <input type="password" placeholder="パスワードを入力" autofocus>
+      <p class="err">パスワードが違います</p>
+      <button type="submit" class="btn btn-green" style="width:100%;">入室する</button>
+    </form>
+    <p class="hint">モック用パスワード: matsudo2026</p>
+  </div>
+</div>
+
+<!-- 解錠後コンテンツ -->
+<div id="gated-content" style="display:none;">
+<section class="section" style="padding-top:40px;">
+  <div class="container">
+    <div class="breadcrumb"><a href="../index.html">ホーム</a> › <a href="index.html">会員専用</a> › 一般会員エリア</div>
+
+    <div class="alert info" style="margin-bottom:28px;">フォルダごとに個別の鍵がかかっています。開きたいフォルダをクリックし、フォルダのパスワードを入力してください。<br><span style="font-size:12px;">※資料の保存・閲覧・ダウンロードは Supabase ストレージに接続して実装予定(モックではサンプル表示)。</span></div>
+
+    <div class="folder-grid">
+      <div class="folder" data-room="oshirase" data-pass="oshirase01">
+        <span class="lock">🔑</span>
+        <div class="f-icon">📢</div>
+        <h3>会員向けお知らせ</h3>
+        <p>事務局からの会員向け連絡事項</p>
+      </div>
+      <div class="folder" data-room="gyoji" data-pass="gyoji02">
+        <span class="lock">🔑</span>
+        <div class="f-icon">📅</div>
+        <h3>協会行事・会議等日程表</h3>
+        <p>年間行事・会議のスケジュール</p>
+      </div>
+      <div class="folder" data-room="shoshiki" data-pass="shoshiki03">
+        <span class="lock">🔑</span>
+        <div class="f-icon">📄</div>
+        <h3>書式ダウンロード</h3>
+        <p>契約書・重説等の各種書式</p>
+      </div>
+      <div class="folder" data-room="kitei" data-pass="kitei04">
+        <span class="lock">🔑</span>
+        <div class="f-icon">📖</div>
+        <h3>松戸支部規定・施行細則</h3>
+        <p>支部規定と施行細則</p>
+      </div>
+      <div class="folder" data-room="hokoku" data-pass="hokoku05">
+        <span class="lock">🔑</span>
+        <div class="f-icon">📷</div>
+        <h3>会員のための行事報告</h3>
+        <p>行事・イベントの実施報告</p>
+      </div>
+      <div class="folder" data-room="kenshu" data-pass="kenshu06">
+        <span class="lock">🔑</span>
+        <div class="f-icon">🎓</div>
+        <h3>研修会・勉強会</h3>
+        <p>開催案内の閲覧・出欠回答</p>
+      </div>
+      <div class="folder" data-room="chosa" data-pass="chosa07">
+        <span class="lock">🔑</span>
+        <div class="f-icon">📊</div>
+        <h3>調査・アンケート</h3>
+        <p>本部・事務局からの調査依頼</p>
+      </div>
+      <div class="folder" data-room="shiryo" data-pass="shiryo08">
+        <span class="lock">🔑</span>
+        <div class="f-icon">🗂</div>
+        <h3>各種資料</h3>
+        <p>不動産相談所運営要綱ほか</p>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- 各部屋の中身(モックデータ) -->
+<template id="room-oshirase">
+  <h3>📢 会員向けお知らせ</h3>
+  <p class="modal-sub">事務局からの会員向け連絡事項</p>
+  <ul class="file-list">
+    <li><span class="f-type pdf">PDF</span>令和7年度 違反建築防止週間の実施について<span class="f-meta">2026.05.15</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+    <li><span class="f-type pdf">PDF</span>(株)動産社商品 事務局取り扱い終了のお知らせ<span class="f-meta">2026.05.13</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+    <li><span class="f-type pdf">PDF</span>不動産契約書・重説書式 無料電話相談のご案内(全宅連)<span class="f-meta">2026.04.28</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+  </ul>
+</template>
+
+<template id="room-gyoji">
+  <h3>📅 協会行事・会議等日程表</h3>
+  <p class="modal-sub">年間行事・会議のスケジュール</p>
+  <ul class="file-list">
+    <li><span class="f-type pdf">PDF</span>令和8年度 協会行事・会議等日程表<span class="f-meta">2026.04.01</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+    <li><span class="f-type pdf">PDF</span>令和7年度 協会行事・会議等日程表<span class="f-meta">2025.04.01</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+  </ul>
+</template>
+
+<template id="room-shoshiki">
+  <h3>📄 書式ダウンロード</h3>
+  <p class="modal-sub">実務に必要な各種書式(実データは渡辺プランニング様からのデータ受領後に最終確認)</p>
+  <ul class="file-list">
+    <li><span class="f-type pdf">PDF</span>売買契約書 書式<a class="dl" href="#" onclick="return false;">DL</a></li>
+    <li><span class="f-type pdf">PDF</span>重要事項説明書 書式<a class="dl" href="#" onclick="return false;">DL</a></li>
+    <li><span class="f-type pdf">PDF</span>賃貸借契約書 書式<a class="dl" href="#" onclick="return false;">DL</a></li>
+    <li><span class="f-type pdf">PDF</span>媒介契約書 書式<a class="dl" href="#" onclick="return false;">DL</a></li>
+    <li><span class="f-type link">LINK</span>全宅連「ハトサポ」コンテンツ / 反響メール返信文例集<a class="dl" href="#" onclick="return false;">開く</a></li>
+  </ul>
+</template>
+
+<template id="room-kitei">
+  <h3>📖 松戸支部規定・施行細則</h3>
+  <p class="modal-sub">支部の規定類</p>
+  <ul class="file-list">
+    <li><span class="f-type pdf">PDF</span>松戸支部規定<a class="dl" href="#" onclick="return false;">DL</a></li>
+    <li><span class="f-type pdf">PDF</span>施行細則<a class="dl" href="#" onclick="return false;">DL</a></li>
+  </ul>
+</template>
+
+<template id="room-hokoku">
+  <h3>📷 会員のための行事報告</h3>
+  <p class="modal-sub">行事・イベントの実施報告</p>
+  <ul class="file-list">
+    <li><span class="f-type pdf">PDF</span>令和7年度 新年賀詞交歓会 実施報告<span class="f-meta">2026.01</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+    <li><span class="f-type pdf">PDF</span>支部研修旅行 実施報告<span class="f-meta">2025.11</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+  </ul>
+</template>
+
+<template id="room-kenshu">
+  <h3>🎓 研修会・勉強会</h3>
+  <p class="modal-sub">開催案内と出欠回答(出欠はGoogleフォーム、集計はスプレッドシートに連携)</p>
+  <ul class="file-list">
+    <li><span class="f-type pdf">PDF</span>【開催案内】宅建業法改正セミナー(7月開催)<span class="f-meta">2026.06.20</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+    <li><span class="f-type link">FORM</span>宅建業法改正セミナー 出欠回答フォーム<a class="dl" href="#" onclick="return false;">回答する</a></li>
+    <li><span class="f-type pdf">PDF</span>【開催報告】反響が増える物件写真の撮り方 講習会<span class="f-meta">2026.05</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+  </ul>
+</template>
+
+<template id="room-chosa">
+  <h3>📊 調査・アンケート</h3>
+  <p class="modal-sub">本部・事務局からの調査依頼(回答はGoogleフォーム)</p>
+  <ul class="file-list">
+    <li><span class="f-type link">FORM</span>令和8年度 会員実態調査アンケート<span class="f-meta">回答期限 7/31</span><a class="dl" href="#" onclick="return false;">回答する</a></li>
+    <li><span class="f-type pdf">PDF</span>調査依頼のご案内(本部)<a class="dl" href="#" onclick="return false;">DL</a></li>
+  </ul>
+</template>
+
+<template id="room-shiryo">
+  <h3>🗂 各種資料</h3>
+  <p class="modal-sub">その他の会員向け資料</p>
+  <ul class="file-list">
+    <li><span class="f-type pdf">PDF</span>松戸市役所市民相談室 不動産相談所運営要綱<a class="dl" href="#" onclick="return false;">DL</a></li>
+    <li><span class="f-type pdf">PDF</span>会員自社ホームページの運用に役立つ情報<a class="dl" href="#" onclick="return false;">DL</a></li>
+  </ul>
+</template>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="brand">
+        <span class="brand-mark"></span>
+        <span class="brand-text">
+          <span class="brand-title">宅建協会 松戸支部</span><br>
+          <span class="brand-sub">一般社団法人 千葉県宅地建物取引業協会</span>
+        </span>
+      </div>
+      <p>〒271-0064 千葉県松戸市上本郷3185</p>
+      <p>TEL 047-364-6904</p>
+    </div>
+    <div>
+      <h4>会員専用</h4>
+      <ul>
+        <li><a href="index.html">会員専用トップ</a></li>
+        <li><a href="kanji.html">幹事・委員会エリア</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>サイトメニュー</h4>
+      <ul>
+        <li><a href="../index.html">ホーム</a></li>
+        <li><a href="../news.html">お知らせ</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="copyright">© 2026 (一社)千葉県宅地建物取引業協会 松戸支部 All rights reserved.</div>
+</footer>
+
+<div class="modal-bg" id="modal-bg"><div class="modal"><button class="close">×</button><div id="modal-body"></div></div></div>
+<script src="../assets/site.js?v=6"></script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>幹事・委員会エリア｜宅建協会 松戸支部</title>
+<link rel="stylesheet" href="../assets/style.css?v=6">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="brand">
+      <span class="brand-mark"></span>
+      <span class="brand-text">
+        <span class="brand-title">宅建協会 松戸支部</span><br>
+        <span class="brand-sub">一般社団法人 千葉県宅地建物取引業協会</span>
+      </span>
+    </a>
+    <nav class="nav">
+      <a href="../index.html">ホーム</a>
+      <a href="../news.html">お知らせ</a>
+      <a href="index.html" class="btn-member">🔒 会員専用トップ</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-hero photo">
+  <img src="../assets/img/yagiri.jpg" alt="">
+  <span class="ghost-sm">BOARD</span>
+  <div class="ph-inner">
+    <span class="en">Board &amp; Committees</span>
+    <h1>② 幹事・委員会エリア</h1>
+  </div>
+</div>
+
+<!-- 入り口の鍵 -->
+<div data-gate="kanji" data-pass="kanji2026">
+  <div class="lockscreen">
+    <div class="mascot-wrap"><img class="mascot" src="../assets/img/mascot.svg" alt="マスコット"></div>
+    <h2>幹事・委員会エリア</h2>
+    <p>幹事・委員会メンバー向けのパスワードを入力してください。</p>
+    <form>
+      <input type="password" placeholder="パスワードを入力" autofocus>
+      <p class="err">パスワードが違います</p>
+      <button type="submit" class="btn btn-red" style="width:100%;">入室する</button>
+    </form>
+    <p class="hint">モック用パスワード: kanji2026</p>
+  </div>
+</div>
+
+<!-- 解錠後コンテンツ -->
+<div id="gated-content" style="display:none;">
+<section class="section" style="padding-top:40px;">
+  <div class="container">
+    <div class="breadcrumb"><a href="../index.html">ホーム</a> › <a href="index.html">会員専用</a> › 幹事・委員会エリア</div>
+
+    <div class="alert info" style="margin-bottom:28px;">委員会ごとに個別の鍵がかかっています。所属する委員会のフォルダを開いてください。<br><span style="font-size:12px;">※「開催案内を発行」ボタンで Google フォーム+集計スプレッドシートを自動生成する想定です(モックでは動作イメージを表示)。</span></div>
+
+    <div class="folder-grid">
+      <div class="folder" data-room="kanjikai" data-pass="kanji00">
+        <span class="lock">🔑</span>
+        <div class="f-icon nb gold">幹</div>
+        <h3>幹事会(全体)</h3>
+        <p>幹事会の資料・議事録・開催案内</p>
+      </div>
+      <div class="folder" data-room="i1" data-pass="iinkai01"><span class="lock">🔑</span><div class="f-icon nb">一</div><h3>総務委員会</h3><p>資料・議事録・開催案内</p></div>
+      <div class="folder" data-room="i2" data-pass="iinkai02"><span class="lock">🔑</span><div class="f-icon nb">二</div><h3>財務委員会</h3><p>資料・議事録・開催案内</p></div>
+      <div class="folder" data-room="i3" data-pass="iinkai03"><span class="lock">🔑</span><div class="f-icon nb">三</div><h3>綱紀・研修委員会</h3><p>資料・議事録・開催案内</p></div>
+      <div class="folder" data-room="i4" data-pass="iinkai04"><span class="lock">🔑</span><div class="f-icon nb">四</div><h3>厚生委員会</h3><p>資料・議事録・開催案内</p></div>
+      <div class="folder" data-room="i5" data-pass="iinkai05"><span class="lock">🔑</span><div class="f-icon nb">五</div><h3>広報委員会</h3><p>資料・議事録・開催案内</p></div>
+      <div class="folder" data-room="i6" data-pass="iinkai06"><span class="lock">🔑</span><div class="f-icon nb">六</div><h3>入会審査委員会</h3><p>資料・議事録・開催案内</p></div>
+      <div class="folder" data-room="i7" data-pass="iinkai07"><span class="lock">🔑</span><div class="f-icon nb">七</div><h3>無料相談業務委員会</h3><p>資料・議事録・開催案内</p></div>
+      <div class="folder" data-room="i8" data-pass="iinkai08"><span class="lock">🔑</span><div class="f-icon nb">八</div><h3>流通委員会</h3><p>資料・議事録・開催案内</p></div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- 幹事会の部屋 -->
+<template id="room-kanjikai">
+  <h3>幹事会(全体)</h3>
+  <p class="modal-sub">幹事会の資料・議事録(Supabaseストレージに保存する想定)</p>
+  <ul class="file-list">
+    <li><span class="f-type pdf">PDF</span>令和8年度 第1回幹事会 議事録<span class="f-meta">2026.05</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+    <li><span class="f-type pdf">PDF</span>令和8年度 事業計画(案)<span class="f-meta">2026.04</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+    <li><span class="f-type xlsx">XLSX</span>令和8年度 予算資料<span class="f-meta">2026.04</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+  </ul>
+  <div style="margin-top:20px;border-top:1px solid #e2e2d8;padding-top:18px;">
+    <p style="font-weight:800;font-size:14px;color:#0e3d23;margin-bottom:10px;">開催案内の発行</p>
+    <button class="btn btn-green" style="width:100%;" onclick="issueForm('第2回幹事会')">📮 開催案内を発行(Googleフォーム生成)</button>
+    <p style="font-size:11.5px;color:#5a6a60;margin-top:8px;">発行するとGoogleフォーム(出欠回答)と集計スプレッドシートが作成され、リンクがここに掲載されます。</p>
+  </div>
+</template>
+
+<!-- 第1〜流通委員会の部屋(同一テンプレ) -->
+<template id="room-i1">
+  <h3>総務委員会</h3>
+  <p class="modal-sub">総務委員会の資料フォルダ</p>
+  <ul class="file-list">
+    <li><span class="f-type pdf">PDF</span>総務委員会 前回議事録<span class="f-meta">2026.06</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+    <li><span class="f-type link">FORM</span>次回開催 出欠回答フォーム<a class="dl" href="#" onclick="return false;">回答する</a></li>
+    <li><span class="f-type xlsx">SHEET</span>出欠集計スプレッドシート<a class="dl" href="#" onclick="return false;">開く</a></li>
+  </ul>
+  <div style="margin-top:20px;border-top:1px solid #e2e2d8;padding-top:18px;">
+    <button class="btn btn-green" style="width:100%;" onclick="issueForm('総務委員会 定例会')">📮 開催案内を発行(Googleフォーム生成)</button>
+  </div>
+</template>
+<template id="room-i2">
+  <h3>財務委員会</h3>
+  <p class="modal-sub">財務委員会の資料フォルダ</p>
+  <ul class="file-list">
+    <li><span class="f-type pdf">PDF</span>財務委員会 前回議事録<span class="f-meta">2026.06</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+  </ul>
+  <div style="margin-top:20px;border-top:1px solid #e2e2d8;padding-top:18px;">
+    <button class="btn btn-green" style="width:100%;" onclick="issueForm('財務委員会 定例会')">📮 開催案内を発行(Googleフォーム生成)</button>
+  </div>
+</template>
+<template id="room-i3">
+  <h3>綱紀・研修委員会</h3>
+  <p class="modal-sub">綱紀・研修委員会の資料フォルダ</p>
+  <ul class="file-list">
+    <li><span class="f-type pdf">PDF</span>綱紀・研修委員会 前回議事録<span class="f-meta">2026.05</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+  </ul>
+  <div style="margin-top:20px;border-top:1px solid #e2e2d8;padding-top:18px;">
+    <button class="btn btn-green" style="width:100%;" onclick="issueForm('綱紀・研修委員会 定例会')">📮 開催案内を発行(Googleフォーム生成)</button>
+  </div>
+</template>
+<template id="room-i4">
+  <h3>厚生委員会</h3>
+  <p class="modal-sub">厚生委員会の資料フォルダ</p>
+  <ul class="file-list">
+    <li><span class="f-type pdf">PDF</span>厚生委員会 前回議事録<span class="f-meta">2026.05</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+  </ul>
+  <div style="margin-top:20px;border-top:1px solid #e2e2d8;padding-top:18px;">
+    <button class="btn btn-green" style="width:100%;" onclick="issueForm('厚生委員会 定例会')">📮 開催案内を発行(Googleフォーム生成)</button>
+  </div>
+</template>
+<template id="room-i5">
+  <h3>広報委員会</h3>
+  <p class="modal-sub">広報委員会の資料フォルダ</p>
+  <ul class="file-list">
+    <li><span class="f-type pdf">PDF</span>広報委員会 前回議事録<span class="f-meta">2026.04</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+  </ul>
+  <div style="margin-top:20px;border-top:1px solid #e2e2d8;padding-top:18px;">
+    <button class="btn btn-green" style="width:100%;" onclick="issueForm('広報委員会 定例会')">📮 開催案内を発行(Googleフォーム生成)</button>
+  </div>
+</template>
+<template id="room-i6">
+  <h3>入会審査委員会</h3>
+  <p class="modal-sub">入会審査委員会の資料フォルダ</p>
+  <ul class="file-list">
+    <li><span class="f-type pdf">PDF</span>入会審査委員会 前回議事録<span class="f-meta">2026.04</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+  </ul>
+  <div style="margin-top:20px;border-top:1px solid #e2e2d8;padding-top:18px;">
+    <button class="btn btn-green" style="width:100%;" onclick="issueForm('入会審査委員会 定例会')">📮 開催案内を発行(Googleフォーム生成)</button>
+  </div>
+</template>
+<template id="room-i7">
+  <h3>無料相談業務委員会</h3>
+  <p class="modal-sub">無料相談業務委員会の資料フォルダ</p>
+  <ul class="file-list">
+    <li><span class="f-type pdf">PDF</span>無料相談業務委員会 前回議事録<span class="f-meta">2026.03</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+  </ul>
+  <div style="margin-top:20px;border-top:1px solid #e2e2d8;padding-top:18px;">
+    <button class="btn btn-green" style="width:100%;" onclick="issueForm('無料相談業務委員会 定例会')">📮 開催案内を発行(Googleフォーム生成)</button>
+  </div>
+</template>
+<template id="room-i8">
+  <h3>流通委員会</h3>
+  <p class="modal-sub">流通委員会の資料フォルダ</p>
+  <ul class="file-list">
+    <li><span class="f-type pdf">PDF</span>流通委員会 前回議事録<span class="f-meta">2026.03</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+  </ul>
+  <div style="margin-top:20px;border-top:1px solid #e2e2d8;padding-top:18px;">
+    <button class="btn btn-green" style="width:100%;" onclick="issueForm('流通委員会 定例会')">📮 開催案内を発行(Googleフォーム生成)</button>
+  </div>
+</template>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="brand">
+        <span class="brand-mark"></span>
+        <span class="brand-text">
+          <span class="brand-title">宅建協会 松戸支部</span><br>
+          <span class="brand-sub">一般社団法人 千葉県宅地建物取引業協会</span>
+        </span>
+      </div>
+      <p>〒271-0064 千葉県松戸市上本郷3185</p>
+      <p>TEL 047-364-6904</p>
+    </div>
+    <div>
+      <h4>会員専用</h4>
+      <ul>
+        <li><a href="index.html">会員専用トップ</a></li>
+        <li><a href="ippan.html">一般会員エリア</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>サイトメニュー</h4>
+      <ul>
+        <li><a href="../index.html">ホーム</a></li>
+        <li><a href="../news.html">お知らせ</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="copyright">© 2026 (一社)千葉県宅地建物取引業協会 松戸支部 All rights reserved.</div>
+</footer>
+
+<div class="modal-bg" id="modal-bg"><div class="modal"><button class="close">×</button><div id="modal-body"></div></div></div>
+<script src="../assets/site.js?v=6"></script>
+</body>
+</html>
