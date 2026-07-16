@@ -973,6 +973,20 @@ body { animation: pageFade 0.55s ease both; }
 /* ロックスクリーンにマスコット */
 .lockscreen .mascot { width: 96px; margin: 0 auto 6px; }
 
+/* ---- 会員一覧テーブル ---- */
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--line); border-radius: 12px; }
+.member-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 860px; }
+.member-table th {
+  background: var(--green-dark); color: #fff; font-weight: 700;
+  padding: 11px 12px; text-align: left; white-space: nowrap;
+  position: sticky; top: 0;
+}
+.member-table td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; line-height: 1.6; }
+.member-table tbody tr:nth-child(even) { background: #f7f8f4; }
+.member-table tbody tr:hover { background: var(--wakaba-pale); }
+.member-table .mt-name { font-weight: 700; color: var(--green-dark); }
+.member-table .note { font-size: 11.5px; color: var(--ink-soft); }
+
 /* レスポンシブ調整 */
 @media (max-width: 960px) {
   .header-inner { flex-wrap: wrap; }

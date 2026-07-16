@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /kaiin/
+
+Sitemap: https://takkenmatsudo.com/sitemap.xml

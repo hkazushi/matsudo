@@ -126,6 +126,7 @@
   const REVEAL_TARGETS =
     ".card, .area-card, .folder, .entrance, .content-block, .news-panel, .section-head, .greeting > *, .stat, .gate-entrances > *";
 
+  // threshold は 0 にする(高さのある要素は 0.12 に永遠に達しないため)
   const io = new IntersectionObserver(
     (entries) => {
       entries.forEach((en) => {
@@ -135,7 +136,7 @@
         }
       });
     },
-    { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+    { threshold: 0, rootMargin: "0px 0px -60px 0px" }
   );
 
   function setupReveal(root) {
@@ -153,6 +154,14 @@
     });
   }
   setupReveal(document);
+
+  // セーフティネット: 万一 Observer が発火しない/タブ非表示等の場合も3秒後に必ず表示する
+  setTimeout(() => {
+    document.querySelectorAll(".reveal:not(.in)").forEach((el) => {
+      el.style.transition = "none";
+      el.classList.add("in");
+    });
+  }, 3000);
 
   // ---- カウントアップ ----
   const counterIO = new IntersectionObserver(

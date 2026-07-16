@@ -1,71 +1,80 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 260" width="240" height="260" role="img" aria-label="松戸支部イメージキャラクター ハトのまつどくん(仮)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300" width="200" height="300" role="img" aria-label="松戸市 応援キャラクター 松戸さん(イメージ・要許諾)">
   <defs>
-    <radialGradient id="mBody" cx="42%" cy="35%" r="75%">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="70%" stop-color="#f4f9f4"/>
-      <stop offset="100%" stop-color="#e3efe6"/>
+    <radialGradient id="sHead" cx="42%" cy="34%" r="72%">
+      <stop offset="0%" stop-color="#f7f1cf"/>
+      <stop offset="70%" stop-color="#f1e7bd"/>
+      <stop offset="100%" stop-color="#e6d7a3"/>
     </radialGradient>
-    <linearGradient id="mWing" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#bfe0b8"/>
-      <stop offset="100%" stop-color="#8fc9a0"/>
+    <linearGradient id="sSuit" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3a58b8"/>
+      <stop offset="100%" stop-color="#26408a"/>
     </linearGradient>
-    <linearGradient id="mHouse" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#f7c9d3"/>
-      <stop offset="100%" stop-color="#eda9bb"/>
+    <linearGradient id="sArm" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3454b0"/>
+      <stop offset="100%" stop-color="#243c84"/>
     </linearGradient>
-    <linearGradient id="mRoof" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#a7d3e6"/>
-      <stop offset="100%" stop-color="#7bb8d6"/>
-    </linearGradient>
-    <filter id="mSoft" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#5a7a63" flood-opacity="0.18"/>
+    <filter id="sSoft" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#3a3a5a" flood-opacity="0.18"/>
     </filter>
   </defs>
 
   <!-- 影 -->
-  <ellipse cx="120" cy="240" rx="62" ry="12" fill="#5a7a63" opacity="0.14"/>
+  <ellipse cx="100" cy="288" rx="58" ry="10" fill="#4a4a60" opacity="0.14"/>
 
-  <!-- 尾羽 -->
-  <path d="M148 150 q52 6 74 34 q-30 6 -58 -6 q14 16 10 34 q-26 -12 -40 -40 Z" fill="url(#mWing)" opacity="0.92"/>
+  <!-- 脚 -->
+  <rect x="78" y="238" width="18" height="40" rx="8" fill="#2b4699"/>
+  <rect x="104" y="238" width="18" height="40" rx="8" fill="#2b4699"/>
+  <!-- 靴 -->
+  <ellipse cx="83" cy="282" rx="18" ry="10" fill="#1c1c22"/>
+  <ellipse cx="117" cy="282" rx="18" ry="10" fill="#1c1c22"/>
 
-  <!-- 胴体 -->
-  <g filter="url(#mSoft)">
-    <path d="M120 46
-             c46 0 78 34 78 78
-             c0 42 -32 74 -78 74
-             c-46 0 -78 -32 -78 -74
-             c0 -44 32 -78 78 -78 Z" fill="url(#mBody)"/>
+  <!-- 胴(スーツ) -->
+  <g filter="url(#sSoft)">
+    <path d="M100 150
+             c34 0 52 20 56 52
+             c3 24 2 40 0 52
+             c-1 6 -8 8 -16 8
+             h-80
+             c-8 0 -15 -2 -16 -8
+             c-2 -12 -3 -28 0 -52
+             c4 -32 22 -52 56 -52 Z" fill="url(#sSuit)"/>
   </g>
 
-  <!-- 翼(手前) -->
-  <path d="M70 120 q-26 8 -34 34 q26 4 44 -10 q-8 18 4 34 q22 -16 26 -48 Z" fill="url(#mWing)"/>
-  <path d="M64 132 q-14 6 -18 20" fill="none" stroke="#7bb890" stroke-width="2.4" stroke-linecap="round" opacity="0.6"/>
+  <!-- シャツの襟 -->
+  <path d="M84 156 L100 176 L116 156 L108 150 L100 162 L92 150 Z" fill="#fafafa"/>
+  <!-- 赤ネクタイ -->
+  <path d="M100 164 l-7 8 l7 30 l7 -30 Z" fill="#d5372f"/>
+  <path d="M94 160 l6 6 l6 -6 l-6 -5 Z" fill="#b8281f"/>
+
+  <!-- 腕(前で組む) -->
+  <path d="M50 176 q-8 26 6 46 q10 -2 18 -12 q-14 -12 -12 -34 Z" fill="url(#sArm)"/>
+  <path d="M150 176 q8 26 -6 46 q-10 -2 -18 -12 q14 -12 12 -34 Z" fill="url(#sArm)"/>
+  <!-- 白い手(組んだ手) -->
+  <ellipse cx="92" cy="220" rx="15" ry="11" fill="#f4edc6"/>
+  <ellipse cx="108" cy="220" rx="15" ry="11" fill="#f7f1cf"/>
+  <path d="M84 218 q8 5 16 0 M100 218 q8 5 16 0" stroke="#d8c88c" stroke-width="1.4" fill="none" opacity="0.7"/>
+
+  <!-- 頭(たまご型) -->
+  <g filter="url(#sSoft)">
+    <ellipse cx="100" cy="86" rx="64" ry="74" fill="url(#sHead)"/>
+  </g>
+
+  <!-- 髪(松=黒いモジャモジャ) -->
+  <path d="M100 20
+           q-10 -2 -14 6 q-12 -4 -16 8 q-10 2 -6 14 q-8 6 2 14
+           q6 -10 16 -12 q4 -10 16 -12 q12 2 16 12 q10 2 16 12
+           q10 -8 2 -14 q4 -12 -6 -14 q-4 -12 -16 -8 q-4 -8 -14 -6 Z" fill="#1a1a1a"/>
+  <path d="M100 26 l0 -12 M92 22 l-4 -8 M108 22 l4 -8" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/>
 
   <!-- ほっぺ -->
-  <circle cx="86" cy="128" r="11" fill="#f7bcca" opacity="0.75"/>
-  <circle cx="150" cy="128" r="11" fill="#f7bcca" opacity="0.75"/>
+  <circle cx="62" cy="96" r="13" fill="#f2a3bd" opacity="0.85"/>
+  <circle cx="138" cy="96" r="13" fill="#f2a3bd" opacity="0.85"/>
 
-  <!-- 目 -->
-  <circle cx="100" cy="112" r="7.5" fill="#3a4a40"/>
-  <circle cx="136" cy="112" r="7.5" fill="#3a4a40"/>
-  <circle cx="102.4" cy="109.4" r="2.4" fill="#fff"/>
-  <circle cx="138.4" cy="109.4" r="2.4" fill="#fff"/>
-
-  <!-- くちばし -->
-  <path d="M112 124 q8 9 16 0 q-8 6 -16 0 Z" fill="#f0b64e"/>
-
-  <!-- 頭の若葉(松戸=緑) -->
-  <path d="M120 40 q-4 -20 12 -30 q6 18 -12 30 Z" fill="url(#mWing)"/>
-  <path d="M120 42 q6 -16 24 -16 q-8 16 -24 16 Z" fill="#a9d6b4" opacity="0.9"/>
-
-  <!-- 抱えた家 -->
-  <g filter="url(#mSoft)">
-    <rect x="96" y="168" width="48" height="40" rx="6" fill="url(#mHouse)"/>
-    <path d="M90 170 L120 146 L150 170 Z" fill="url(#mRoof)"/>
-    <rect x="112" y="184" width="16" height="24" rx="3" fill="#fff" opacity="0.85"/>
-    <circle cx="120" cy="196" r="1.8" fill="#eda9bb"/>
-  </g>
-
-  <!-- 足 -->
-  <path d="M104 206 l-6 12 M116 208 l0 12" stroke="#f0b64e" stroke-width="4" stroke-linecap="round" fill="none"/>
+  <!-- 顔文字(松戸): 眉・目=ハ, 口=ロ -->
+  <path d="M64 74 l24 10" stroke="#2a2a2a" stroke-width="4" stroke-linecap="round"/>
+  <path d="M136 74 l-24 10" stroke="#2a2a2a" stroke-width="4" stroke-linecap="round"/>
+  <path d="M72 90 l18 8" stroke="#2a2a2a" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M128 90 l-18 8" stroke="#2a2a2a" stroke-width="4.5" stroke-linecap="round"/>
+  <!-- 口=ロ(四角) -->
+  <rect x="86" y="108" width="28" height="24" rx="3" fill="none" stroke="#2a2a2a" stroke-width="4.5"/>
 </svg>
