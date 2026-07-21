@@ -113,6 +113,14 @@ mockup/
 
 ⚠️ 公開時は松戸支部ご提供の写真(カメラマン手配中とのこと)へ差し替え推奨。仮素材のまま公開する場合はCCライセンスのクレジット表記が必要です。
 
+## お問い合わせフォーム(実送信・テスト運用中)
+
+- 送信先: **info@sai-ax.com**(テスト用・FormSubmit経由)。スパム対策: honeypot+必須項目バリデーション
+- **初回のみ**: info@sai-ax.com に届く FormSubmit の「Activate Form」リンクをクリックすると有効化されます
+- 送信後は thanks.html(送信完了ページ)へ遷移
+- **本番切替**: contact.html の form action を `https://formsubmit.co/事務局アドレス` に変更(1行)。
+  ドメイン切替時は hidden の `_next` のURLも変更すること
+
 ## モック段階のもの(本実装で対応)
 
 - 会員エリアの認証: 現在はクライアントJSの見た目デモ → 本実装は Supabase 側で検証
