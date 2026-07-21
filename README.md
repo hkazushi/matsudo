@@ -115,7 +115,7 @@ mockup/
 
 ## お問い合わせフォーム(実送信・テスト運用中)
 
-- 送信先: **info@sai-ax.com**(テスト用・FormSubmit経由)。スパム対策: honeypot+必須項目バリデーション
+- 送信先: **info@sai-ax.com**(テスト用・FormSubmit経由/actionはメールアドレス秘匿のためハッシュ形式 79b3be…bacb6 を使用)。スパム対策: honeypot+必須項目バリデーション
 - **初回のみ**: info@sai-ax.com に届く FormSubmit の「Activate Form」リンクをクリックすると有効化されます
 - 送信後は thanks.html(送信完了ページ)へ遷移
 - **本番切替**: contact.html の form action を `https://formsubmit.co/事務局アドレス` に変更(1行)。
