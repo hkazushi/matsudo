@@ -64,29 +64,33 @@
 
     <div class="content-block">
       <h2>フォームでのお問い合わせ</h2>
-      <p class="note" style="margin-bottom:20px;">送信内容は事務局宛にメールで届きます(モックのため送信されません)。</p>
-      <form onsubmit="alert('モックのため送信されません'); return false;">
+      <p class="note" style="margin-bottom:20px;">送信内容はメールで届きます。<span style="color:var(--red-dark);">※現在はテスト運用中(送信先: SAI)。公開時に事務局アドレスへ切り替えます。</span></p>
+      <form action="https://formsubmit.co/info@sai-ax.com" method="POST">
+        <input type="hidden" name="_subject" value="【松戸支部HP】お問い合わせフォーム">
+        <input type="hidden" name="_next" value="https://hkazushi.github.io/matsudo/thanks.html">
+        <input type="hidden" name="_template" value="table">
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
         <table class="info-table">
           <tr><th>お名前 <span style="color:var(--red);font-size:11px;">必須</span></th>
-              <td><input type="text" style="width:100%;padding:10px 14px;border:1.5px solid var(--line);border-radius:8px;" placeholder="例)松戸 太郎"></td></tr>
+              <td><input type="text" name="お名前" required style="width:100%;padding:10px 14px;border:1.5px solid var(--line);border-radius:8px;" placeholder="例)松戸 太郎"></td></tr>
           <tr><th>会社名</th>
-              <td><input type="text" style="width:100%;padding:10px 14px;border:1.5px solid var(--line);border-radius:8px;" placeholder="例)○○不動産株式会社"></td></tr>
+              <td><input type="text" name="会社名" style="width:100%;padding:10px 14px;border:1.5px solid var(--line);border-radius:8px;" placeholder="例)○○不動産株式会社"></td></tr>
           <tr><th>メールアドレス <span style="color:var(--red);font-size:11px;">必須</span></th>
-              <td><input type="email" style="width:100%;padding:10px 14px;border:1.5px solid var(--line);border-radius:8px;" placeholder="例)info@example.com"></td></tr>
+              <td><input type="email" name="email" required style="width:100%;padding:10px 14px;border:1.5px solid var(--line);border-radius:8px;" placeholder="例)info@example.com"></td></tr>
           <tr><th>お問い合わせ種別</th>
-              <td><select style="width:100%;padding:10px 14px;border:1.5px solid var(--line);border-radius:8px;background:#fff;">
+              <td><select name="お問い合わせ種別" style="width:100%;padding:10px 14px;border:1.5px solid var(--line);border-radius:8px;background:#fff;">
                 <option>不動産相談について</option>
                 <option>入会について(資料請求)</option>
                 <option>講習・試験について</option>
                 <option>その他</option>
               </select></td></tr>
           <tr><th>お問い合わせ内容 <span style="color:var(--red);font-size:11px;">必須</span></th>
-              <td><textarea rows="6" style="width:100%;padding:10px 14px;border:1.5px solid var(--line);border-radius:8px;" placeholder="お問い合わせ内容をご記入ください"></textarea></td></tr>
+              <td><textarea rows="6" name="お問い合わせ内容" required style="width:100%;padding:10px 14px;border:1.5px solid var(--line);border-radius:8px;" placeholder="お問い合わせ内容をご記入ください"></textarea></td></tr>
         </table>
         <div style="text-align:center;margin-top:24px;">
           <button type="submit" class="btn btn-green" style="min-width:240px;">送信する</button>
         </div>
-        <p class="note" style="text-align:center;margin-top:14px;">送信いただいた個人情報は「個人情報の取り扱い」に基づき適切に管理します。</p>
+        <p class="note" style="text-align:center;margin-top:14px;">送信いただいた個人情報は<a href="privacy.html">「個人情報の取り扱い」</a>に基づき適切に管理します。</p>
       </form>
     </div>
 
