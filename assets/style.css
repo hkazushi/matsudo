@@ -104,13 +104,12 @@ ul { list-style: none; }
 }
 .brand { display: flex; align-items: center; gap: 12px; }
 .brand-mark {
-  width: 48px; height: 48px; flex-shrink: 0;
-  background: url("img/logo.svg") center/contain no-repeat;
-  filter: drop-shadow(0 2px 5px rgba(20,60,40,0.18));
+  width: 46px; height: 52px; flex-shrink: 0;
+  background: url("img/hatomark.png") center/contain no-repeat;
+  filter: drop-shadow(0 2px 5px rgba(20,60,40,0.15));
   transition: transform 0.6s var(--ease);
 }
-.brand:hover .brand-mark { transform: rotate(-8deg) scale(1.05); }
-/* フッター等パス階層が異なる場合の上書きは各所で指定 */
+.brand:hover .brand-mark { transform: rotate(-6deg) scale(1.05); }
 .brand-text .brand-title { font-family: var(--serif); font-weight: 900; font-size: 18px; color: var(--ink); line-height: 1.3; letter-spacing: 0.04em; }
 .brand-text .brand-sub { font-size: 10.5px; color: var(--ink-soft); letter-spacing: 0.06em; }
 
