@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>資料アップロード管理(事務局)｜宅建協会 松戸支部</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="../assets/img/hatomark.png">
+<link rel="stylesheet" href="../assets/style.css?v=13">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="brand">
+      <span class="brand-mark"></span>
+      <span class="brand-text">
+        <span class="brand-title">宅建協会 松戸支部</span><br>
+        <span class="brand-sub">一般社団法人 千葉県宅地建物取引業協会</span>
+      </span>
+    </a>
+    <nav class="nav">
+      <a href="../index.html">ホーム</a>
+      <a href="index.html" class="btn-member">🔒 会員専用トップ</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-hero photo">
+  <img src="../assets/img/mori21.jpg" alt="">
+  <span class="ghost-sm">ADMIN</span>
+  <div class="ph-inner">
+    <span class="en">Admin</span>
+    <h1>資料アップロード管理</h1>
+  </div>
+</div>
+
+<section class="section" style="padding-top:36px;">
+  <div class="container" style="max-width:760px;">
+
+    <!-- 接続未設定の案内 -->
+    <div id="not-configured" class="content-block" style="display:none;">
+      <h2>接続設定が必要です</h2>
+      <p>このページは Supabase ストレージへの資料アップロード用の事務局管理画面です。<code>assets/config.js</code> に Supabase の接続情報を設定すると有効になります(手順は SETUP.md 参照)。</p>
+    </div>
+
+    <!-- ログイン -->
+    <div id="login-box" class="content-block" style="display:none;max-width:460px;margin-left:auto;margin-right:auto;text-align:center;">
+      <h2 style="text-align:left;">事務局ログイン</h2>
+      <p class="note" style="margin-bottom:18px;">資料の追加・削除は事務局アカウントのみ行えます。</p>
+      <form id="login-form">
+        <input id="login-email" type="email" placeholder="メールアドレス" required
+               style="width:100%;padding:12px 16px;border:1.5px solid var(--line);border-radius:10px;font-size:15px;margin-bottom:10px;">
+        <input id="login-pass" type="password" placeholder="パスワード" required
+               style="width:100%;padding:12px 16px;border:1.5px solid var(--line);border-radius:10px;font-size:15px;margin-bottom:12px;">
+        <p id="login-err" style="color:var(--red-dark);font-size:12.5px;display:none;margin-bottom:8px;"></p>
+        <button type="submit" class="btn btn-green" style="width:100%;">ログイン</button>
+      </form>
+    </div>
+
+    <!-- 管理画面 -->
+    <div id="admin-box" style="display:none;">
+      <div class="content-block">
+        <h2>資料のアップロード</h2>
+        <p class="note" id="signed-in-as" style="margin-bottom:16px;"></p>
+        <table class="info-table">
+          <tr><th>アップロード先フォルダ</th><td>
+            <select id="room-select" style="width:100%;padding:11px 14px;border:1.5px solid var(--line);border-radius:10px;background:#fff;font-size:14px;"></select>
+          </td></tr>
+          <tr><th>ファイル(複数可)</th><td>
+            <input id="file-input" type="file" multiple style="font-size:14px;">
+            <p class="note" style="margin-top:6px;">PDF・Excel・Word等。同名ファイルは上書きされます。</p>
+          </td></tr>
+        </table>
+        <div style="margin-top:18px;">
+          <button id="upload-btn" class="btn btn-green">⬆️ アップロード</button>
+          <button id="logout-btn" class="btn btn-ghost" style="color:var(--green);border-color:var(--green);margin-left:8px;">ログアウト</button>
+        </div>
+        <p id="upload-status" style="font-size:13.5px;margin-top:12px;color:var(--green-dark);"></p>
+      </div>
+
+      <div class="content-block">
+        <h2>フォルダ内のファイル</h2>
+        <p class="note" style="margin-bottom:12px;">上で選択中のフォルダの内容です。「削除」で即時削除されます(取り消し不可)。</p>
+        <ul id="file-list" class="file-list"></ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="copyright">© 2026 (一社)千葉県宅地建物取引業協会 松戸支部 All rights reserved.</div>
+</footer>
+
+<div class="modal-bg" id="modal-bg"><div class="modal"><button class="close">×</button><div id="modal-body"></div></div></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../assets/config.js"></script>
+<script src="../assets/site.js?v=13"></script>
+<script>
+(function () {
+  const CFG = window.SITE_CONFIG || {};
+  const ROOMS = [
+    ["oshirase", "① 会員向けお知らせ"], ["gyoji", "① 協会行事・会議等日程表"],
+    ["shoshiki", "① 書式ダウンロード"], ["kitei", "① 支部規定・施行細則"],
+    ["hokoku", "① 会員のための行事報告"], ["kenshu", "① 研修会・勉強会"],
+    ["chosa", "① 調査・アンケート"], ["shiryo", "① 各種資料"],
+    ["kanjikai", "② 幹事会(全体)"], ["i1", "② 総務委員会"], ["i2", "② 財務委員会"],
+    ["i3", "② 綱紀・研修委員会"], ["i4", "② 厚生委員会"], ["i5", "② 広報委員会"],
+    ["i6", "② 入会審査委員会"], ["i7", "② 無料相談業務委員会"], ["i8", "② 流通委員会"],
+  ];
+  const $ = (id) => document.getElementById(id);
+
+  if (!CFG.SUPABASE_URL || !CFG.SUPABASE_ANON_KEY || !window.supabase) {
+    $("not-configured").style.display = "block";
+    return;
+  }
+  const sb = window.supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY);
+
+  ROOMS.forEach(([id, label]) => {
+    const o = document.createElement("option");
+    o.value = id; o.textContent = label;
+    $("room-select").appendChild(o);
+  });
+
+  function escp(s){ return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+
+  async function refreshUI() {
+    const { data: { session } } = await sb.auth.getSession();
+    $("login-box").style.display = session ? "none" : "block";
+    $("admin-box").style.display = session ? "block" : "none";
+    if (session) {
+      $("signed-in-as").textContent = "ログイン中: " + session.user.email;
+      loadFiles();
+    }
+  }
+
+  async function loadFiles() {
+    const room = $("room-select").value;
+    const list = $("file-list");
+    list.innerHTML = '<li style="color:var(--ink-soft);">読み込み中…</li>';
+    const { data, error } = await sb.storage.from("kaiin").list(room, { limit: 100, sortBy: { column: "updated_at", order: "desc" } });
+    if (error) { list.innerHTML = '<li style="color:var(--red-dark);">読み込みエラー: ' + escp(error.message) + "</li>"; return; }
+    const files = (data || []).filter((f) => f.name && !f.name.startsWith("."));
+    if (!files.length) { list.innerHTML = '<li style="color:var(--ink-soft);">ファイルはありません。</li>'; return; }
+    list.innerHTML = files.map((f) => {
+      const url = sb.storage.from("kaiin").getPublicUrl(room + "/" + f.name).data.publicUrl;
+      return `<li><span class="f-type pdf" style="background:var(--green);">FILE</span>${escp(f.name)}
+        <a class="dl" href="${escp(url)}" target="_blank" rel="noopener">確認</a>
+        <a class="dl" href="#" style="color:var(--red-dark);" data-del="${escp(f.name)}">削除</a></li>`;
+    }).join("");
+    list.querySelectorAll("[data-del]").forEach((a) => {
+      a.addEventListener("click", async (e) => {
+        e.preventDefault();
+        const name = a.getAttribute("data-del");
+        if (!confirm("「" + name + "」を削除します。よろしいですか?")) return;
+        const { error } = await sb.storage.from("kaiin").remove([room + "/" + name]);
+        if (error) alert("削除エラー: " + error.message);
+        loadFiles();
+      });
+    });
+  }
+
+  $("login-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const err = $("login-err"); err.style.display = "none";
+    const { error } = await sb.auth.signInWithPassword({ email: $("login-email").value, password: $("login-pass").value });
+    if (error) { err.textContent = "ログインできませんでした: " + error.message; err.style.display = "block"; return; }
+    refreshUI();
+  });
+
+  $("logout-btn").addEventListener("click", async () => { await sb.auth.signOut(); refreshUI(); });
+  $("room-select").addEventListener("change", loadFiles);
+
+  $("upload-btn").addEventListener("click", async () => {
+    const files = $("file-input").files;
+    if (!files.length) { alert("ファイルを選択してください"); return; }
+    const room = $("room-select").value;
+    const st = $("upload-status");
+    $("upload-btn").disabled = true;
+    let ok = 0, ng = 0;
+    for (const f of files) {
+      st.textContent = `アップロード中: ${f.name} (${ok + ng + 1}/${files.length})`;
+      const { error } = await sb.storage.from("kaiin").upload(room + "/" + f.name, f, { upsert: true });
+      if (error) { ng++; console.error(error); } else { ok++; }
+    }
+    st.textContent = `完了: 成功 ${ok}件` + (ng ? ` / 失敗 ${ng}件(コンソール参照)` : "");
+    $("upload-btn").disabled = false;
+    $("file-input").value = "";
+    loadFiles();
+  });
+
+  refreshUI();
+})();
+</script>
+</body>
+</html>

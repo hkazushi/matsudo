@@ -66,7 +66,7 @@
     folder.addEventListener("click", () => {
       const contentTpl = document.getElementById("room-" + folder.dataset.room);
       if (sessionStorage.getItem(key) === "ok") {
-        openModal(contentTpl.innerHTML);
+        showRoom(folder, contentTpl);
         return;
       }
       // 部屋ごとの鍵入力
@@ -88,7 +88,7 @@
         if (input.value === folder.dataset.pass) {
           sessionStorage.setItem(key, "ok");
           folder.classList.add("unlocked");
-          openModal(contentTpl.innerHTML);
+          showRoom(folder, contentTpl);
         } else {
           form.querySelector(".err").style.display = "block";
           input.value = "";
@@ -98,7 +98,119 @@
     });
   });
 
-  // ---- 開催案内の発行(Googleフォーム生成モック) ----
+  // ============================================================
+  // Supabase / Googleフォーム連携(本実装)
+  // assets/config.js に接続情報が設定されている場合のみ有効。
+  // 未設定時は従来のサンプル表示(template)にフォールバックする。
+  // ============================================================
+  const CFG = window.SITE_CONFIG || {};
+  const SB = (CFG.SUPABASE_URL && CFG.SUPABASE_ANON_KEY && window.supabase)
+    ? window.supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY)
+    : null;
+
+  function showRoom(folder, tpl) {
+    if (SB) { renderRoomLive(folder); } else { openModal(tpl.innerHTML); }
+  }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+  function fmtSize(b) {
+    if (b == null) return "";
+    if (b < 1024) return b + " B";
+    if (b < 1048576) return Math.round(b / 1024) + " KB";
+    return (b / 1048576).toFixed(1) + " MB";
+  }
+  function fmtDate(iso) {
+    if (!iso) return "";
+    const d = new Date(iso);
+    return d.getFullYear() + "." + String(d.getMonth() + 1).padStart(2, "0") + "." + String(d.getDate()).padStart(2, "0");
+  }
+  function extType(name) {
+    const e = (name.split(".").pop() || "").toLowerCase();
+    if (e === "pdf") return ["pdf", "PDF"];
+    if (["xlsx", "xls", "csv"].includes(e)) return ["xlsx", "XLSX"];
+    if (["doc", "docx"].includes(e)) return ["link", "DOC"];
+    return ["link", (e || "FILE").toUpperCase().slice(0, 5)];
+  }
+
+  async function renderRoomLive(folder) {
+    const room = folder.dataset.room;
+    const title = folder.querySelector("h3").textContent;
+    const canIssue = /kanji\.html/.test(location.pathname);
+    openModal(`<h3>${esc(title)}</h3><p class="modal-sub">読み込み中…</p>`);
+
+    let files = [], links = [];
+    try {
+      const r = await SB.storage.from("kaiin").list(room, { limit: 100, sortBy: { column: "updated_at", order: "desc" } });
+      files = (r.data || []).filter((f) => f.name && !f.name.startsWith("."));
+    } catch (e) {}
+    try {
+      const r = await SB.from("room_links").select("*").eq("room", room).order("created_at", { ascending: false });
+      links = r.data || [];
+    } catch (e) {}
+
+    let html = `<h3>${esc(title)}</h3><p class="modal-sub">資料の閲覧・ダウンロード</p>`;
+    if (files.length) {
+      html += '<ul class="file-list">' + files.map((f) => {
+        const t = extType(f.name);
+        const url = SB.storage.from("kaiin").getPublicUrl(room + "/" + f.name).data.publicUrl;
+        const size = f.metadata ? f.metadata.size : null;
+        return `<li><span class="f-type ${t[0]}">${t[1]}</span>${esc(f.name)}<span class="f-meta">${fmtDate(f.updated_at)} ${fmtSize(size)}</span><a class="dl" href="${esc(url)}" target="_blank" rel="noopener">DL</a></li>`;
+      }).join("") + "</ul>";
+    } else {
+      html += '<p class="note">掲載中の資料はまだありません。</p>';
+    }
+    if (links.length) {
+      html += '<p style="font-weight:800;font-size:14px;color:var(--green-dark);margin:18px 0 6px;">発行済みフォーム</p><ul class="file-list">' +
+        links.map((l) =>
+          `<li><span class="f-type link">FORM</span>${esc(l.title)} 出欠回答<span class="f-meta">${fmtDate(l.created_at)}</span><a class="dl" href="${esc(l.form_url)}" target="_blank" rel="noopener">回答する</a>${l.sheet_url ? ` <a class="dl" href="${esc(l.sheet_url)}" target="_blank" rel="noopener">集計</a>` : ""}</li>`
+        ).join("") + "</ul>";
+    }
+    if (canIssue) {
+      if (CFG.GAS_FORM_URL) {
+        html += `<div style="margin-top:20px;border-top:1px solid #e7e6dc;padding-top:16px;">
+          <p style="font-weight:800;font-size:14px;color:var(--green-dark);margin-bottom:8px;">開催案内の発行</p>
+          <input id="issue-title" type="text" placeholder="例)${esc(title)} 8月定例会" style="width:100%;padding:11px 14px;border:1.5px solid #e7e6dc;border-radius:10px;font-size:14px;margin-bottom:10px;">
+          <button id="issue-btn" class="btn btn-green" style="width:100%;" onclick="issueLive('${room}')">📮 Googleフォームを発行</button>
+          <p style="font-size:11.5px;color:#63726a;margin-top:8px;">出欠回答フォームと集計スプレッドシートが自動作成され、この一覧に掲載されます。</p>
+        </div>`;
+      } else {
+        html += '<p class="note" style="margin-top:16px;">※フォーム発行機能は接続設定(GAS_FORM_URL)後に有効になります。</p>';
+      }
+    }
+    openModal(html);
+  }
+
+  window.issueLive = async function (room) {
+    const input = document.getElementById("issue-title");
+    const title = input ? input.value.trim() : "";
+    if (!title) { if (input) input.focus(); return; }
+    const btn = document.getElementById("issue-btn");
+    if (btn) { btn.disabled = true; btn.textContent = "発行中…(20秒ほどかかる場合があります)"; }
+    try {
+      const res = await fetch(CFG.GAS_FORM_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ secret: CFG.GAS_SECRET, title }),
+      });
+      const data = await res.json();
+      if (!data.ok) throw new Error(data.error || "unknown");
+      try { await SB.from("room_links").insert({ room, title, form_url: data.formUrl, sheet_url: data.sheetUrl }); } catch (e) {}
+      openModal(`<h3>✅ 発行しました</h3><p class="modal-sub">「${esc(title)}」の出欠フォームと集計シートを作成しました。</p>
+        <ul class="file-list">
+          <li><span class="f-type link">FORM</span>出欠回答フォーム(会員配布用)<a class="dl" href="${esc(data.formUrl)}" target="_blank" rel="noopener">開く</a></li>
+          <li><span class="f-type xlsx">SHEET</span>出欠集計スプレッドシート<a class="dl" href="${esc(data.sheetUrl)}" target="_blank" rel="noopener">開く</a></li>
+          <li><span class="f-type link">EDIT</span>フォーム編集(質問の変更)<a class="dl" href="${esc(data.formEditUrl)}" target="_blank" rel="noopener">開く</a></li>
+        </ul>
+        <div class="alert info" style="margin-top:16px;">リンクはこの部屋の一覧にも自動掲載されました。フォームURLを会員のみなさまへ共有してください。</div>`);
+    } catch (err) {
+      if (btn) { btn.disabled = false; btn.textContent = "📮 Googleフォームを発行"; }
+      alert("発行に失敗しました: " + err.message + "\nGASのデプロイ設定(アクセス: 全員)をご確認ください。");
+    }
+  };
+
+  // ---- 開催案内の発行(Googleフォーム生成モック/未接続時のみ) ----
   window.issueForm = function (title) {
     openModal(`
       <h3>✅ Googleフォームを発行しました(モック)</h3>
