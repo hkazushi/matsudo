@@ -19,7 +19,13 @@
     const unlock = () => {
       gate.style.display = "none";
       content.style.display = "block";
-      setupReveal(content); // 解錠後のコンテンツにも演出を適用
+      // 解錠後のコンテンツにも演出を適用。
+      // 初期化中(sessionStorage解錠済みで即時呼び出し)に走ると
+      // 後方で定義される Observer がまだ生成されておらず例外になるため、
+      // スクリプト全体の初期化完了後に実行する。
+      setTimeout(() => {
+        try { setupReveal(content); } catch (e) {}
+      }, 0);
     };
     if (sessionStorage.getItem(key) === "ok") unlock();
 
