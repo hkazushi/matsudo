@@ -8,9 +8,9 @@
    ============================================================ */
 window.SITE_CONFIG = {
   // Supabase → プロジェクト設定 → API の「Project URL」
-  SUPABASE_URL: "",
-  // 同ページの「anon public」キー(service_roleは絶対に貼らないこと)
-  SUPABASE_ANON_KEY: "",
+  SUPABASE_URL: "https://kipvhvkjjvpzwpmeipqn.supabase.co",
+  // 公開可能キー(publishable/anon)。サイトに掲載してよい種類のキー
+  SUPABASE_ANON_KEY: "sb_publishable_D6Uu_fpfIY_ACKXLp-WhbA_96Mf76Jq",
   // Google Apps Script をウェブアプリとしてデプロイしたURL(gas/form-issuer.gs)
   GAS_FORM_URL: "",
   // GAS側の SECRET と同じ文字列(簡易な悪用防止)
