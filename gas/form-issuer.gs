@@ -23,8 +23,10 @@ var SECRET = "matsudo-form-2026"; // assets/config.js の GAS_SECRET と一致�
  * 「ページが見つかりません」と出る場合は、デプロイの
  * 「アクセスできるユーザー」が『全員』になっていません。
  */
+var VERSION = 3; // 更新の反映確認用
+
 function doGet() {
-  return json_({ ok: true, service: "matsudo form issuer", ready: true });
+  return json_({ ok: true, service: "matsudo form issuer", ready: true, version: VERSION });
 }
 
 function doPost(e) {
@@ -44,7 +46,12 @@ function doPost(e) {
     form.setCollectEmail(false);
     // 重要: Google Workspace アカウントで作成すると既定で
     // 「組織内のユーザーのみ回答可」になり、会員が回答できないため解除する。
-    try { form.setRequireLogin(false); } catch (e) {}
+    var loginFixError = "";
+    try {
+      form.setRequireLogin(false);
+    } catch (e) {
+      loginFixError = String(e);
+    }
     form.addTextItem().setTitle("会社名(商号)").setRequired(true);
     form.addTextItem().setTitle("お名前").setRequired(true);
     form.addMultipleChoiceItem()
@@ -57,11 +64,17 @@ function doPost(e) {
     var ss = SpreadsheetApp.create("【" + title + "】出欠集計");
     form.setDestination(FormApp.DestinationType.SPREADSHEET, ss.getId());
 
+    var stillRequiresLogin = null;
+    try { stillRequiresLogin = form.requiresLogin(); } catch (e) {}
+
     return json_({
       ok: true,
+      version: VERSION,
       formUrl: form.getPublishedUrl(),   // 会員が回答するURL
       formEditUrl: form.getEditUrl(),    // 事務局・幹事の編集URL
-      sheetUrl: ss.getUrl()              // 集計スプレッドシート
+      sheetUrl: ss.getUrl(),             // 集計スプレッドシート
+      requiresLogin: stillRequiresLogin, // true なら会員が回答できない状態
+      loginFixError: loginFixError       // 解除に失敗した場合の理由
     });
   } catch (err) {
     return json_({ error: String(err) });
