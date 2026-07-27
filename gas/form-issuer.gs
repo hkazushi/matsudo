@@ -17,6 +17,16 @@
 
 var SECRET = "matsudo-form-2026"; // assets/config.js の GAS_SECRET と一致させる
 
+/**
+ * 動作確認用。デプロイ後、ウェブアプリのURLをブラウザ(シークレットウィンドウ)で開き、
+ * {"ok":true,...} と表示されれば公開設定は正常です。
+ * 「ページが見つかりません」と出る場合は、デプロイの
+ * 「アクセスできるユーザー」が『全員』になっていません。
+ */
+function doGet() {
+  return json_({ ok: true, service: "matsudo form issuer", ready: true });
+}
+
 function doPost(e) {
   try {
     var p = JSON.parse(e.postData.contents);
