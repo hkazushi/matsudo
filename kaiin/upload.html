@@ -140,7 +140,7 @@
 <div class="modal-bg" id="modal-bg"><div class="modal"><button class="close">×</button><div id="modal-body"></div></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../assets/config.js"></script>
-<script src="../assets/site.js?v=14"></script>
+<script src="../assets/site.js?v=15"></script>
 <script>
 (function () {
   const CFG = window.SITE_CONFIG || {};
@@ -248,13 +248,19 @@
   });
 
   async function loadNewsAdmin() {
+    let loaded = false;
     try {
       const res = await fetch(CFG.SUPABASE_URL + "/storage/v1/object/public/kaiin/" + NEWS_PATH + "?t=" + Date.now());
       if (res.ok) {
         const d = await res.json();
         newsData = { oshirase: d.oshirase || [], takken: d.takken || [] };
+        loaded = true;
       }
     } catch (e) {}
+    // 初回(まだ一度も保存していない)は、現在サイトに表示中の初期記事を編集対象として読み込む
+    if (!loaded && window.DEFAULT_NEWS) {
+      newsData = JSON.parse(JSON.stringify(window.DEFAULT_NEWS));
+    }
     renderNewsAdmin();
   }
 
