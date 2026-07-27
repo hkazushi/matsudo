@@ -12,7 +12,7 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="assets/img/hero-hondoji.jpg">
-<link rel="stylesheet" href="assets/style.css?v=13">
+<link rel="stylesheet" href="assets/style.css?v=14">
 </head>
 <body>
 
@@ -58,8 +58,8 @@
 
     <div class="content-block">
       <h2>支部からのお知らせ</h2>
-      <p class="note">現行サイトのお知らせを移行したものです。本実装では事務局が管理画面から追加・編集できます。</p>
-      <ul class="news-list" style="margin-top:12px;">
+      <p class="note">最新のお知らせです(事務局が管理画面から更新できます)。</p>
+      <ul class="news-list" id="news-all-oshirase" style="margin-top:12px;">
         <li><a href="#" onclick="return false;"><span class="date">2026.06.01</span><span class="chip red">重要</span>事務局臨時休業のお知らせ — 6月3日(水)は台風の為、臨時休業とさせていただきます。</a></li>
         <li><a href="#" onclick="return false;"><span class="date">2026.05.26</span><span class="chip green">事務局</span>事務局業務開始時間変更のお知らせ — 5月28日(火)は本部定時総会の為、事務局は15時より業務開始となります。</a></li>
         <li><a href="#" onclick="return false;"><span class="date">2026.05.20</span><span class="chip gold">販売</span>不動産日記(手帳)発売のお知らせ — 毎年恒例の(株)住宅新報発行の不動産日記を事務局にて発売しております。数に限りがございますので、お早めにご購入願います。</a></li>
@@ -73,7 +73,7 @@
 
     <div class="content-block">
       <h2>宅建ニュース</h2>
-      <ul class="news-list" style="margin-top:12px;">
+      <ul class="news-list" id="news-all-takken" style="margin-top:12px;">
         <li><a href="#" onclick="return false;"><span class="date">2026.06.01</span>住宅ローン返済が安くなる?!「残クレ」車だけじゃない。「残価設定型住宅ローン」および住宅融資保険のメリット徹底解説【SUUMO】</a></li>
         <li><a href="#" onclick="return false;"><span class="date">2026.05.01</span>ハトマーク/宅建協会のPR及び入会促進のため、山下智久主演の映画「正直不動産」とタイアップしたポスターを作成し、全国の会員へ配布中!!</a></li>
         <li><a href="#" onclick="return false;"><span class="date">2026.04.03</span>首都圏の新築マンション購入者の平均価格は7324万円で、最高値更新。いま新築マンションを購入しているのは、どんな人たち?【SUUMO】</a></li>
@@ -129,6 +129,7 @@
 </footer>
 
 <div class="modal-bg" id="modal-bg"><div class="modal"><button class="close">×</button><div id="modal-body"></div></div></div>
-<script src="assets/site.js?v=13"></script>
+<script src="assets/config.js"></script>
+<script src="assets/site.js?v=14"></script>
 </body>
 </html>

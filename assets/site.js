@@ -210,6 +210,37 @@
     }
   };
 
+  // ---- お知らせ・宅建ニュースの動的読み込み(管理画面で編集した内容を表示) ----
+  async function loadNews() {
+    if (!CFG.SUPABASE_URL) return;
+    const t = {
+      homeO: document.getElementById("news-home-oshirase"),
+      homeT: document.getElementById("news-home-takken"),
+      allO: document.getElementById("news-all-oshirase"),
+      allT: document.getElementById("news-all-takken"),
+    };
+    if (!t.homeO && !t.allO) return;
+    try {
+      const res = await fetch(CFG.SUPABASE_URL + "/storage/v1/object/public/kaiin/site/news.json?t=" + Date.now());
+      if (!res.ok) return; // 未作成なら静的表示のまま
+      const d = await res.json();
+      const chip = (n) => n.chip ? `<span class="chip ${esc(n.color || "green")}">${esc(n.chip)}</span>` : "";
+      const item = (n, withBody) =>
+        `<li><a href="#" onclick="return false;"><span class="date">${esc(n.date)}</span>${chip(n)}${esc(n.title)}${withBody && n.body ? " — " + esc(n.body) : ""}</a></li>`;
+      const homeItem = (n) =>
+        `<li><a href="news.html"><span class="date">${esc(n.date)}</span>${chip(n)}${esc(n.title)}</a></li>`;
+      if (Array.isArray(d.oshirase) && d.oshirase.length) {
+        if (t.homeO) t.homeO.innerHTML = d.oshirase.slice(0, 5).map(homeItem).join("");
+        if (t.allO) t.allO.innerHTML = d.oshirase.map((n) => item(n, true)).join("");
+      }
+      if (Array.isArray(d.takken) && d.takken.length) {
+        if (t.homeT) t.homeT.innerHTML = d.takken.slice(0, 3).map(homeItem).join("");
+        if (t.allT) t.allT.innerHTML = d.takken.map((n) => item(n, true)).join("");
+      }
+    } catch (e) {}
+  }
+  loadNews();
+
   // ---- 開催案内の発行(Googleフォーム生成モック/未接続時のみ) ----
   window.issueForm = function (title) {
     openModal(`
