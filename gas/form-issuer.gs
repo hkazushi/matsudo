@@ -42,6 +42,9 @@ function doPost(e) {
       "回答期限までにご回答をお願いいたします。"
     );
     form.setCollectEmail(false);
+    // 重要: Google Workspace アカウントで作成すると既定で
+    // 「組織内のユーザーのみ回答可」になり、会員が回答できないため解除する。
+    try { form.setRequireLogin(false); } catch (e) {}
     form.addTextItem().setTitle("会社名(商号)").setRequired(true);
     form.addTextItem().setTitle("お名前").setRequired(true);
     form.addMultipleChoiceItem()
