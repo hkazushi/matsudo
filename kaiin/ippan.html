@@ -13,7 +13,7 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="../assets/img/hero-hondoji.jpg">
-<link rel="stylesheet" href="../assets/style.css?v=16">
+<link rel="stylesheet" href="../assets/style.css?v=17">
 </head>
 <body>
 
@@ -43,28 +43,12 @@
   </div>
 </div>
 
-<!-- 入り口の鍵 -->
-<div data-gate="ippan" data-pass="matsudo2026">
-  <div class="lockscreen">
-    <div class="icon">🔒</div>
-    <h2>一般会員エリア</h2>
-    <p>事務局から配布されたパスワードを入力してください。</p>
-    <form>
-      <input type="password" placeholder="パスワードを入力" autofocus>
-      <p class="err">パスワードが違います</p>
-      <button type="submit" class="btn btn-green" style="width:100%;">入室する</button>
-    </form>
-    <p class="hint">モック用パスワード: matsudo2026</p>
-  </div>
-</div>
-
-<!-- 解錠後コンテンツ -->
-<div id="gated-content" style="display:none;">
+<div id="gated-content">
 <section class="section" style="padding-top:40px;">
   <div class="container">
     <div class="breadcrumb"><a href="../index.html">ホーム</a> › <a href="index.html">会員専用</a> › 一般会員エリア</div>
 
-    <div class="alert info" style="margin-bottom:28px;">フォルダごとに個別の鍵がかかっています。開きたいフォルダをクリックし、フォルダのパスワードを入力してください。<br><span style="font-size:12px;">※資料の保存・閲覧・ダウンロードは Supabase ストレージに接続して実装予定(モックではサンプル表示)。</span></div>
+    <div class="alert info" style="margin-bottom:28px;">フォルダごとに個別の鍵がかかっています。開きたいフォルダをクリックし、フォルダのパスワードを入力してください。<br><span style="font-size:12px;">※「研修会・勉強会」フォルダでは出欠フォームの発行・回答リンクの確認ができます。</span></div>
 
     <div class="folder-grid">
       <div class="folder" data-room="oshirase" data-pass="oshirase01">
@@ -231,7 +215,7 @@
 
 <div class="modal-bg" id="modal-bg"><div class="modal"><button class="close">×</button><div id="modal-body"></div></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../assets/config.js?v=16"></script>
-<script src="../assets/site.js?v=16"></script>
+<script src="../assets/config.js?v=17"></script>
+<script src="../assets/site.js?v=17"></script>
 </body>
 </html>

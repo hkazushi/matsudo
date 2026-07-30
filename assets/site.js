@@ -140,13 +140,26 @@
     return ["link", (e || "FILE").toUpperCase().slice(0, 5)];
   }
 
+  // クリップボードへのリンクコピー
+  window.copyLink = function (btn, url) {
+    navigator.clipboard.writeText(url).then(() => {
+      const orig = btn.textContent;
+      btn.textContent = "✓ コピーしました";
+      setTimeout(() => { btn.textContent = orig; }, 1600);
+    }).catch(() => { prompt("このURLをコピーしてください", url); });
+  };
+
+  let currentFolder = null; // 再描画用
+
   async function renderRoomLive(folder) {
+    currentFolder = folder;
     const room = folder.dataset.room;
     const title = folder.querySelector("h3").textContent;
-    const canIssue = /kanji\.html/.test(location.pathname);
+    // フォーム発行: 幹事・委員会の全部屋+一般の「研修会・勉強会」
+    const canIssue = /kanji\.html/.test(location.pathname) || room === "kenshu";
     openModal(`<h3>${esc(title)}</h3><p class="modal-sub">読み込み中…</p>`);
 
-    let files = [], links = [];
+    let files = [], links = [], session = null;
     try {
       const r = await SB.storage.from("kaiin").list(room, { limit: 100, sortBy: { column: "updated_at", order: "desc" } });
       files = (r.data || []).filter((f) => f.name && !f.name.startsWith("."));
@@ -155,37 +168,102 @@
       const r = await SB.from("room_links").select("*").eq("room", room).order("created_at", { ascending: false });
       links = r.data || [];
     } catch (e) {}
+    try { session = (await SB.auth.getSession()).data.session; } catch (e) {}
 
-    let html = `<h3>${esc(title)}</h3><p class="modal-sub">資料の閲覧・ダウンロード</p>`;
+    const showEvent = canIssue || links.length > 0;
+
+    // --- 資料(ダウンロード)タブ ---
+    let dlPane;
     if (files.length) {
-      html += '<ul class="file-list">' + files.map((f) => {
+      dlPane = '<ul class="file-list">' + files.map((f) => {
         const t = extType(f.name);
         const url = SB.storage.from("kaiin").getPublicUrl(room + "/" + f.name).data.publicUrl;
         const size = f.metadata ? f.metadata.size : null;
         return `<li><span class="f-type ${t[0]}">${t[1]}</span>${esc(f.name)}<span class="f-meta">${fmtDate(f.updated_at)} ${fmtSize(size)}</span><a class="dl" href="${esc(url)}" target="_blank" rel="noopener">DL</a></li>`;
       }).join("") + "</ul>";
     } else {
-      html += '<p class="note">掲載中の資料はまだありません。</p>';
+      dlPane = '<p class="note">掲載中の資料はまだありません。</p>';
     }
+
+    // --- アップロードタブ ---
+    let upPane;
+    if (session) {
+      upPane = `
+        <p class="note" style="margin-bottom:10px;">ログイン中: ${esc(session.user.email)} / このフォルダに追加されます(同名は上書き)。</p>
+        <input id="room-up-input" type="file" multiple style="font-size:14px;margin-bottom:10px;">
+        <button id="room-up-btn" class="btn btn-green" style="width:100%;">⬆️ アップロード</button>
+        <p id="room-up-status" style="font-size:13px;color:var(--green-dark);margin-top:8px;"></p>`;
+    } else {
+      upPane = `
+        <p class="note" style="margin-bottom:14px;">資料の追加・削除は事務局アカウントでのログインが必要です。</p>
+        <a class="btn btn-green" href="upload.html" style="width:100%;text-align:center;">事務局ログイン(管理ページ)へ</a>`;
+    }
+
+    // --- 勉強会・イベントタブ ---
+    let evPane = "";
     if (links.length) {
-      html += '<p style="font-weight:800;font-size:14px;color:var(--green-dark);margin:18px 0 6px;">発行済みフォーム</p><ul class="file-list">' +
-        links.map((l) =>
-          `<li><span class="f-type link">FORM</span>${esc(l.title)} 出欠回答<span class="f-meta">${fmtDate(l.created_at)}</span><a class="dl" href="${esc(l.form_url)}" target="_blank" rel="noopener">回答する</a>${l.sheet_url ? ` <a class="dl" href="${esc(l.sheet_url)}" target="_blank" rel="noopener">集計</a>` : ""}</li>`
-        ).join("") + "</ul>";
+      evPane += '<ul class="file-list">' + links.map((l) =>
+        `<li><span class="f-type link">FORM</span>${esc(l.title)}<span class="f-meta">${fmtDate(l.created_at)}</span>` +
+        `<a class="dl" href="${esc(l.form_url)}" target="_blank" rel="noopener">回答</a>` +
+        (l.sheet_url ? ` <a class="dl" href="${esc(l.sheet_url)}" target="_blank" rel="noopener">集計</a>` : "") +
+        ` <a class="dl" href="#" onclick="copyLink(this,'${esc(l.form_url)}');return false;">リンクをコピー</a></li>`
+      ).join("") + "</ul>";
+    } else {
+      evPane += '<p class="note">発行済みのフォームはまだありません。</p>';
     }
     if (canIssue) {
       if (CFG.GAS_FORM_URL) {
-        html += `<div style="margin-top:20px;border-top:1px solid #e7e6dc;padding-top:16px;">
+        evPane += `<div style="margin-top:16px;border-top:1px solid #e7e6dc;padding-top:14px;">
           <p style="font-weight:800;font-size:14px;color:var(--green-dark);margin-bottom:8px;">開催案内の発行</p>
           <input id="issue-title" type="text" placeholder="例)${esc(title)} 8月定例会" style="width:100%;padding:11px 14px;border:1.5px solid #e7e6dc;border-radius:10px;font-size:14px;margin-bottom:10px;">
           <button id="issue-btn" class="btn btn-green" style="width:100%;" onclick="issueLive('${room}')">📮 Googleフォームを発行</button>
           <p style="font-size:11.5px;color:#63726a;margin-top:8px;">出欠回答フォームと集計スプレッドシートが自動作成され、この一覧に掲載されます。</p>
         </div>`;
       } else {
-        html += '<p class="note" style="margin-top:16px;">※フォーム発行機能は接続設定(GAS_FORM_URL)後に有効になります。</p>';
+        evPane += '<p class="note" style="margin-top:12px;">※フォーム発行機能は接続設定後に有効になります。</p>';
       }
     }
+
+    // --- タブUI組み立て ---
+    let html = `<h3>${esc(title)}</h3>
+      <div class="modal-tabs">
+        <button class="mtab active" data-pane="pane-dl">📄 資料</button>
+        <button class="mtab" data-pane="pane-up">⬆️ アップロード</button>
+        ${showEvent ? '<button class="mtab" data-pane="pane-ev">📮 勉強会・イベント</button>' : ""}
+      </div>
+      <div class="mtab-pane" id="pane-dl">${dlPane}</div>
+      <div class="mtab-pane" id="pane-up" hidden>${upPane}</div>
+      ${showEvent ? `<div class="mtab-pane" id="pane-ev" hidden>${evPane}</div>` : ""}`;
     openModal(html);
+
+    // タブ切り替え
+    document.querySelectorAll("#modal-body .mtab").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("#modal-body .mtab").forEach((b) => b.classList.remove("active"));
+        document.querySelectorAll("#modal-body .mtab-pane").forEach((p) => (p.hidden = true));
+        btn.classList.add("active");
+        document.getElementById(btn.dataset.pane).hidden = false;
+      });
+    });
+
+    // 部屋内アップロード(事務局ログイン時のみ)
+    const upBtn = document.getElementById("room-up-btn");
+    if (upBtn) {
+      upBtn.addEventListener("click", async () => {
+        const input = document.getElementById("room-up-input");
+        const st = document.getElementById("room-up-status");
+        if (!input.files.length) { st.textContent = "ファイルを選択してください"; return; }
+        upBtn.disabled = true;
+        let ok = 0, ng = 0;
+        for (const f of input.files) {
+          st.textContent = `アップロード中: ${f.name}`;
+          const { error } = await SB.storage.from("kaiin").upload(room + "/" + f.name, f, { upsert: true });
+          error ? ng++ : ok++;
+        }
+        st.textContent = `完了: 成功 ${ok}件` + (ng ? ` / 失敗 ${ng}件` : "");
+        setTimeout(() => renderRoomLive(folder), 800);
+      });
+    }
   }
 
   window.issueLive = async function (room) {
@@ -205,11 +283,11 @@
       try { await SB.from("room_links").insert({ room, title, form_url: data.formUrl, sheet_url: data.sheetUrl }); } catch (e) {}
       openModal(`<h3>✅ 発行しました</h3><p class="modal-sub">「${esc(title)}」の出欠フォームと集計シートを作成しました。</p>
         <ul class="file-list">
-          <li><span class="f-type link">FORM</span>出欠回答フォーム(会員配布用)<a class="dl" href="${esc(data.formUrl)}" target="_blank" rel="noopener">開く</a></li>
+          <li><span class="f-type link">FORM</span>出欠回答フォーム(会員配布用)<a class="dl" href="${esc(data.formUrl)}" target="_blank" rel="noopener">開く</a> <a class="dl" href="#" onclick="copyLink(this,'${esc(data.formUrl)}');return false;">リンクをコピー</a></li>
           <li><span class="f-type xlsx">SHEET</span>出欠集計スプレッドシート<a class="dl" href="${esc(data.sheetUrl)}" target="_blank" rel="noopener">開く</a></li>
           <li><span class="f-type link">EDIT</span>フォーム編集(質問の変更)<a class="dl" href="${esc(data.formEditUrl)}" target="_blank" rel="noopener">開く</a></li>
         </ul>
-        <div class="alert info" style="margin-top:16px;">リンクはこの部屋の一覧にも自動掲載されました。フォームURLを会員のみなさまへ共有してください。</div>`);
+        <div class="alert info" style="margin-top:16px;">リンクはこの部屋の「勉強会・イベント」タブにも自動掲載されました。「リンクをコピー」して会員のみなさまへ共有してください。</div>`);
     } catch (err) {
       if (btn) { btn.disabled = false; btn.textContent = "📮 Googleフォームを発行"; }
       alert("発行に失敗しました: " + err.message + "\nGASのデプロイ設定(アクセス: 全員)をご確認ください。");
