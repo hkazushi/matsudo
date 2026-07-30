@@ -156,8 +156,11 @@
     currentFolder = folder;
     const room = folder.dataset.room;
     const title = folder.querySelector("h3").textContent;
-    // フォーム発行: 幹事・委員会の全部屋+一般の「研修会・勉強会」
-    const canIssue = /kanji\.html/.test(location.pathname) || room === "kenshu";
+    // 権限設計:
+    //  ・一般会員エリア = 閲覧専用(資料DL + 勉強会の参加リンクのみ)
+    //  ・幹事・委員会エリア = 事務局アカウントでログイン中のみ追加・発行が可能
+    //  ・資料の追加/フォーム作成の本拠地は「支部管理者ページ(upload.html)」
+    const isIppan = /ippan\.html/.test(location.pathname);
     openModal(`<h3>${esc(title)}</h3><p class="modal-sub">読み込み中…</p>`);
 
     let files = [], links = [], session = null;
@@ -171,7 +174,10 @@
     } catch (e) {}
     try { session = (await SB.auth.getSession()).data.session; } catch (e) {}
 
-    const showEvent = canIssue || links.length > 0;
+    const canUpload = !isIppan;                 // 一般会員はアップロード不可
+    const canIssue = !isIppan && !!session;      // 発行は事務局ログイン中のみ
+    // 研修会・勉強会フォルダは案内が無くてもタブを表示(現在の開催状況が分かるように)
+    const showEvent = links.length > 0 || canIssue || room === "kenshu";
 
     // --- 資料(ダウンロード)タブ ---
     let dlPane;
@@ -201,39 +207,39 @@
     }
 
     // --- 勉強会・イベントタブ ---
+    // 一般会員には「参加する(回答)」リンクのみ。集計・コピーは運営側のみ表示。
     let evPane = "";
     if (links.length) {
-      evPane += '<ul class="file-list">' + links.map((l) =>
-        `<li><span class="f-type link">FORM</span>${esc(l.title)}<span class="f-meta">${fmtDate(l.created_at)}</span>` +
-        `<a class="dl" href="${esc(l.form_url)}" target="_blank" rel="noopener">回答</a>` +
-        (l.sheet_url ? ` <a class="dl" href="${esc(l.sheet_url)}" target="_blank" rel="noopener">集計</a>` : "") +
-        ` <a class="dl" href="#" onclick="copyLink(this,'${esc(l.form_url)}');return false;">リンクをコピー</a></li>`
-      ).join("") + "</ul>";
+      evPane += '<ul class="file-list">' + links.map((l) => {
+        let actions = `<a class="dl" href="${esc(l.form_url)}" target="_blank" rel="noopener">${isIppan ? "参加する" : "回答"}</a>`;
+        if (!isIppan) {
+          if (l.sheet_url) actions += ` <a class="dl" href="${esc(l.sheet_url)}" target="_blank" rel="noopener">集計</a>`;
+          actions += ` <a class="dl" href="#" onclick="copyLink(this,'${esc(l.form_url)}');return false;">リンクをコピー</a>`;
+        }
+        return `<li><span class="f-type link">FORM</span>${esc(l.title)}<span class="f-meta">${fmtDate(l.created_at)}</span>${actions}</li>`;
+      }).join("") + "</ul>";
+      if (isIppan) evPane += '<p class="note" style="margin-top:10px;">「参加する」を押すと出欠回答フォームが開きます。</p>';
     } else {
-      evPane += '<p class="note">発行済みのフォームはまだありません。</p>';
+      evPane += '<p class="note">' + (isIppan ? "現在ご案内中の勉強会・研修会はありません。" : "発行済みのフォームはまだありません。") + "</p>";
     }
-    if (canIssue) {
-      if (CFG.GAS_FORM_URL) {
-        evPane += `<div style="margin-top:16px;border-top:1px solid #e7e6dc;padding-top:14px;">
-          <p style="font-weight:800;font-size:14px;color:var(--green-dark);margin-bottom:8px;">開催案内の発行</p>
-          <input id="issue-title" type="text" placeholder="例)${esc(title)} 8月定例会" style="width:100%;padding:11px 14px;border:1.5px solid #e7e6dc;border-radius:10px;font-size:14px;margin-bottom:10px;">
-          <button id="issue-btn" class="btn btn-green" style="width:100%;" onclick="issueLive('${room}')">📮 Googleフォームを発行</button>
-          <p style="font-size:11.5px;color:#63726a;margin-top:8px;">出欠回答フォームと集計スプレッドシートが自動作成され、この一覧に掲載されます。</p>
-        </div>`;
-      } else {
-        evPane += '<p class="note" style="margin-top:12px;">※フォーム発行機能は接続設定後に有効になります。</p>';
-      }
+    if (canIssue && CFG.GAS_FORM_URL) {
+      evPane += `<div style="margin-top:16px;border-top:1px solid #e7e6dc;padding-top:14px;">
+        <p style="font-weight:800;font-size:14px;color:var(--green-dark);margin-bottom:8px;">開催案内の発行(事務局)</p>
+        <input id="issue-title" type="text" placeholder="例)${esc(title)} 8月定例会" style="width:100%;padding:11px 14px;border:1.5px solid #e7e6dc;border-radius:10px;font-size:14px;margin-bottom:10px;">
+        <button id="issue-btn" class="btn btn-green" style="width:100%;" onclick="issueLive('${room}')">📮 Googleフォームを発行</button>
+        <p style="font-size:11.5px;color:#63726a;margin-top:8px;">出欠回答フォームと集計スプレッドシートが自動作成され、この一覧に掲載されます。</p>
+      </div>`;
     }
 
     // --- タブUI組み立て ---
     let html = `<h3>${esc(title)}</h3>
       <div class="modal-tabs">
         <button class="mtab active" data-pane="pane-dl">📄 資料</button>
-        <button class="mtab" data-pane="pane-up">⬆️ アップロード</button>
-        ${showEvent ? '<button class="mtab" data-pane="pane-ev">📮 勉強会・イベント</button>' : ""}
+        ${canUpload ? '<button class="mtab" data-pane="pane-up">⬆️ アップロード</button>' : ""}
+        ${showEvent ? `<button class="mtab" data-pane="pane-ev">📮 ${isIppan ? "勉強会・研修会" : "勉強会・イベント"}</button>` : ""}
       </div>
       <div class="mtab-pane" id="pane-dl">${dlPane}</div>
-      <div class="mtab-pane" id="pane-up" hidden>${upPane}</div>
+      ${canUpload ? `<div class="mtab-pane" id="pane-up" hidden>${upPane}</div>` : ""}
       ${showEvent ? `<div class="mtab-pane" id="pane-ev" hidden>${evPane}</div>` : ""}`;
     openModal(html);
 

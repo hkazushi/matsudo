@@ -6,7 +6,7 @@
 <title>資料アップロード管理(事務局)｜宅建協会 松戸支部</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/png" href="../assets/img/hatomark.png">
-<link rel="stylesheet" href="../assets/style.css?v=19">
+<link rel="stylesheet" href="../assets/style.css?v=21">
 </head>
 <body>
 
@@ -86,6 +86,26 @@
       </div>
 
       <div class="content-block">
+        <h2>勉強会・研修会フォームの作成</h2>
+        <p class="note" style="margin-bottom:16px;">出欠回答フォーム(Googleフォーム)と集計スプレッドシートを作成します。作成すると、選んだフォルダの「勉強会」タブに参加リンクが自動掲載され、会員がその場から回答できます。</p>
+        <table class="info-table">
+          <tr><th>掲載先フォルダ</th><td>
+            <select id="form-room" style="width:100%;padding:11px 14px;border:1.5px solid var(--line);border-radius:10px;background:#fff;font-size:14px;"></select>
+          </td></tr>
+          <tr><th>勉強会・研修会名 <span style="color:var(--red);font-size:11px;">必須</span></th><td>
+            <input id="issue-title" type="text" style="width:100%;padding:10px 14px;border:1.5px solid var(--line);border-radius:10px;font-size:14px;" placeholder="例)宅建業法改正セミナー(8月開催)">
+          </td></tr>
+        </table>
+        <div style="margin-top:16px;">
+          <button id="issue-btn" class="btn btn-green">📮 Googleフォームを作成</button>
+        </div>
+        <p class="note" style="margin-top:8px;">※作成には20秒ほどかかる場合があります。</p>
+
+        <h3 style="margin-top:26px;">作成済みフォーム</h3>
+        <ul id="form-list" class="file-list"></ul>
+      </div>
+
+      <div class="content-block">
         <h2>お知らせ・宅建ニュースの編集</h2>
         <p class="note" style="margin-bottom:16px;">ここで追加した記事が、トップページとお知らせページに即時反映されます(新しいものが上に表示)。</p>
         <table class="info-table">
@@ -139,8 +159,8 @@
 
 <div class="modal-bg" id="modal-bg"><div class="modal"><button class="close">×</button><div id="modal-body"></div></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../assets/config.js?v=19"></script>
-<script src="../assets/site.js?v=19"></script>
+<script src="../assets/config.js?v=21"></script>
+<script src="../assets/site.js?v=21"></script>
 <script>
 (function () {
   const CFG = window.SITE_CONFIG || {};
@@ -234,6 +254,44 @@
     loadFiles();
   });
 
+  // ============ 勉強会・研修会フォームの作成 ============
+  ROOMS.forEach(([id, label]) => {
+    const o = document.createElement("option");
+    o.value = id; o.textContent = label;
+    $("form-room").appendChild(o);
+  });
+
+  async function loadFormList() {
+    const ul = $("form-list");
+    ul.innerHTML = '<li style="color:var(--ink-soft);">読み込み中…</li>';
+    const { data, error } = await sb.from("room_links").select("*").order("created_at", { ascending: false });
+    if (error) { ul.innerHTML = '<li style="color:var(--red-dark);">読み込みエラー: ' + escp(error.message) + "</li>"; return; }
+    if (!data.length) { ul.innerHTML = '<li style="color:var(--ink-soft);">作成済みのフォームはありません。</li>'; return; }
+    const label = (r) => (ROOMS.find(([id]) => id === r) || [r, r])[1];
+    ul.innerHTML = data.map((l) =>
+      `<li><span class="f-type link">FORM</span><div style="flex:1;"><strong>${escp(l.title)}</strong><br>
+        <span class="note">${escp(label(l.room))}</span></div>
+        <a class="dl" href="${escp(l.form_url)}" target="_blank" rel="noopener">フォーム</a>
+        ${l.sheet_url ? `<a class="dl" href="${escp(l.sheet_url)}" target="_blank" rel="noopener">集計</a>` : ""}
+        <a class="dl" href="#" onclick="copyLink(this,'${escp(l.form_url)}');return false;">リンクをコピー</a>
+        <a class="dl" href="#" style="color:var(--red-dark);" data-link-del="${l.id}">掲載削除</a></li>`
+    ).join("");
+    ul.querySelectorAll("[data-link-del]").forEach((a) => {
+      a.addEventListener("click", async (e) => {
+        e.preventDefault();
+        if (!confirm("この参加リンクを会員ページから削除します(フォーム本体とスプレッドシートはGoogleドライブに残ります)。よろしいですか?")) return;
+        await sb.from("room_links").delete().eq("id", a.getAttribute("data-link-del"));
+        loadFormList();
+      });
+    });
+  }
+
+  $("issue-btn").addEventListener("click", () => {
+    // site.js の発行処理を再利用(GAS作成 → room_links登録 → 結果モーダル)
+    window.issueLive($("form-room").value);
+    setTimeout(loadFormList, 22000);
+  });
+
   // ============ お知らせ・宅建ニュース編集 ============
   const NEWS_PATH = "site/news.json";
   let newsData = { oshirase: [], takken: [] };
@@ -316,7 +374,7 @@
   refreshUI = async function () {
     await origRefresh();
     const { data: { session } } = await sb.auth.getSession();
-    if (session) loadNewsAdmin();
+    if (session) { loadNewsAdmin(); loadFormList(); }
   };
 
   refreshUI();
