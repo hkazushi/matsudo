@@ -13,7 +13,7 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="../assets/img/hero-hondoji.jpg">
-<link rel="stylesheet" href="../assets/style.css?v=17">
+<link rel="stylesheet" href="../assets/style.css?v=18">
 </head>
 <body>
 
@@ -43,58 +43,66 @@
   </div>
 </div>
 
-<div id="gated-content">
+<!-- 入り口の鍵 -->
+<div data-gate="ippan" data-pass="matsudo2026">
+  <div class="lockscreen">
+    <div class="icon">🔒</div>
+    <h2>一般会員エリア</h2>
+    <p>事務局から配布されたパスワードを入力してください。</p>
+    <form>
+      <input type="password" placeholder="パスワードを入力" autofocus>
+      <p class="err">パスワードが違います</p>
+      <button type="submit" class="btn btn-green" style="width:100%;">入室する</button>
+    </form>
+    <p class="hint">モック用パスワード: matsudo2026</p>
+  </div>
+</div>
+
+<!-- 解錠後コンテンツ -->
+<div id="gated-content" style="display:none;">
 <section class="section" style="padding-top:40px;">
   <div class="container">
     <div class="breadcrumb"><a href="../index.html">ホーム</a> › <a href="index.html">会員専用</a> › 一般会員エリア</div>
 
-    <div class="alert info" style="margin-bottom:28px;">フォルダごとに個別の鍵がかかっています。開きたいフォルダをクリックし、フォルダのパスワードを入力してください。<br><span style="font-size:12px;">※「研修会・勉強会」フォルダでは出欠フォームの発行・回答リンクの確認ができます。</span></div>
+    <div class="alert info" style="margin-bottom:28px;">各フォルダをクリックすると資料をご覧いただけます(フォルダごとの追加パスワードはありません)。<br><span style="font-size:12px;">※「研修会・勉強会」フォルダでは出欠フォームの発行・回答リンクの確認ができます。</span></div>
 
     <div class="folder-grid">
-      <div class="folder" data-room="oshirase" data-pass="oshirase01">
-        <span class="lock">🔑</span>
+      <div class="folder" data-room="oshirase">
         <div class="f-icon">📢</div>
         <h3>会員向けお知らせ</h3>
         <p>事務局からの会員向け連絡事項</p>
       </div>
-      <div class="folder" data-room="gyoji" data-pass="gyoji02">
-        <span class="lock">🔑</span>
+      <div class="folder" data-room="gyoji">
         <div class="f-icon">📅</div>
         <h3>協会行事・会議等日程表</h3>
         <p>年間行事・会議のスケジュール</p>
       </div>
-      <div class="folder" data-room="shoshiki" data-pass="shoshiki03">
-        <span class="lock">🔑</span>
+      <div class="folder" data-room="shoshiki">
         <div class="f-icon">📄</div>
         <h3>書式ダウンロード</h3>
         <p>契約書・重説等の各種書式</p>
       </div>
-      <div class="folder" data-room="kitei" data-pass="kitei04">
-        <span class="lock">🔑</span>
+      <div class="folder" data-room="kitei">
         <div class="f-icon">📖</div>
         <h3>松戸支部規定・施行細則</h3>
         <p>支部規定と施行細則</p>
       </div>
-      <div class="folder" data-room="hokoku" data-pass="hokoku05">
-        <span class="lock">🔑</span>
+      <div class="folder" data-room="hokoku">
         <div class="f-icon">📷</div>
         <h3>会員のための行事報告</h3>
         <p>行事・イベントの実施報告</p>
       </div>
-      <div class="folder" data-room="kenshu" data-pass="kenshu06">
-        <span class="lock">🔑</span>
+      <div class="folder" data-room="kenshu">
         <div class="f-icon">🎓</div>
         <h3>研修会・勉強会</h3>
         <p>開催案内の閲覧・出欠回答</p>
       </div>
-      <div class="folder" data-room="chosa" data-pass="chosa07">
-        <span class="lock">🔑</span>
+      <div class="folder" data-room="chosa">
         <div class="f-icon">📊</div>
         <h3>調査・アンケート</h3>
         <p>本部・事務局からの調査依頼</p>
       </div>
-      <div class="folder" data-room="shiryo" data-pass="shiryo08">
-        <span class="lock">🔑</span>
+      <div class="folder" data-room="shiryo">
         <div class="f-icon">🗂</div>
         <h3>各種資料</h3>
         <p>不動産相談所運営要綱ほか</p>
@@ -215,7 +223,7 @@
 
 <div class="modal-bg" id="modal-bg"><div class="modal"><button class="close">×</button><div id="modal-body"></div></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../assets/config.js?v=17"></script>
-<script src="../assets/site.js?v=17"></script>
+<script src="../assets/config.js?v=18"></script>
+<script src="../assets/site.js?v=18"></script>
 </body>
 </html>

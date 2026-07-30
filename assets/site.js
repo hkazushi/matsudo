@@ -65,13 +65,14 @@
     });
   }
 
-  document.querySelectorAll(".folder[data-pass]").forEach((folder) => {
+  document.querySelectorAll(".folder[data-room]").forEach((folder) => {
     const key = "room_" + folder.dataset.room;
-    if (sessionStorage.getItem(key) === "ok") folder.classList.add("unlocked");
+    const pass = folder.dataset.pass; // 未設定なら鍵なし(そのまま開く)
+    if (!pass || sessionStorage.getItem(key) === "ok") folder.classList.add("unlocked");
 
     folder.addEventListener("click", () => {
       const contentTpl = document.getElementById("room-" + folder.dataset.room);
-      if (sessionStorage.getItem(key) === "ok") {
+      if (!pass || sessionStorage.getItem(key) === "ok") {
         showRoom(folder, contentTpl);
         return;
       }
