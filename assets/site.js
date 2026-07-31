@@ -336,9 +336,9 @@
       const d = await res.json();
       const chip = (n) => n.chip ? `<span class="chip ${esc(n.color || "green")}">${esc(n.chip)}</span>` : "";
       const item = (n, withBody) =>
-        `<li><a href="#" onclick="return false;"><span class="date">${esc(n.date)}</span>${chip(n)}${esc(n.title)}${withBody && n.body ? " — " + esc(n.body) : ""}</a></li>`;
+        `<li><a href="#" onclick="return false;"><span class="date">${esc(n.date)}</span>${chip(n)}<span class="ttl">${esc(n.title)}${withBody && n.body ? " — " + esc(n.body) : ""}</span></a></li>`;
       const homeItem = (n) =>
-        `<li><a href="news.html"><span class="date">${esc(n.date)}</span>${chip(n)}${esc(n.title)}</a></li>`;
+        `<li><a href="news.html"><span class="date">${esc(n.date)}</span>${chip(n)}<span class="ttl">${esc(n.title)}</span></a></li>`;
       if (Array.isArray(d.oshirase) && d.oshirase.length) {
         if (t.homeO) t.homeO.innerHTML = d.oshirase.slice(0, 5).map(homeItem).join("");
         if (t.allO) t.allO.innerHTML = d.oshirase.map((n) => item(n, true)).join("");
@@ -438,6 +438,34 @@
     { threshold: 0.5 }
   );
   document.querySelectorAll("[data-count]").forEach((el) => counterIO.observe(el));
+
+  // ---- モバイル: ハンバーガーメニュー ----
+  (function () {
+    const headerInner = document.querySelector(".header-inner");
+    const navEl = document.querySelector(".nav");
+    if (!headerInner || !navEl || document.querySelector(".nav-toggle")) return;
+    const btn = document.createElement("button");
+    btn.className = "nav-toggle";
+    btn.setAttribute("aria-label", "メニューを開く");
+    btn.setAttribute("aria-expanded", "false");
+    btn.innerHTML = "<span></span><span></span><span></span>";
+    headerInner.appendChild(btn);
+
+    const setOpen = (open) => {
+      navEl.classList.toggle("open", open);
+      btn.classList.toggle("open", open);
+      document.body.classList.toggle("nav-open", open);
+      btn.setAttribute("aria-label", open ? "メニューを閉じる" : "メニューを開く");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    };
+    btn.addEventListener("click", () => setOpen(!navEl.classList.contains("open")));
+    navEl.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setOpen(false)));
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") setOpen(false); });
+    document.addEventListener("click", (e) => {
+      if (navEl.classList.contains("open") && !navEl.contains(e.target) && !btn.contains(e.target)) setOpen(false);
+    });
+    window.addEventListener("resize", () => { if (innerWidth > 960) setOpen(false); });
+  })();
 
   // ---- ヘッダー影 & ページトップボタン ----
   const header = document.querySelector(".header");
