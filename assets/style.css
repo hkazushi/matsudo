@@ -782,15 +782,16 @@ ul { list-style: none; }
 /* ---- フルスクリーン写真ヒーロー ---- */
 .hero.photo {
   /* 提供画像(2920x1032)の比率に合わせ、切り取らず全体を表示する */
-  /* 画像は切り取らず全体を表示(contain)。足りない高さは下の帯で確保する */
-  height: clamp(560px, 74vh, 800px);
+  /* 画像そのままの高さ(切り取りも余白帯もなし) */
+  aspect-ratio: 2920 / 1032;
+  height: auto;
   /* 提供画像の左上ロゴ・右の縦書きコピーを隠さないよう、見出しは下寄せ */
   display: flex; align-items: flex-end;
   animation: none;
   background: var(--green-deep);
 }
 /* スマホでは横長すぎて小さくなるため、中央を切り出して表示 */
-@media (max-width: 760px) { .hero.photo { height: 420px; } }
+@media (max-width: 760px) { .hero.photo { aspect-ratio: auto; height: 420px; } }
 .hero.photo .hero-bg { position: absolute; inset: 0; overflow: hidden; }
 .hero.photo .hero-bg img {
   width: 100%; height: 100%;
