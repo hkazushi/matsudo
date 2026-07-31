@@ -1043,9 +1043,11 @@ h1, h2, h3, h4, .hero h1, .lead, .section-head p.desc, .entrance h3, .card h3, .
 body { line-break: strict; }
 td, .file-list li, .breadcrumb { overflow-wrap: break-word; }
 
-/* 画面外に退避したメニュー等で横スクロールが出ないように
-   (clip は sticky ヘッダーを壊さない) */
-body { overflow-x: clip; }
+/* 画面外に退避したメニュー等で横スクロールが出ないように。
+   root に指定すると viewport に伝播するため、縦スクロールや
+   sticky ヘッダーには影響しない(body に置くと body がスクロール
+   コンテナ化して window スクロールが壊れる) */
+html { overflow-x: clip; }
 
 /* ---- ハンバーガーメニュー ---- */
 .nav-toggle { display: none; }
@@ -1076,21 +1078,21 @@ body { overflow-x: clip; }
     position: fixed; top: 0; right: 0; bottom: 0;
     width: min(80vw, 320px); margin-left: 0;
     background: #fff; flex-direction: column; flex-wrap: nowrap; align-items: stretch;
-    gap: 0; padding: 76px 20px 32px;
+    gap: 0; padding: 64px 20px calc(24px + env(safe-area-inset-bottom));
     transform: translateX(100%); transition: transform 0.35s var(--ease);
     box-shadow: -10px 0 34px rgba(14,61,35,0.18);
     overflow-y: auto; z-index: 120;
   }
   .nav.open { transform: none; }
   .nav a {
-    padding: 15px 6px; font-size: 15px;
+    padding: 12px 6px; font-size: 14.5px;
     border-bottom: 1px solid var(--line);
   }
   .nav a::after { display: none; }
   .nav a.active { color: var(--green); background: var(--wakaba-pale); border-radius: 8px; }
   .nav .btn-member {
-    margin: 20px 0 0; text-align: center; border-bottom: none;
-    padding: 14px 20px;
+    margin: 16px 0 0; text-align: center; border-bottom: none;
+    padding: 13px 20px;
   }
   body.nav-open { overflow: hidden; }
   /* ヘッダー(z-index:100)が重ね合わせ文脈を作るため、覆いはその下に敷く */
@@ -1155,13 +1157,30 @@ body { overflow-x: clip; }
   .modal-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
   .modal-tabs::-webkit-scrollbar { display: none; }
   .modal-tabs .mtab { font-size: 12.5px; padding: 8px 10px 10px; }
-  .file-list li { flex-wrap: wrap; gap: 8px; font-size: 13.5px; }
-  .file-list .f-meta { margin-left: 0; width: 100%; }
+  /* 書式DL: バッジ+タイトルを1行目、開くボタンを右下に */
+  .file-list li { flex-wrap: wrap; gap: 6px 10px; font-size: 13.5px; line-height: 1.65; padding: 12px 4px; }
+  .file-list .f-type { font-size: 10px; padding: 2px 7px; }
+  .file-list .f-meta { margin-left: 0; order: 3; }
+  /* インラインの style="flex:1" (flex-basis:0%) より優先させて全幅に折り返す */
+  .file-list li > div { flex-basis: 100% !important; order: 2; }
+  .file-list a.dl {
+    order: 4; margin-left: auto;
+    padding: 6px 16px; border: 1.5px solid var(--green); border-radius: 999px;
+    color: var(--green-dark);
+  }
 
-  /* フォルダ・入り口カード */
-  .folder-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
-  .folder { padding: 20px 16px; }
-  .folder h3 { font-size: 14.5px; }
+  /* フォルダ: 1列の横型カード(アイコン左・テキスト右) */
+  .folder-grid { grid-template-columns: 1fr; gap: 12px; }
+  .folder {
+    padding: 16px 44px 16px 16px;
+    display: grid; grid-template-columns: 48px 1fr; gap: 4px 14px;
+    align-items: center;
+  }
+  .folder .f-icon { width: 48px; height: 48px; font-size: 21px; margin-bottom: 0; grid-row: 1 / 3; }
+  .folder h3 { font-size: 15px; align-self: end; }
+  .folder p { margin-top: 0; align-self: start; }
+  .folder .lock { top: 50%; transform: translateY(-50%); right: 16px; }
+  .folder:hover .lock { transform: translateY(-50%); }
   .entrance { padding: 34px 24px; }
 
   /* 会員一覧: 横スクロールをやめてカード表示に */
@@ -1204,6 +1223,5 @@ body { overflow-x: clip; }
 
 @media (max-width: 400px) {
   .hero.photo h1 { font-size: 25px; }
-  .folder-grid { grid-template-columns: 1fr 1fr; }
   .content-block h2 { font-size: 19px; }
 }
