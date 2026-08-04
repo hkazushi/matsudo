@@ -283,7 +283,8 @@
       const res = await fetch(CFG.GAS_FORM_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ secret: CFG.GAS_SECRET, title }),
+        // room を渡すと GAS 側で委員会別・開催回別のフォルダに収納される
+        body: JSON.stringify({ secret: CFG.GAS_SECRET, title, room, kind: room === "chosa" ? "survey" : "attendance" }),
       });
       const data = await res.json();
       if (!data.ok) throw new Error(data.error || "unknown");
@@ -293,7 +294,9 @@
           <li><span class="f-type link">FORM</span>出欠回答フォーム(会員配布用)<a class="dl" href="${esc(data.formUrl)}" target="_blank" rel="noopener">開く</a> <a class="dl" href="#" onclick="copyLink(this,'${esc(data.formUrl)}');return false;">リンクをコピー</a></li>
           <li><span class="f-type xlsx">SHEET</span>出欠集計スプレッドシート<a class="dl" href="${esc(data.sheetUrl)}" target="_blank" rel="noopener">開く</a></li>
           <li><span class="f-type link">EDIT</span>フォーム編集(質問の変更)<a class="dl" href="${esc(data.formEditUrl)}" target="_blank" rel="noopener">開く</a></li>
+          ${data.folderUrl ? `<li><span class="f-type xlsx">📁</span>保存先フォルダ「${esc(data.folderName || "")}」<a class="dl" href="${esc(data.folderUrl)}" target="_blank" rel="noopener">開く</a></li>` : ""}
         </ul>
+        ${data.filed === false ? `<div class="alert warn" style="margin-top:14px;">フォルダへの移動に失敗したため、フォームと集計シートはマイドライブ直下にあります。手動で移動してください。</div>` : ""}
         <div class="alert info" style="margin-top:16px;">リンクはこの部屋の「勉強会・イベント」タブにも自動掲載されました。「リンクをコピー」して会員のみなさまへ共有してください。</div>`);
     } catch (err) {
       if (btn) { btn.disabled = false; btn.textContent = "📮 Googleフォームを発行"; }
