@@ -12,7 +12,8 @@ window.SITE_CONFIG = {
   // 公開可能キー(publishable/anon)。サイトに掲載してよい種類のキー
   SUPABASE_ANON_KEY: "sb_publishable_D6Uu_fpfIY_ACKXLp-WhbA_96Mf76Jq",
   // Google Apps Script をウェブアプリとしてデプロイしたURL(gas/form-issuer.gs)
-  GAS_FORM_URL: "https://script.google.com/macros/s/AKfycbw95iwB0UeyfpL8ffrER9FMyWZd6dLc8YoYPN9xEixzYHSHHedjE1RR1IISdV1bl8Cixg/exec",
+  // デプロイ先アカウント: takken.matsudo.official@gmail.com (松戸支部)
+  GAS_FORM_URL: "https://script.google.com/macros/s/AKfycbwH3yFgFFMcnCvcsuBFakGUYuTt6sLgLPhT5KFd4tJqmVmTwK00DbF0ArCPwNcC_pro/exec",
   // GAS側の SECRET と同じ文字列(簡易な悪用防止)
   GAS_SECRET: "matsudo-form-2026",
 };
