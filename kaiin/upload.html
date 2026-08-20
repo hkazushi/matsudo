@@ -6,7 +6,7 @@
 <title>資料アップロード管理(事務局)｜宅建協会 松戸支部</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/png" href="../assets/img/hatomark.png">
-<link rel="stylesheet" href="../assets/style.css?v=47">
+<link rel="stylesheet" href="../assets/style.css?v=48">
 </head>
 <body>
 
@@ -158,8 +158,8 @@
 
 <div class="modal-bg" id="modal-bg"><div class="modal"><button class="close">×</button><div id="modal-body"></div></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../assets/config.js?v=47"></script>
-<script src="../assets/site.js?v=47"></script>
+<script src="../assets/config.js?v=48"></script>
+<script src="../assets/site.js?v=48"></script>
 <script>
 (function () {
   const CFG = window.SITE_CONFIG || {};
@@ -240,13 +240,22 @@
     const room = $("room-select").value;
     const st = $("upload-status");
     $("upload-btn").disabled = true;
-    let ok = 0, ng = 0;
+    let ok = 0, ng = 0, lastErr = "";
+    // セッションが切れていると anon 扱いになり RLS で必ず弾かれるため、先に確認する
+    const { data: { session: sess } } = await sb.auth.getSession();
+    if (!sess) {
+      st.style.color = "var(--red-dark)";
+      st.textContent = "ログインの有効期限が切れています。ページを再読み込みして、もう一度ログインしてください。";
+      $("upload-btn").disabled = false;
+      return;
+    }
     for (const f of files) {
       st.textContent = `アップロード中: ${f.name} (${ok + ng + 1}/${files.length})`;
       const { error } = await sb.storage.from("kaiin").upload(room + "/" + f.name, f, { upsert: true });
-      if (error) { ng++; console.error(error); } else { ok++; }
+      if (error) { ng++; lastErr = error.message || String(error); console.error(error); } else { ok++; }
     }
-    st.textContent = `完了: 成功 ${ok}件` + (ng ? ` / 失敗 ${ng}件(コンソール参照)` : "");
+    st.style.color = ng ? "var(--red-dark)" : "var(--green-dark)";
+    st.textContent = `完了: 成功 ${ok}件` + (ng ? ` / 失敗 ${ng}件 — ${lastErr}` : "");
     $("upload-btn").disabled = false;
     $("file-input").value = "";
     loadFiles();
