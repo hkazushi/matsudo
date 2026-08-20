@@ -6,7 +6,7 @@
 <title>資料アップロード管理(事務局)｜宅建協会 松戸支部</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/png" href="../assets/img/hatomark.png">
-<link rel="stylesheet" href="../assets/style.css?v=48">
+<link rel="stylesheet" href="../assets/style.css?v=49">
 </head>
 <body>
 
@@ -158,8 +158,8 @@
 
 <div class="modal-bg" id="modal-bg"><div class="modal"><button class="close">×</button><div id="modal-body"></div></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../assets/config.js?v=48"></script>
-<script src="../assets/site.js?v=48"></script>
+<script src="../assets/config.js?v=49"></script>
+<script src="../assets/site.js?v=49"></script>
 <script>
 (function () {
   const CFG = window.SITE_CONFIG || {};
@@ -206,8 +206,9 @@
     const files = (data || []).filter((f) => f.name && !f.name.startsWith("."));
     if (!files.length) { list.innerHTML = '<li style="color:var(--ink-soft);">ファイルはありません。</li>'; return; }
     list.innerHTML = files.map((f) => {
-      const url = sb.storage.from("kaiin").getPublicUrl(room + "/" + f.name).data.publicUrl;
-      return `<li><span class="f-type pdf" style="background:var(--green);">FILE</span>${escp(f.name)}
+      const disp = window.fromStorageKey(f.name);
+      const url = sb.storage.from("kaiin").getPublicUrl(room + "/" + f.name, { download: disp }).data.publicUrl;
+      return `<li><span class="f-type pdf" style="background:var(--green);">FILE</span>${escp(disp)}
         <a class="dl" href="${escp(url)}" target="_blank" rel="noopener">確認</a>
         <a class="dl" href="#" style="color:var(--red-dark);" data-del="${escp(f.name)}">削除</a></li>`;
     }).join("");
@@ -215,7 +216,7 @@
       a.addEventListener("click", async (e) => {
         e.preventDefault();
         const name = a.getAttribute("data-del");
-        if (!confirm("「" + name + "」を削除します。よろしいですか?")) return;
+        if (!confirm("「" + window.fromStorageKey(name) + "」を削除します。よろしいですか?")) return;
         const { error } = await sb.storage.from("kaiin").remove([room + "/" + name]);
         if (error) alert("削除エラー: " + error.message);
         loadFiles();
@@ -251,7 +252,7 @@
     }
     for (const f of files) {
       st.textContent = `アップロード中: ${f.name} (${ok + ng + 1}/${files.length})`;
-      const { error } = await sb.storage.from("kaiin").upload(room + "/" + f.name, f, { upsert: true });
+      const { error } = await sb.storage.from("kaiin").upload(room + "/" + window.toStorageKey(f.name), f, { upsert: true });
       if (error) { ng++; lastErr = error.message || String(error); console.error(error); } else { ok++; }
     }
     st.style.color = ng ? "var(--red-dark)" : "var(--green-dark)";

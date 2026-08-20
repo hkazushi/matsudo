@@ -133,6 +133,21 @@
     const d = new Date(iso);
     return d.getFullYear() + "." + String(d.getMonth() + 1).padStart(2, "0") + "." + String(d.getDate()).padStart(2, "0");
   }
+  // Supabase Storage のオブジェクトキーは ASCII の限られた文字しか使えず、
+  // 日本語ファイル名をそのまま渡すと InvalidKey(400) で弾かれる。
+  // 使用可能な "=" を目印にした可逆エンコードで保存し、表示時に元へ戻す。
+  window.toStorageKey = function (name) {
+    return encodeURIComponent(name).replace(/~/g, "%7E").replace(/%/g, "=");
+  };
+  window.fromStorageKey = function (key) {
+    if (key.indexOf("=") === -1) return key; // 従来のASCII名はそのまま
+    try {
+      return decodeURIComponent(key.replace(/=/g, "%"));
+    } catch (e) {
+      return key;
+    }
+  };
+
   function extType(name) {
     const e = (name.split(".").pop() || "").toLowerCase();
     if (e === "pdf") return ["pdf", "PDF"];
@@ -183,10 +198,11 @@
     let dlPane;
     if (files.length) {
       dlPane = '<ul class="file-list">' + files.map((f) => {
-        const t = extType(f.name);
-        const url = SB.storage.from("kaiin").getPublicUrl(room + "/" + f.name).data.publicUrl;
+        const disp = window.fromStorageKey(f.name);
+        const t = extType(disp);
+        const url = SB.storage.from("kaiin").getPublicUrl(room + "/" + f.name, { download: disp }).data.publicUrl;
         const size = f.metadata ? f.metadata.size : null;
-        return `<li><span class="f-type ${t[0]}">${t[1]}</span>${esc(f.name)}<span class="f-meta">${fmtDate(f.updated_at)} ${fmtSize(size)}</span><a class="dl" href="${esc(url)}" target="_blank" rel="noopener">DL</a></li>`;
+        return `<li><span class="f-type ${t[0]}">${t[1]}</span>${esc(disp)}<span class="f-meta">${fmtDate(f.updated_at)} ${fmtSize(size)}</span><a class="dl" href="${esc(url)}" target="_blank" rel="noopener">DL</a></li>`;
       }).join("") + "</ul>";
     } else {
       dlPane = '<p class="note">掲載中の資料はまだありません。</p>';
@@ -264,7 +280,7 @@
         let ok = 0, ng = 0;
         for (const f of input.files) {
           st.textContent = `アップロード中: ${f.name}`;
-          const { error } = await SB.storage.from("kaiin").upload(room + "/" + f.name, f, { upsert: true });
+          const { error } = await SB.storage.from("kaiin").upload(room + "/" + window.toStorageKey(f.name), f, { upsert: true });
           error ? ng++ : ok++;
         }
         st.textContent = `完了: 成功 ${ok}件` + (ng ? ` / 失敗 ${ng}件` : "");
