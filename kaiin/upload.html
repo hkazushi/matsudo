@@ -6,7 +6,7 @@
 <title>資料アップロード管理(事務局)｜宅建協会 松戸支部</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/png" href="../assets/img/hatomark.png">
-<link rel="stylesheet" href="../assets/style.css?v=49">
+<link rel="stylesheet" href="../assets/style.css?v=50">
 </head>
 <body>
 
@@ -82,6 +82,7 @@
         <h2>フォルダ内のファイル</h2>
         <p class="note" style="margin-bottom:12px;">上で選択中のフォルダの内容です。「削除」で即時削除されます(取り消し不可)。</p>
         <ul id="file-list" class="file-list"></ul>
+        <p id="file-status" style="font-size:13.5px;margin-top:10px;color:var(--green-dark);"></p>
       </div>
 
       <div class="content-block">
@@ -158,8 +159,8 @@
 
 <div class="modal-bg" id="modal-bg"><div class="modal"><button class="close">×</button><div id="modal-body"></div></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../assets/config.js?v=49"></script>
-<script src="../assets/site.js?v=49"></script>
+<script src="../assets/config.js?v=50"></script>
+<script src="../assets/site.js?v=50"></script>
 <script>
 (function () {
   const CFG = window.SITE_CONFIG || {};
@@ -216,9 +217,14 @@
       a.addEventListener("click", async (e) => {
         e.preventDefault();
         const name = a.getAttribute("data-del");
-        if (!confirm("「" + window.fromStorageKey(name) + "」を削除します。よろしいですか?")) return;
+        const disp = window.fromStorageKey(name);
+        if (!confirm("「" + disp + "」を削除します。よろしいですか?")) return;
+        const fst = $("file-status");
+        fst.style.color = "var(--ink-soft)";
+        fst.textContent = "削除中: " + disp;
         const { error } = await sb.storage.from("kaiin").remove([room + "/" + name]);
-        if (error) alert("削除エラー: " + error.message);
+        fst.style.color = error ? "var(--red-dark)" : "var(--green-dark)";
+        fst.textContent = error ? "削除エラー: " + error.message : "削除しました: " + disp;
         loadFiles();
       });
     });
