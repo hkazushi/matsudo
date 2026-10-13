@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>資料アップロード管理｜宅建協会 松戸支部 デザイン案C</title>
+<meta name="description" content="宅建協会 松戸支部">
+<!-- デザイン検討用ページのため検索結果には出さない -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0C0F0D">
+<link rel="icon" type="image/png" href="../../assets/img/hatomark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif+JP:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.css">
+<link rel="stylesheet" href="../assets/c.css?v=21">
+<script>
+  // 演出の初期状態を描画前に決める(読み込み後に隠すとチラつくため)
+  (function () {
+    var d = document.documentElement, rm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    d.classList.add("js");
+    if (!rm) d.classList.add("anim");
+    try { if (!rm && sessionStorage.getItem("c-pt") === "1") { d.classList.add("pt-in"); sessionStorage.removeItem("c-pt"); } } catch (e) {}
+    
+    // スクリプトが動かなかった場合でも内容は必ず表示する
+    setTimeout(function () { if (!d.classList.contains("ready")) d.classList.remove("anim", "pt-in", "intro-on"); }, 4000);
+  })();
+</script>
+</head>
+<body class="page-kaiin-upload">
+<div class="intro" aria-hidden="true"><img class="intro-mark" src="../../assets/img/hatomark.png" alt=""><span class="intro-line"></span><p class="intro-name bx">宅建協会 松戸支部</p></div>
+<div class="pt" aria-hidden="true"><i></i></div>
+<div class="cur" aria-hidden="true"><i></i><s></s><b></b></div>
+
+<header class="hd">
+  <a href="../index.html" class="hd-brand" aria-label="宅建協会 松戸支部 トップへ">
+    <img src="../../assets/img/hatomark.png" alt="" width="28" height="33">
+    <span class="hd-name"><small class="bx">一般社団法人 千葉県宅地建物取引業協会</small><strong>宅建協会 松戸支部</strong></span>
+  </a>
+  <nav class="hd-nav" aria-label="主要メニュー"><a href="../about.html">支部案内</a><a href="../consult.html">不動産相談</a><a href="../area.html">会員を探す</a><a href="../nyukai.html">入会案内</a><a href="../license.html">講習・試験</a><a href="../news.html">お知らせ</a></nav>
+  <div class="hd-cta">
+    <a href="../kaiin/index.html" class="hd-member">会員専用</a>
+    <a href="../contact.html" class="hd-contact">CONTACT</a>
+  </div>
+  <button class="hd-menu" type="button" aria-expanded="false" aria-controls="menu"><b>MENU</b><i></i></button>
+</header>
+
+<div class="menu" id="menu" aria-hidden="true" data-lenis-prevent>
+  <div class="menu-in">
+    <figure class="menu-photo"><img class="grade" src="../../assets/img/tojotei.jpg" alt="" loading="lazy"></figure>
+    <div class="menu-body">
+      <div class="menu-groups"><div class="menu-group"><p class="lbl d bx">For residents</p><ul><li style="--i:0" class="bx"><a href="../consult.html">不動産相談<span>Consultation</span></a></li><li style="--i:1" class="bx"><a href="../area.html">会員一覧・エリアマップ<span>Members</span></a></li><li style="--i:2" class="bx"><a href="../kariru.html">家を<wbr>借りる<wbr>・貸す<wbr>時<span>Renting</span></a></li><li style="--i:3" class="bx"><a href="../news.html">お知らせ<span>News</span></a></li></ul></div><div class="menu-group"><p class="lbl d bx">For businesses</p><ul><li style="--i:4" class="bx"><a href="../nyukai.html">入会案内<span>Membership</span></a></li><li style="--i:5" class="bx"><a href="../kaigyo.html">開業を<wbr>お考えの<wbr>方<span>Start up</span></a></li><li style="--i:6" class="bx"><a href="../takken.html">宅建協会とは<span>Association</span></a></li></ul></div><div class="menu-group"><p class="lbl d bx">For licensees</p><ul><li style="--i:7" class="bx"><a href="../license.html">講習・試験<span>License</span></a></li><li style="--i:8" class="bx"><a href="../shoshiki.html">書式ダウンロード<span>Documents</span></a></li><li style="--i:9" class="bx"><a href="../kaiin/index.html">会員専用ページ<span>Members only</span></a></li></ul></div><div class="menu-group"><p class="lbl d bx">About</p><ul><li style="--i:10" class="bx"><a href="../about.html">支部<wbr>案内<span>About</span></a></li><li style="--i:11" class="bx"><a href="../links.html">リンク集<span>Links</span></a></li><li style="--i:12" class="bx"><a href="../contact.html">お問い<wbr>合わせ<span>Contact</span></a></li><li style="--i:13" class="bx"><a href="../privacy.html">個人情報の<wbr>取り扱い<span>Privacy</span></a></li></ul></div></div>
+      <div class="menu-foot">
+        <div><p class="lbl d bx">Contact</p><a class="tel" href="tel:0473646904">047-364-6904</a></div>
+        <p class="bx">月〜金 9:00–17:00(土日・祝日休)<br>〒271-0064 千葉県松戸市上本郷3185</p>
+      </div>
+    </div>
+  </div>
+</div>
+<main>
+<section class="ph plain">
+  
+  <span class="ph-frame" aria-hidden="true"></span>
+  <div class="ph-in">
+    <p class="ph-en">Members</p>
+    <p class="ph-big split bx" aria-hidden="true">Admin</p>
+    <h1 class="ph-ja split bx">資料アップロード管理</h1>
+    <span class="gl"></span>
+  </div>
+  <p class="ph-vt bx" aria-hidden="true">千葉県宅地建物取引業協会 松戸支部</p>
+  <nav class="crumbs" aria-label="現在地"><a href="../index.html">ホーム</a><span aria-hidden="true">—</span><a href="index.html">会員専用</a><span aria-hidden="true">—</span><span aria-current="page">資料アップロード管理</span></nav>
+  <span class="ph-scroll" aria-hidden="true"></span>
+</section>
+<div class="wrap"><div class="pg no-toc"><div class="pg-body"><div class="demo-bar"><span class="lbl">Design only</span>会員専用エリアの画面デザインです。パスワード入力・資料のダウンロード・フォームの発行などの機能は持たせていません。</div></div></div></div><div class="adm"><div class="wrap"><div class="pg"><aside class="pg-toc" aria-label="このページの目次"><div class="pg-toc-in"><p class="lbl bx">Contents</p><ol><li class="bx"><a href="#s01"><span>01</span>資料の<wbr>アップロード</a></li><li class="bx"><a href="#s02"><span>02</span>フォルダ内の<wbr>ファイル</a></li><li class="bx"><a href="#s03"><span>03</span>勉強会・研修会フォームの<wbr>作成</a></li><li class="bx"><a href="#s04"><span>04</span>お知らせ・宅建ニュースの<wbr>編集</a></li></ol></div></aside><div class="pg-body"><section class="blk" id="s01"><p class="blk-num bx" data-n="01" data-rv>01</p><form class="adm-form" onsubmit="return false"><h2 class="split bx">資料の<wbr>アップロード</h2>
+        <table class="info-table">
+          <tr><th class="bx">アップロード先フォルダ</th><td class="bx">
+            <select id="room-select"><option>① 会員向けお知らせ</option><option>① 協会行事・会議等日程表</option><option>① 書式ダウンロード</option><option>① 支部規定・施行細則</option><option>① 会員のための行事報告</option><option>① 研修会・勉強会</option><option>① 調査・アンケート</option><option>① 各種資料</option><option>② 幹事会(全体)</option><option>② 総務委員会</option><option>② 財務委員会</option><option>② 綱紀・研修委員会</option><option>② 厚生委員会</option><option>② 広報委員会</option><option>② 入会審査委員会</option><option>② 無料相談業務委員会</option><option>② 流通委員会</option></select>
+          </td></tr>
+          <tr><th class="bx">ファイル(複数可)</th><td class="bx">
+            <input id="file-input" type="file" multiple>
+            <p class="note">PDF・Excel・Word等。<wbr>同名ファイルは<wbr>上<wbr>書きされます。</p>
+          </td></tr>
+        </table>
+        <div><button id="upload-btn" class="btn btn-green"> アップロード</button>
+          
+        </div>
+        <p id="upload-status" class="bx"></p>
+      </form></section><section class="blk" id="s02"><p class="blk-num bx" data-n="02" data-rv>02</p><form class="adm-form" onsubmit="return false"><h2 class="split bx">フォルダ内の<wbr>ファイル</h2>
+        <p class="note bx">上で<wbr>選択中の<wbr>フォルダの<wbr>内容です。<wbr>「削除」で<wbr>即時削除されます(取り消し不可)。</p>
+        <ul class="file-list"><li class="bx"><span class="f-type pdf">PDF</span><div>令和8年度 総会資料.pdf</div><span class="f-meta">2026.06.01 ／ 1.2 MB</span><a class="dl" href="#">確認</a><a class="dl" href="#">削除</a></li><li class="bx"><span class="f-type xlsx">XLSX</span><div>会員名簿(更新用).xlsx</div><span class="f-meta">2026.05.20 ／ 48 KB</span><a class="dl" href="#">確認</a><a class="dl" href="#">削除</a></li></ul>
+        <p id="file-status" class="bx"></p>
+      </form></section><section class="blk" id="s03"><p class="blk-num bx" data-n="03" data-rv>03</p><form class="adm-form" onsubmit="return false"><h2 class="split bx">勉強会・研修会フォームの<wbr>作成</h2>
+        <p class="note bx">出欠回答フォーム(Googleフォーム)と<wbr>集計スプレッドシートを<wbr>作成します。<wbr>作成すると、<wbr>選んだ<wbr>フォルダの<wbr>「勉強会」<wbr>タブに<wbr>参加リンクが<wbr>自動掲載され、<wbr>会員が<wbr>その<wbr>場から<wbr>回答できます。</p>
+        <table class="info-table">
+          <tr><th class="bx">掲載先フォルダ</th><td class="bx">
+            <select id="form-room"><option>① 会員向けお知らせ</option><option>① 協会行事・会議等日程表</option><option>① 書式ダウンロード</option><option>① 支部規定・施行細則</option><option>① 会員のための行事報告</option><option>① 研修会・勉強会</option><option>① 調査・アンケート</option><option>① 各種資料</option><option>② 幹事会(全体)</option><option>② 総務委員会</option><option>② 財務委員会</option><option>② 綱紀・研修委員会</option><option>② 厚生委員会</option><option>② 広報委員会</option><option>② 入会審査委員会</option><option>② 無料相談業務委員会</option><option>② 流通委員会</option></select>
+          </td></tr>
+          <tr><th class="bx">勉強会・研修会名 <span style="color:var(--red);font-size:11px;">必須</span></th><td class="bx">
+            <input id="issue-title" type="text" placeholder="例)宅建業法改正セミナー(8月開催)">
+          </td></tr>
+        </table>
+        <div><button id="issue-btn" class="btn btn-green"> Googleフォームを作成</button>
+        </div>
+        <p class="note bx">※作成には<wbr>20秒ほどかかる<wbr>場合が<wbr>あります。</p>
+
+        <h3 style="margin-top:26px;" class="bx">作成済みフォーム</h3>
+        <ul class="file-list"><li class="bx"><span class="f-type link">FORM</span><div><strong>宅建業法改正セミナー(8月開催)</strong><br><span class="note">① 研修会・勉強会</span></div><a class="dl" href="#">フォーム</a><a class="dl" href="#">集計</a><a class="dl" href="#">リンクを<wbr>コピー</a></li></ul>
+      </form></section><section class="blk" id="s04"><p class="blk-num bx" data-n="04" data-rv>04</p><form class="adm-form" onsubmit="return false"><h2 class="split bx">お知らせ・宅建ニュースの<wbr>編集</h2>
+        <p class="note bx">ここで<wbr>追加した<wbr>記事が、<wbr>トップページとお知らせページに<wbr>即時反映されます(新しい<wbr>ものが<wbr>上に<wbr>表示)。</p>
+        <table class="info-table">
+          <tr><th class="bx">掲載先</th><td class="bx">
+            <select id="news-kind">
+              <option value="oshirase">支部からのお知らせ</option>
+              <option value="takken">宅建ニュース</option>
+            </select>
+          </td></tr>
+          <tr><th class="bx">日付</th><td class="bx">
+            <input id="news-date" type="text" placeholder="2026.07.27">
+          </td></tr>
+          <tr id="news-cat-row"><th class="bx">カテゴリ</th><td class="bx">
+            <select id="news-cat">
+              <option value="">(なし)</option>
+              <option value="重要|red">重要(赤)</option>
+              <option value="事務局|green">事務局</option>
+              <option value="講習|green">講習</option>
+              <option value="相談|green">相談</option>
+              <option value="会員向け|green">会員向け</option>
+              <option value="販売|gold">販売</option>
+              <option value="その他|gold">その他</option>
+            </select>
+          </td></tr>
+          <tr><th class="bx">タイトル <span style="color:var(--red);font-size:11px;">必須</span></th><td class="bx">
+            <input id="news-title" type="text" placeholder="例)事務局臨時休業のお知らせ">
+          </td></tr>
+          <tr><th class="bx">本文(任意)</th><td class="bx">
+            <textarea id="news-body" rows="3" placeholder="お知らせ一覧ページにタイトルの後ろに表示されます"></textarea>
+          </td></tr>
+        </table>
+        <div><button id="news-add-btn" class="btn btn-green"> 追加して公開</button>
+        </div>
+        <p id="news-status" class="bx"></p>
+
+        <h3 style="margin-top:26px;" class="bx">掲載中の<wbr>記事</h3>
+        <p class="bx">支部からの<wbr>お知らせ</p>
+        <ul class="file-list"><li class="bx"><span class="f-type link">重要</span><div>事務局臨時休業の<wbr>お知らせ(6/3 台風の<wbr>ため)<br><span class="note">2026.06.01</span></div><a class="dl" href="#">削除</a></li><li class="bx"><span class="f-type link">事務局</span><div>事務局業務開始時間変更の<wbr>お知らせ(5/28)<br><span class="note">2026.05.26</span></div><a class="dl" href="#">削除</a></li><li class="bx"><span class="f-type link">販売</span><div>不動産日記(手帳)発売の<wbr>お知らせ<br><span class="note">2026.05.20</span></div><a class="dl" href="#">削除</a></li></ul>
+        <p class="bx">宅建ニュース</p>
+        <ul class="file-list"><li class="note bx">(表示例は<wbr>省略)</li></ul>
+      </form></section></div></div></div></div></main>
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft-brand" data-rv>
+      <a href="../index.html"><img src="../../assets/img/hatomark.png" alt="" width="40" height="47"><strong>宅建協会 松戸支部</strong><small class="bx">一般社団法人 千葉県宅地建物取引業協会</small></a>
+    </div>
+    <p class="ft-addr bx" data-rv>〒271-0064 千葉県松戸市上本郷3185 ／ JR常磐線 北松戸駅 徒歩約8分<br><a class="tel" href="tel:0473646904">047-364-6904</a><br>FAX 047-363-3142 ／ 月〜金 9:00–17:00(土日・祝日休)</p>
+    <nav class="ft-nav" aria-label="フッターメニュー"><div><p class="lbl d bx">For residents</p><ul><li class="bx"><a href="../consult.html">不動産相談</a></li><li class="bx"><a href="../area.html">会員一覧・エリアマップ</a></li><li class="bx"><a href="../kariru.html">家を<wbr>借りる<wbr>・貸す<wbr>時</a></li><li class="bx"><a href="../news.html">お知らせ</a></li></ul></div><div><p class="lbl d bx">For businesses</p><ul><li class="bx"><a href="../nyukai.html">入会案内</a></li><li class="bx"><a href="../kaigyo.html">開業を<wbr>お考えの<wbr>方</a></li><li class="bx"><a href="../takken.html">宅建協会とは</a></li></ul></div><div><p class="lbl d bx">For licensees</p><ul><li class="bx"><a href="../license.html">講習・試験</a></li><li class="bx"><a href="../shoshiki.html">書式ダウンロード</a></li><li class="bx"><a href="../kaiin/index.html">会員専用ページ</a></li></ul></div><div><p class="lbl d bx">About</p><ul><li class="bx"><a href="../about.html">支部<wbr>案内</a></li><li class="bx"><a href="../links.html">リンク集</a></li><li class="bx"><a href="../contact.html">お問い<wbr>合わせ</a></li><li class="bx"><a href="../privacy.html">個人情報の<wbr>取り扱い</a></li></ul></div></nav>
+    <p class="ft-word bx" aria-hidden="true">Takken Matsudo</p>
+    <div class="ft-bottom">
+      <p class="bx">© 2026 (一社)千葉県宅地建物取引業協会 松戸支部</p>
+      <p class="bx">この<wbr>サイトは<wbr>デザイン案Cです(機能は<wbr>動作しません)。 <a href="../../index.html">現行デザイン</a> ／ <a href="../../sample-b/">デザイン案B</a></p>
+    </div>
+  </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="../assets/c.js?v=21"></script>
+</body>
+</html>

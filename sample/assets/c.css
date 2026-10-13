@@ -736,3 +736,150 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* ==========================================================================
+   改良(2026-10-13): 高級感は保ったまま「奥行き」を足す
+   英字の大きな斜体見出し / 写真の重ね合わせと金の額縁 / 縦書きの添え文 /
+   回る円形の文字バッジ / 流れる英字の帯 / ごく薄い粒子感 / 暗い面の光
+   ========================================================================== */
+
+/* ごく薄いフィルムの粒子(明るい面・暗い面の両方に効くよう overlay) */
+body::after {
+  content: ""; position: fixed; inset: 0; z-index: 420; pointer-events: none; opacity: 0.07; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* 暗い面にやわらかな光 */
+.on-dark, .cta, .ft { isolation: isolate; }
+.on-dark::after, .ft::before {
+  content: ""; position: absolute; z-index: 0; pointer-events: none;
+  width: 70vw; height: 70vw; max-width: 1100px; max-height: 1100px; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(201, 180, 138, 0.10), rgba(201, 180, 138, 0));
+  right: -18vw; top: -22vw;
+}
+.ft::before { left: -20vw; right: auto; top: auto; bottom: -40vw; }
+.ft > .wrap { position: relative; z-index: 1; }
+
+/* 英字の大きな斜体見出し + 日本語見出し */
+.shd { position: relative; }
+.shd-no { display: flex; align-items: center; gap: 14px; font-family: var(--f-lat); font-style: italic; font-weight: 300; font-size: 20px; color: var(--gold); line-height: 1; }
+.shd-no::after { content: ""; width: 54px; height: 1px; background: currentColor; }
+.shd-en { margin-top: 18px; font-family: var(--f-lat); font-style: italic; font-weight: 300; font-size: clamp(60px, 9.4vw, 150px); line-height: 0.95; letter-spacing: -0.005em; color: var(--ink); white-space: nowrap; }
+.shd-ja { margin-top: 22px; font-family: var(--f-serif); font-weight: 300; font-size: clamp(20px, 2vw, 28px); letter-spacing: 0.18em; line-height: 1.7; }
+.shd.c { text-align: center; }
+.shd.c .shd-no { justify-content: center; }
+.shd.c .shd-no::before { content: ""; width: 54px; height: 1px; background: currentColor; }
+.on-dark .shd-en, .cta .shd-en { color: var(--text-d); }
+.on-dark .shd-no, .cta .shd-no { color: var(--gold-2); }
+.shd-en .w { white-space: nowrap; }
+
+/* ---- ヒーロー: 金の額縁線・縦書き・回る文字バッジ ---- */
+.hero-frame { position: absolute; z-index: 4; inset: var(--hd-h) 28px 28px;  /* 上辺はヘッダーの下から(文字と重ねない) */ border: 1px solid rgba(201, 180, 138, 0.32); pointer-events: none; }
+.anim .hero-frame { clip-path: inset(0 100% 100% 0); }
+.hero-go .hero-frame { clip-path: inset(0 0 0 0); transition: clip-path 2.4s var(--ease-io) 0.6s; }
+.hero-vt { position: absolute; z-index: 4; left: calc(28px + 22px); top: 50%; transform: translateY(-50%); writing-mode: vertical-rl; font-family: var(--f-serif); font-weight: 300; font-size: 12px; letter-spacing: 0.5em; color: var(--text-d2); display: flex; align-items: center; gap: 18px; }
+.hero-vt::before { content: ""; width: 1px; height: 60px; background: var(--gold-2); opacity: 0.6; }
+.badge { position: absolute; z-index: 4; right: calc(28px + 30px); top: calc(var(--hd-h) + 40px); width: 132px; height: 132px; }
+.badge svg { width: 100%; height: 100%; animation: spin 28s linear infinite; }
+.badge text { font-family: var(--f-lat); font-size: 10.6px; letter-spacing: 3.4px; fill: var(--gold-2); text-transform: uppercase; }
+.badge img { position: absolute; left: 50%; top: 50%; width: 24px; transform: translate(-50%, -50%); opacity: 0.9; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.anim .hero-vt, .anim .badge { opacity: 0; }
+.hero-go .hero-vt, .hero-go .badge { opacity: 1; transition: opacity 2s ease 1.4s; }
+
+/* ---- コンセプト: 大小2枚の写真を左右にずらして重ねる ---- */
+.concept { overflow: hidden; }
+.cp-a, .cp-b { position: absolute; z-index: 0; margin: 0; }
+.cp-a { left: 0; top: clamp(150px, 16vw, 240px); width: clamp(200px, 21vw, 330px); aspect-ratio: 3 / 4; }
+.cp-b { right: var(--pad); bottom: clamp(90px, 10vw, 150px); width: clamp(160px, 15vw, 240px); aspect-ratio: 4 / 5; }
+.cp-a img, .cp-b img { width: 100%; height: 100%; object-fit: cover; }
+/* 額縁は外側の figure に、出現演出(はみ出しを隠す)は内側の .rv-img に分けて持たせる */
+.cp-a .rv-img, .cp-b .rv-img, .feat-sub .rv-img { width: 100%; height: 100%; }
+.cp-b::before { content: ""; position: absolute; inset: -16px 16px 16px -16px; border: 1px solid var(--gold); opacity: 0.55; z-index: -1; }
+.concept .wrap { position: relative; z-index: 1; max-width: 760px; }
+.vt { position: absolute; z-index: 1; writing-mode: vertical-rl; font-family: var(--f-serif); font-weight: 300; font-size: 14px; letter-spacing: 0.6em; color: var(--ink-2); display: flex; align-items: center; gap: 20px; }
+.vt::before { content: ""; width: 1px; height: 70px; background: var(--gold); }
+.concept .vt { right: calc(var(--pad) + 30px); top: clamp(140px, 15vw, 220px); }
+
+/* ---- 目的別: 金の額縁・小さな写真の重ね・縦書き ---- */
+.feat-media { grid-column: 1 / span 7; position: relative; }
+.feat:nth-child(even) .feat-media { grid-column: 6 / span 7; grid-row: 1; }
+.feat-media .feat-img { display: block; aspect-ratio: 16 / 11; position: relative; z-index: 1; }
+.feat-media::before { content: ""; position: absolute; z-index: 0; inset: 26px -26px -26px 26px; border: 1px solid var(--gold); opacity: 0.5; }
+.feat:nth-child(even) .feat-media::before { inset: 26px 26px -26px -26px; }
+.feat-sub { position: absolute; z-index: 2; right: -6%; bottom: -14%; width: 34%; aspect-ratio: 4 / 5; box-shadow: 0 30px 60px -20px rgba(12, 15, 13, 0.45); }
+.feat:nth-child(even) .feat-sub { right: auto; left: -6%; }
+.feat-sub img { width: 100%; height: 100%; object-fit: cover; }
+.feat-media .vt { top: 0; right: -54px; color: var(--mute); font-size: 12px; }
+.feat:nth-child(even) .feat-media .vt { right: auto; left: -54px; }
+.feat-no { position: relative; }
+.feat-txt { position: relative; z-index: 3; }
+
+/* ---- 流れる英字の帯 ---- */
+.flow { overflow: hidden; padding: clamp(40px, 5vw, 70px) 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.flow-track { display: flex; width: max-content; animation: flow 90s linear infinite; }
+.flow span { font-family: var(--f-lat); font-style: italic; font-weight: 300; font-size: clamp(54px, 7.4vw, 118px); line-height: 1; color: transparent; -webkit-text-stroke: 1px var(--gold); padding-right: 0.5em; white-space: nowrap; }
+.flow span:nth-child(even) { color: var(--ink); -webkit-text-stroke: 0; }
+.flow span::after { content: "—"; padding-left: 0.5em; color: var(--gold); -webkit-text-stroke: 0; }
+@keyframes flow { to { transform: translateX(-50%); } }
+
+/* ---- 会員の方へ: 小さな写真を添える ---- */
+.members-in { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+.members-in .m-photo { grid-column: 1 / span 3; aspect-ratio: 4 / 3; }
+.members-in .m-photo img { width: 100%; height: 100%; object-fit: cover; }
+.members-in .m-photo .rv-img { width: 100%; height: 100%; }
+.members-in > div { grid-column: 4 / span 6; }
+.members-in .lux { grid-column: 10 / span 3; }
+
+/* 縦書きの添え文は1列に収める(文節改行の keep-all で2列に折れないように) */
+.hero-vt, .ph-vt, .vt { white-space: nowrap; }
+
+/* ---- 下層の見出し: 英字の大きな斜体題名・金の額縁 ---- */
+.ph-frame { position: absolute; z-index: 2; inset: var(--hd-h) 24px 24px; border: 1px solid rgba(201, 180, 138, 0.28); pointer-events: none; }
+.anim .ph-frame { clip-path: inset(0 100% 100% 0); }
+.ready .ph-frame { clip-path: inset(0 0 0 0); transition: clip-path 2.2s var(--ease-io) 0.4s; }
+.ph-big { font-family: var(--f-lat); font-style: italic; font-weight: 300; font-size: clamp(56px, 9vw, 150px); line-height: 1; letter-spacing: -0.005em; color: var(--text-d); white-space: nowrap; }
+.ph-in .ph-ja { margin-top: 22px; font-size: clamp(22px, 2.6vw, 36px); letter-spacing: 0.24em; padding-left: 0.24em; font-weight: 300; }
+.ph-in .ph-en { margin-bottom: 18px; }
+.ph-vt { position: absolute; z-index: 2; right: calc(24px + 24px); top: 50%; transform: translateY(-50%); writing-mode: vertical-rl; font-family: var(--f-serif); font-weight: 300; font-size: 11.5px; letter-spacing: 0.5em; color: var(--text-d2); display: flex; align-items: center; gap: 16px; }
+.ph-vt::before { content: ""; width: 1px; height: 50px; background: var(--gold-2); opacity: 0.6; }
+
+/* ---- 本文の章: 大きな薄い章番号を背景に ---- */
+.blk { position: relative; }
+.blk-num[data-n]::before { content: attr(data-n); position: absolute; right: 0; top: clamp(-50px, -3vw, -24px); font-family: var(--f-lat); font-style: italic; font-weight: 300; font-size: clamp(90px, 10vw, 150px); line-height: 1; color: var(--gold); opacity: 0.1; pointer-events: none; }
+.blk + .blk .blk-num[data-n]::before { top: clamp(10px, 2vw, 30px); }   /* 2章目以降は区切り線の下に */
+
+
+@media (max-width: 1180px) {
+  .badge { display: none; }
+  .concept .vt { display: none; }
+  .feat-media .vt { display: none; }
+}
+@media (max-width: 960px) {
+  .feat-media { margin-right: 26px; }
+  .feat:nth-child(even) .feat-media { margin: 0 0 0 26px; }
+  .feat-sub { width: 30%; }
+  .cp-a, .cp-b { position: relative; left: auto; right: auto; top: auto; bottom: auto; }
+  .concept-pics { display: flex; align-items: flex-end; gap: 22px; padding: 0 var(--pad); margin-top: 70px; }
+  .concept-pics .cp-a { width: 58%; }
+  .concept-pics .cp-b { width: 36%; margin-bottom: 30px; }
+  .members-in .m-photo { display: none; }
+  .members-in > div { grid-column: 1 / span 8; }
+}
+@media (max-width: 760px) {
+  .hero-frame { inset: var(--hd-h) 14px 14px; }
+  .hero-vt, .ph-vt { display: none; }
+  .ph-frame { inset: var(--hd-h) 12px 12px; }
+  .ph-big { font-size: clamp(40px, 12vw, 58px); }
+  .ph-in .ph-ja { font-size: clamp(19px, 5.6vw, 24px); letter-spacing: 0.16em; padding-left: 0.16em; }
+  .shd-en { font-size: clamp(46px, 14vw, 64px); }
+  .shd-ja { font-size: 18px; letter-spacing: 0.14em; }
+  .feat-sub { bottom: -10%; }
+  .feat-media::before { inset: 16px -16px -16px 16px; }
+  .feat:nth-child(even) .feat-media::before { inset: 16px 16px -16px -16px; }
+  .feat-media { margin-right: 16px; }
+  .feat:nth-child(even) .feat-media { margin: 0 0 0 16px; }
+  .feat-txt { margin-top: 64px; }
+  .flow span { font-size: 46px; }
+  .blk-num[data-n]::before { font-size: 84px; }
+}

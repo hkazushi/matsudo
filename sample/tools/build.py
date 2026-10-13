@@ -1,15 +1,16 @@
 """
-デザイン案C(/sample2/)の全ページを生成する。
+デザイン案C(/sample/)の全ページを生成する。
 
 現行サイト(mockup/*.html, mockup/kaiin/*.html)の本文をそのまま取り込み、
 案Cの枠(ヘッダー・ページ見出し・目次・関連ページ・フッター)で組み直して書き出す。
 文章を手で書き写さないので、現行ページを直したら再実行するだけで反映できる。
 
-  python3 sample2/tools/build.py            # mockup/ で実行
-  python3 sample/tools/add_wbr.py ...       # 続けて文節改行を書き込む(build.py が自動で呼ぶ)
+  python3 sample/tools/build.py             # mockup/ で実行(BudouX 入りの python で)
+  文節改行(<wbr>)は build.py が tools/add_wbr.py を呼んで自動で書き込む。
 
-URL の注意: Vercel は /sample2(末尾スラッシュなし)をリダイレクトせずに返すため、
-トップページだけは ../sample2/ を経由して参照する(R と A の接頭辞で吸収している)。
+URL の注意: Vercel は /sample(末尾スラッシュなし)をリダイレクトせずに返すため、
+トップページだけは ../sample/ を経由して参照する(R と A の接頭辞で吸収している)。
+旧URL /sample2/ には、同じページへ転送するだけの小さなページを書き出す。
 """
 import html as htmllib
 import os
@@ -18,8 +19,10 @@ import subprocess
 import sys
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))   # mockup/
-OUT = os.path.join(ROOT, "sample2")
-VER = "15"
+OUT = os.path.join(ROOT, "sample")
+SITE = "sample"          # 公開URLのディレクトリ名
+OLD_SITES = ["sample2"]  # 旧URL。同じページへ転送する
+VER = "21"
 
 # ---------------------------------------------------------------------------
 # ページ定義: slug -> (英字見出し, 分類, 写真, 写真の位置, 関連ページ)
@@ -246,8 +249,8 @@ def contact_band(R, A):
   <div class="bgimg" data-px="6"><img class="grade" src="{A}assets/img/yagiri.jpg" alt="" loading="lazy"></div>
   <div class="wrap cta-grid">
     <div class="cta-hd">
-      <p class="lbl d" data-rv>Contact</p>
-      <h2 class="ttl split">不動産のこと、<br>ひとりで悩まずご相談を。</h2>
+      <div class="shd"><p class="shd-no" data-rv>Contact</p><p class="shd-en split" aria-hidden="true">Consult</p></div>
+      <h2 class="ttl split" style="margin-top:26px">不動産のこと、<br>ひとりで悩まずご相談を。</h2>
     </div>
     <div class="cta-tel" data-rv style="--d:.2s">
       <p class="lbl d">Telephone</p>
@@ -275,7 +278,7 @@ def footer(R, A):
     <p class="ft-word" aria-hidden="true">Takken Matsudo</p>
     <div class="ft-bottom">
       <p>© 2026 (一社)千葉県宅地建物取引業協会 松戸支部</p>
-      <p>このサイトはデザイン案Cです(機能は動作しません)。 <a href="{A}index.html">現行デザイン</a> ／ <a href="{A}sample/">デザイン案B</a></p>
+      <p>このサイトはデザイン案Cです(機能は動作しません)。 <a href="{A}index.html">現行デザイン</a> ／ <a href="{A}sample-b/">デザイン案B</a></p>
     </div>
   </div>
 </footer>
@@ -301,12 +304,14 @@ def page_hero(en, cat, ja, crumbs, photo, pos, A):
           if photo else "")
     return f"""<section class="ph{'' if photo else ' plain'}">
   {bg}
+  <span class="ph-frame" aria-hidden="true"></span>
   <div class="ph-in">
-    <p class="ph-en">{esc(en)}</p>
+    <p class="ph-en">{cat}</p>
+    <p class="ph-big split" aria-hidden="true">{esc(en)}</p>
     <h1 class="ph-ja split">{ja}</h1>
     <span class="gl"></span>
-    <p class="ph-cat">{cat}</p>
   </div>
+  <p class="ph-vt" aria-hidden="true">千葉県宅地建物取引業協会 松戸支部</p>
   <nav class="crumbs" aria-label="現在地">{"".join(cr)}</nav>
   <span class="ph-scroll" aria-hidden="true"></span>
 </section>
@@ -330,7 +335,7 @@ def body_with_toc(blocks):
         sid = f"s{i:02d}"
         m = re.search(r"<h2[^>]*>(.*?)</h2>", b, re.S)
         title = strip_tags(m.group(1)) if m else ""
-        num = f'<p class="blk-num" data-rv>{i:02d}</p>' if m else ""
+        num = f'<p class="blk-num" data-n="{i:02d}" data-rv>{i:02d}</p>' if m else ""
         secs.append(f'<section class="blk" id="{sid}">{num}{add_split(b)}</section>')
         if title:
             toc.append(f'<li><a href="#{sid}"><span>{i:02d}</span>{esc(title)}</a></li>')
@@ -515,7 +520,7 @@ def build_kaiin(titles):
 # トップ・完了・404
 # ---------------------------------------------------------------------------
 def build_index(titles):
-    R, A = "../sample2/", "../"
+    R, A = f"../{SITE}/", "../"
     src = read("index.html")
     news = {}
     for key in ("oshirase", "takken"):
@@ -539,6 +544,9 @@ def build_index(titles):
     dl = "".join(f'<li><a href="{link(s, R)}"><span class="num">{i:02d}</span><span><b>{n}</b><small>{st}</small></span><span class="cnt">{c}<em>社</em></span></a></li>'
                  for i, (s, n, st, c) in enumerate(area, 1))
     total = sum(int(c) for *_, c in area)
+    # 縦書きの添え文は、重ねた小写真に触れない長さ(5文字前後)にする
+    subimg = {"consult": ("hero-hondoji.jpg", "無料相談"), "area": ("tojotei.jpg", "会員を探す"),
+              "nyukai": ("yagiri.jpg", "入会案内"), "license": ("mori21.jpg", "講習・試験")}
     feats = [
         ("consult", "Consultation", "yagiri.jpg", "不動産の無料相談", "売買・賃貸・契約・税金など、不動産に関するお悩みに、経験豊富な相談員が無料でお応えします。松戸市役所での相談会、弁護士による法律相談、税理士による電話相談をご用意しています。"),
         ("area", "Find a member", "mori21.jpg", "地域の不動産会社を探す", f"松戸支部の会員{total}社を、5つの地区ごとにご紹介しています。お住まいの地域から、身近な不動産会社をお探しいただけます。"),
@@ -547,7 +555,11 @@ def build_index(titles):
     ]
     fhtml = "".join(f"""
       <article class="feat">
-        <a class="feat-img rv-img" href="{link(sl, R)}" data-cursor="VIEW"><img class="grade" src="{A}assets/img/{img}" alt="" loading="lazy"></a>
+        <div class="feat-media">
+          <a class="feat-img rv-img" href="{link(sl, R)}" data-cursor="VIEW"><img class="grade" src="{A}assets/img/{img}" alt="" loading="lazy"></a>
+          <div class="feat-sub" data-float="12"><div class="rv-img" style="--d:.35s"><img class="grade" src="{A}assets/img/{subimg[sl][0]}" alt="" loading="lazy"></div></div>
+          <p class="vt" aria-hidden="true">{subimg[sl][1]}</p>
+        </div>
         <div class="feat-txt">
           <span class="feat-no num" data-rv>{i:02d}</span>
           <p class="lbl" data-rv>{en}</p>
@@ -562,6 +574,9 @@ def build_index(titles):
 <section class="hero" aria-label="メインビジュアル">
   {hs}
   <div class="hero-shade"></div>
+  <span class="hero-frame" aria-hidden="true"></span>
+  <p class="hero-vt" aria-hidden="true">千葉県宅地建物取引業協会 松戸支部</p>
+  <div class="badge" aria-hidden="true"><svg viewBox="0 0 132 132"><defs><path id="bp" d="M66,66 m-52,0 a52,52 0 1,1 104,0 a52,52 0 1,1 -104,0"/></defs><text textLength="324" lengthAdjust="spacing"><textPath href="#bp">Matsudo Branch · Takken Chiba ·</textPath></text></svg><img src="{A}assets/img/hatomark.png" alt=""></div>
   <div class="hero-in">
     <p class="lbl c">Matsudo Branch</p>
     <h1 class="hero-catch split">人と住まいを、<br>笑顔でつなぐ。</h1>
@@ -576,15 +591,20 @@ def build_index(titles):
 
 <section class="sec concept">
   <span class="concept-v" aria-hidden="true"></span>
+  <p class="vt" aria-hidden="true" data-rv>住まいに、確かな安心を。</p>
   <div class="wrap">
-    <p class="lbl c" data-rv>Concept</p>
-    <h2 class="ttl split" style="margin-top:30px">確かな取引を、<br>この街のすみずみまで。</h2>
+    <div class="shd c"><p class="shd-no" data-rv>01</p><p class="shd-en split" aria-hidden="true">Concept</p></div>
+    <h2 class="ttl split" style="margin-top:34px">確かな取引を、<br>この街のすみずみまで。</h2>
     <div class="concept-body">
       <p data-rv>千葉県宅地建物取引業協会は、昭和42年7月に千葉県知事の許可を得て設立された、県下宅建業界唯一の一般社団法人です。県内の不動産業者の約8割にあたる4,000社が加入しています。</p>
       <p data-rv style="--d:.15s">松戸支部は335社の会員を擁する大支部です(令和6年3月31日現在)。取引の公正と消費者の保護を大切に、地域の皆さまの住まい探しをお手伝いしています。</p>
     </div>
     <span class="gl"></span>
     <a class="lux" href="{link('about', R)}" data-rv>支部案内</a>
+  </div>
+  <div class="concept-pics">
+    <figure class="cp-a" data-float="-8"><div class="rv-img"><img class="grade" src="{A}assets/img/hero-hondoji.jpg" alt="" loading="lazy" style="object-position:35% 50%"></div></figure>
+    <figure class="cp-b" data-float="10"><div class="rv-img" style="--d:.25s"><img class="grade" src="{A}assets/img/tojotei.jpg" alt="" loading="lazy"></div></figure>
   </div>
 </section>
 
@@ -595,22 +615,21 @@ def build_index(titles):
 
 <section class="sec">
   <div class="wrap">
-    <div class="sec-hd">
-      <p class="lbl c" data-rv>Service</p>
-      <h2 class="ttl split">目的からさがす</h2>
-    </div>
+    <div class="sec-hd shd c"><p class="shd-no" data-rv>02</p><p class="shd-en split" aria-hidden="true">Service</p><h2 class="shd-ja split">目的からさがす</h2></div>
     <div class="feats">{fhtml}
     </div>
     <nav class="subs" aria-label="その他のご案内" data-rv>{subs}</nav>
   </div>
 </section>
 
+<div class="flow" aria-hidden="true"><div class="flow-track">{"".join(f"<span>{w}</span>" for w in ["Matsudo", "Real Estate", "Trust", "Community", "Living"] * 2)}</div></div>
+
 <section class="sec on-dark area-sec">
   <div class="bgimg" data-px="5"><img class="grade" src="{A}assets/img/mori21.jpg" alt="" loading="lazy"></div>
   <div class="wrap area-lay">
     <div class="area-hd">
-      <p class="lbl d" data-rv>Find a member</p>
-      <h2 class="ttl split">お住まいの地域から、<br>探す。</h2>
+      <div class="shd"><p class="shd-no" data-rv>03</p><p class="shd-en split" aria-hidden="true">Area</p></div>
+      <h2 class="ttl split" style="margin-top:22px">お住まいの地域から、<br>探す。</h2>
       <p data-rv>松戸支部の会員{total}社を、5つの地区ごとにご紹介しています。地区を選ぶと、その地域の不動産会社の一覧が表示されます。</p>
       <a class="more" href="{link('area', R)}" data-rv>Area map<i></i></a>
     </div>
@@ -620,10 +639,7 @@ def build_index(titles):
 
 <section class="sec">
   <div class="wrap">
-    <div class="sec-hd">
-      <p class="lbl c" data-rv>Information</p>
-      <h2 class="ttl split">お知らせ</h2>
-    </div>
+    <div class="sec-hd shd c"><p class="shd-no" data-rv>04</p><p class="shd-en split" aria-hidden="true">News</p><h2 class="shd-ja split">お知らせ</h2></div>
     <div data-tabs data-rv>
       <div class="tabs" role="tablist"><button class="tab is-on" role="tab" aria-selected="true">支部からのお知らせ</button><button class="tab" role="tab" aria-selected="false">宅建ニュース</button></div>
       <div class="tabpane"><ul class="nlist">{nrows(news['oshirase'])}</ul></div>
@@ -637,8 +653,8 @@ def build_index(titles):
   <div class="bgimg" data-px="6"><img class="grade" src="{A}assets/img/yagiri.jpg" alt="" loading="lazy"></div>
   <div class="wrap cta-grid">
     <div class="cta-hd">
-      <p class="lbl d" data-rv>Free consultation</p>
-      <h2 class="ttl split">不動産のこと、<br>ひとりで悩まずご相談を。</h2>
+      <div class="shd"><p class="shd-no" data-rv>05</p><p class="shd-en split" aria-hidden="true">Consult</p></div>
+      <h2 class="ttl split" style="margin-top:26px">不動産のこと、<br>ひとりで悩まずご相談を。</h2>
     </div>
     <div class="cta-tel" data-rv style="--d:.2s">
       <p class="lbl d">Telephone</p>
@@ -657,6 +673,7 @@ def build_index(titles):
 <section class="members">
   <div class="wrap">
     <div class="members-in" data-rv>
+      <figure class="m-photo"><div class="rv-img"><img class="grade" src="{A}assets/img/mori21.jpg" alt="" loading="lazy"></div></figure>
       <div><p class="lbl">For members</p><h2>会員の方へ</h2><p>研修会の案内と出欠回答、本部からの調査依頼、各種書式のダウンロードなど、会員限定の情報をご利用いただけます。</p></div>
       <a class="lux" href="{link('kaiin/index', R)}">会員専用ページ</a>
     </div>
@@ -684,6 +701,29 @@ def build_simple(slug, en, A_title=None):
     write(f"{slug}.html", page)
 
 
+def write_redirects(files):
+    """旧URL(/sample2/...)を開いた人を、同じページの新URLへ転送する。"""
+    for old in OLD_SITES:
+        for f in files:
+            depth = f.count("/")
+            up = "../" * (depth + 1)
+            target = f"{up}{SITE}/{'' if f == 'index.html' else f}"
+            # トップは /sample2(スラッシュなし)でも開かれるので、どちらでも同じ場所に解決する書き方にする
+            if f == "index.html":
+                target = f"../{SITE}/"
+            page = f"""<!DOCTYPE html>
+<html lang="ja"><head><meta charset="UTF-8"><meta name="robots" content="noindex, nofollow">
+<meta http-equiv="refresh" content="0; url={target}"><link rel="canonical" href="{target}">
+<title>移動しました｜宅建協会 松戸支部</title>
+<script>location.replace({target!r} + location.hash);</script></head>
+<body><p>このページは移動しました。<a href="{target}">新しいページへ</a></p></body></html>
+"""
+            path = os.path.join(ROOT, old, f)
+            os.makedirs(os.path.dirname(path), exist_ok=True)
+            with open(path, "w", encoding="utf-8") as fh:
+                fh.write(page)
+
+
 def main():
     titles = {s: h1_of(read(f"{s}.html")) for s in PAGES}
     warnings = build_pages(titles)
@@ -692,11 +732,12 @@ def main():
     build_simple("thanks", "Thank you")
     build_simple("404", "Not found")
     files = sorted(os.path.relpath(os.path.join(dp, f), OUT) for dp, _, fs in os.walk(OUT) for f in fs if f.endswith(".html"))
+    write_redirects(files)
     print(f"{len(files)} ページを生成しました")
     for w in warnings:
         print("  [要確認]", w)
     # 文節改行(<wbr>)を書き込む
-    wbr = os.path.join(ROOT, "sample", "tools", "add_wbr.py")
+    wbr = os.path.join(OUT, "tools", "add_wbr.py")
     py = os.environ.get("BUDOUX_PY", sys.executable)
     for f in files:
         r = subprocess.run([py, "-I", wbr, os.path.join(OUT, f), "--c"], capture_output=True, text=True)

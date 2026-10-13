@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>① 一般会員エリア｜宅建協会 松戸支部 デザイン案C</title>
+<meta name="description" content="一般会員エリア(会員専用)。">
+<!-- デザイン検討用ページのため検索結果には出さない -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0C0F0D">
+<link rel="icon" type="image/png" href="../../assets/img/hatomark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif+JP:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.css">
+<link rel="stylesheet" href="../assets/c.css?v=21">
+<script>
+  // 演出の初期状態を描画前に決める(読み込み後に隠すとチラつくため)
+  (function () {
+    var d = document.documentElement, rm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    d.classList.add("js");
+    if (!rm) d.classList.add("anim");
+    try { if (!rm && sessionStorage.getItem("c-pt") === "1") { d.classList.add("pt-in"); sessionStorage.removeItem("c-pt"); } } catch (e) {}
+    
+    // スクリプトが動かなかった場合でも内容は必ず表示する
+    setTimeout(function () { if (!d.classList.contains("ready")) d.classList.remove("anim", "pt-in", "intro-on"); }, 4000);
+  })();
+</script>
+</head>
+<body class="page-kaiin-ippan">
+<div class="intro" aria-hidden="true"><img class="intro-mark" src="../../assets/img/hatomark.png" alt=""><span class="intro-line"></span><p class="intro-name bx">宅建協会 松戸支部</p></div>
+<div class="pt" aria-hidden="true"><i></i></div>
+<div class="cur" aria-hidden="true"><i></i><s></s><b></b></div>
+
+<header class="hd">
+  <a href="../index.html" class="hd-brand" aria-label="宅建協会 松戸支部 トップへ">
+    <img src="../../assets/img/hatomark.png" alt="" width="28" height="33">
+    <span class="hd-name"><small class="bx">一般社団法人 千葉県宅地建物取引業協会</small><strong>宅建協会 松戸支部</strong></span>
+  </a>
+  <nav class="hd-nav" aria-label="主要メニュー"><a href="../about.html">支部案内</a><a href="../consult.html">不動産相談</a><a href="../area.html">会員を探す</a><a href="../nyukai.html">入会案内</a><a href="../license.html">講習・試験</a><a href="../news.html">お知らせ</a></nav>
+  <div class="hd-cta">
+    <a href="../kaiin/index.html" class="hd-member">会員専用</a>
+    <a href="../contact.html" class="hd-contact">CONTACT</a>
+  </div>
+  <button class="hd-menu" type="button" aria-expanded="false" aria-controls="menu"><b>MENU</b><i></i></button>
+</header>
+
+<div class="menu" id="menu" aria-hidden="true" data-lenis-prevent>
+  <div class="menu-in">
+    <figure class="menu-photo"><img class="grade" src="../../assets/img/tojotei.jpg" alt="" loading="lazy"></figure>
+    <div class="menu-body">
+      <div class="menu-groups"><div class="menu-group"><p class="lbl d bx">For residents</p><ul><li style="--i:0" class="bx"><a href="../consult.html">不動産相談<span>Consultation</span></a></li><li style="--i:1" class="bx"><a href="../area.html">会員一覧・エリアマップ<span>Members</span></a></li><li style="--i:2" class="bx"><a href="../kariru.html">家を<wbr>借りる<wbr>・貸す<wbr>時<span>Renting</span></a></li><li style="--i:3" class="bx"><a href="../news.html">お知らせ<span>News</span></a></li></ul></div><div class="menu-group"><p class="lbl d bx">For businesses</p><ul><li style="--i:4" class="bx"><a href="../nyukai.html">入会案内<span>Membership</span></a></li><li style="--i:5" class="bx"><a href="../kaigyo.html">開業を<wbr>お考えの<wbr>方<span>Start up</span></a></li><li style="--i:6" class="bx"><a href="../takken.html">宅建協会とは<span>Association</span></a></li></ul></div><div class="menu-group"><p class="lbl d bx">For licensees</p><ul><li style="--i:7" class="bx"><a href="../license.html">講習・試験<span>License</span></a></li><li style="--i:8" class="bx"><a href="../shoshiki.html">書式ダウンロード<span>Documents</span></a></li><li style="--i:9" class="bx"><a href="../kaiin/index.html">会員専用ページ<span>Members only</span></a></li></ul></div><div class="menu-group"><p class="lbl d bx">About</p><ul><li style="--i:10" class="bx"><a href="../about.html">支部<wbr>案内<span>About</span></a></li><li style="--i:11" class="bx"><a href="../links.html">リンク集<span>Links</span></a></li><li style="--i:12" class="bx"><a href="../contact.html">お問い<wbr>合わせ<span>Contact</span></a></li><li style="--i:13" class="bx"><a href="../privacy.html">個人情報の<wbr>取り扱い<span>Privacy</span></a></li></ul></div></div>
+      <div class="menu-foot">
+        <div><p class="lbl d bx">Contact</p><a class="tel" href="tel:0473646904">047-364-6904</a></div>
+        <p class="bx">月〜金 9:00–17:00(土日・祝日休)<br>〒271-0064 千葉県松戸市上本郷3185</p>
+      </div>
+    </div>
+  </div>
+</div>
+<main>
+<section class="ph">
+  <div class="ph-bg" data-px="6"><img class="grade" src="../../assets/img/hero-hondoji.jpg" alt="" style="object-position:40% 55%"></div>
+  <span class="ph-frame" aria-hidden="true"></span>
+  <div class="ph-in">
+    <p class="ph-en">Members</p>
+    <p class="ph-big split bx" aria-hidden="true">Members area</p>
+    <h1 class="ph-ja split bx">① 一般会員エリア</h1>
+    <span class="gl"></span>
+  </div>
+  <p class="ph-vt bx" aria-hidden="true">千葉県宅地建物取引業協会 松戸支部</p>
+  <nav class="crumbs" aria-label="現在地"><a href="../index.html">ホーム</a><span aria-hidden="true">—</span><a href="index.html">会員専用</a><span aria-hidden="true">—</span><span aria-current="page">① 一般会員エリア</span></nav>
+  <span class="ph-scroll" aria-hidden="true"></span>
+</section>
+<div class="wrap"><div class="pg no-toc"><div class="pg-body"><div class="demo-bar"><span class="lbl">Design only</span>会員専用エリアの画面デザインです。パスワード入力・資料のダウンロード・フォームの発行などの機能は持たせていません。</div>
+
+  <div><div class="alert info">各フォルダをクリックすると資料をご覧いただけます(フォルダごとの追加パスワードはありません)。<br><span style="font-size:12px;">※資料のダウンロードと、勉強会・研修会への参加(出欠回答)がご利用いただけます。</span></div>
+
+    <div class="folder-grid"><div class="folder" data-room="oshirase"><div class="f-icon">01</div>
+        <h3 class="bx">会員向けお知らせ</h3>
+        <p class="bx">事務局からの<wbr>会員向け連絡事項</p>
+      </div>
+      <div class="folder" data-room="gyoji"><div class="f-icon">02</div>
+        <h3 class="bx">協会行事・会議等日程表</h3>
+        <p class="bx">年間行事・会議の<wbr>スケジュール</p>
+      </div>
+      <div class="folder" data-room="shoshiki"><div class="f-icon">03</div>
+        <h3 class="bx">書式ダウンロード</h3>
+        <p class="bx">契約書・重説等の<wbr>各種書式</p>
+      </div>
+      <div class="folder" data-room="kitei"><div class="f-icon">04</div>
+        <h3 class="bx">松戸支部規定・施行細則</h3>
+        <p class="bx">支部<wbr>規定と<wbr>施行細則</p>
+      </div>
+      <div class="folder" data-room="hokoku"><div class="f-icon">05</div>
+        <h3 class="bx">会員の<wbr>ための<wbr>行事報告</h3>
+        <p class="bx">行事・イベントの<wbr>実施報告</p>
+      </div>
+      <div class="folder" data-room="kenshu"><div class="f-icon">06</div>
+        <h3 class="bx">研修会・勉強会</h3>
+        <p class="bx">開催案内の<wbr>閲覧・出欠回答</p>
+      </div>
+      <div class="folder" data-room="chosa"><div class="f-icon">07</div>
+        <h3 class="bx">調査・アンケート</h3>
+        <p class="bx">本部<wbr>・事務局からの<wbr>調査依頼</p>
+      </div>
+      <div class="folder" data-room="shiryo"><div class="f-icon">08</div>
+        <h3 class="bx">各種資料</h3>
+        <p class="bx">不動産相談所運営要綱ほか</p>
+      </div>
+    </div>
+  </div>
+
+<template id="room-oshirase">
+  <h3 class="bx">会員向けお知らせ</h3>
+  <p class="modal-sub bx">事務局からの<wbr>会員向け連絡事項</p>
+  <ul class="file-list">
+    <li class="bx"><span class="f-type pdf">PDF</span>令和7年度 違反建築防止週間の<wbr>実施に<wbr>ついて<span class="f-meta">2026.05.15</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+    <li class="bx"><span class="f-type pdf">PDF</span>(株)動産社商品 事務局取り扱い<wbr>終了の<wbr>お知らせ<span class="f-meta">2026.05.13</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+    <li class="bx"><span class="f-type pdf">PDF</span>不動産契約書・重説書式 無料電話相談の<wbr>ご案内(全宅<wbr>連)<span class="f-meta">2026.04.28</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+  </ul>
+</template><template id="room-gyoji">
+  <h3 class="bx">協会行事・会議等日程表</h3>
+  <p class="modal-sub bx">年間行事・会議の<wbr>スケジュール</p>
+  <ul class="file-list">
+    <li class="bx"><span class="f-type pdf">PDF</span>令和8年度 協会行事・会議等日程表<span class="f-meta">2026.04.01</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+    <li class="bx"><span class="f-type pdf">PDF</span>令和7年度 協会行事・会議等日程表<span class="f-meta">2025.04.01</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+  </ul>
+</template><template id="room-shoshiki">
+  <h3 class="bx">書式ダウンロード</h3>
+  <p class="modal-sub bx">実務に<wbr>必要な<wbr>各種書式(実データは<wbr>渡辺プランニング様からの<wbr>データ受領後に<wbr>最終確認)</p>
+  <ul class="file-list">
+    <li class="bx"><span class="f-type pdf">PDF</span>売買契約書 書式<a class="dl" href="#" onclick="return false;">DL</a></li>
+    <li class="bx"><span class="f-type pdf">PDF</span>重要事項説明書 書式<a class="dl" href="#" onclick="return false;">DL</a></li>
+    <li class="bx"><span class="f-type pdf">PDF</span>賃貸借契約書 書式<a class="dl" href="#" onclick="return false;">DL</a></li>
+    <li class="bx"><span class="f-type pdf">PDF</span>媒介契約書 書式<a class="dl" href="#" onclick="return false;">DL</a></li>
+    <li class="bx"><span class="f-type link">LINK</span>全宅<wbr>連<wbr>「ハトサポ」<wbr>コンテンツ / 反響メール返信文例集<a class="dl" href="#" onclick="return false;">開く</a></li>
+  </ul>
+</template><template id="room-kitei">
+  <h3 class="bx">松戸支部規定・施行細則</h3>
+  <p class="modal-sub bx">支部の<wbr>規定類</p>
+  <ul class="file-list">
+    <li class="bx"><span class="f-type pdf">PDF</span>松戸支部<wbr>規定<a class="dl" href="#" onclick="return false;">DL</a></li>
+    <li class="bx"><span class="f-type pdf">PDF</span>施行細則<a class="dl" href="#" onclick="return false;">DL</a></li>
+  </ul>
+</template><template id="room-hokoku">
+  <h3 class="bx">会員の<wbr>ための<wbr>行事報告</h3>
+  <p class="modal-sub bx">行事・イベントの<wbr>実施報告</p>
+  <ul class="file-list">
+    <li class="bx"><span class="f-type pdf">PDF</span>令和7年度 新年賀詞交歓会 実施報告<span class="f-meta">2026.01</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+    <li class="bx"><span class="f-type pdf">PDF</span>支部<wbr>研修旅行 実施報告<span class="f-meta">2025.11</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+  </ul>
+</template><template id="room-kenshu">
+  <h3 class="bx">研修会・勉強会</h3>
+  <p class="modal-sub bx">開催案内と<wbr>出欠回答(出欠は<wbr>Googleフォーム、<wbr>集計は<wbr>スプレッドシートに<wbr>連携)</p>
+  <ul class="file-list">
+    <li class="bx"><span class="f-type pdf">PDF</span>【開催案内】宅建業法改正セミナー(7月開催)<span class="f-meta">2026.06.20</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+    <li class="bx"><span class="f-type link">FORM</span>宅建業法改正セミナー 出欠回答フォーム<a class="dl" href="#" onclick="return false;">回答する</a></li>
+    <li class="bx"><span class="f-type pdf">PDF</span>【開催報告】反響が<wbr>増える<wbr>物件写真の<wbr>撮り方<wbr> 講習会<span class="f-meta">2026.05</span><a class="dl" href="#" onclick="return false;">DL</a></li>
+  </ul>
+</template><template id="room-chosa">
+  <h3 class="bx">調査・アンケート</h3>
+  <p class="modal-sub bx">本部<wbr>・事務局からの<wbr>調査依頼(回答は<wbr>Googleフォーム)</p>
+  <ul class="file-list">
+    <li class="bx"><span class="f-type link">FORM</span>令和8年度 会員実態調査アンケート<span class="f-meta">回答期限 7/31</span><a class="dl" href="#" onclick="return false;">回答する</a></li>
+    <li class="bx"><span class="f-type pdf">PDF</span>調査依頼の<wbr>ご案内(本部<wbr>)<a class="dl" href="#" onclick="return false;">DL</a></li>
+  </ul>
+</template><template id="room-shiryo">
+  <h3 class="bx">各種資料</h3>
+  <p class="modal-sub bx">その<wbr>他の<wbr>会員向け資料</p>
+  <ul class="file-list">
+    <li class="bx"><span class="f-type pdf">PDF</span>松戸市役所市民相談室 不動産相談所運営要綱<a class="dl" href="#" onclick="return false;">DL</a></li>
+    <li class="bx"><span class="f-type pdf">PDF</span>会員自社ホームページの<wbr>運用に<wbr>役立つ情報<a class="dl" href="#" onclick="return false;">DL</a></li>
+  </ul>
+</template><div class="cm" role="dialog" aria-modal="true" aria-label="フォルダの中身"><div class="cm-panel"><div class="cm-top"><h3 class="bx"></h3><button class="cm-close" type="button">Close</button></div><div class="cm-body"></div></div></div></div></div></div></main>
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft-brand" data-rv>
+      <a href="../index.html"><img src="../../assets/img/hatomark.png" alt="" width="40" height="47"><strong>宅建協会 松戸支部</strong><small class="bx">一般社団法人 千葉県宅地建物取引業協会</small></a>
+    </div>
+    <p class="ft-addr bx" data-rv>〒271-0064 千葉県松戸市上本郷3185 ／ JR常磐線 北松戸駅 徒歩約8分<br><a class="tel" href="tel:0473646904">047-364-6904</a><br>FAX 047-363-3142 ／ 月〜金 9:00–17:00(土日・祝日休)</p>
+    <nav class="ft-nav" aria-label="フッターメニュー"><div><p class="lbl d bx">For residents</p><ul><li class="bx"><a href="../consult.html">不動産相談</a></li><li class="bx"><a href="../area.html">会員一覧・エリアマップ</a></li><li class="bx"><a href="../kariru.html">家を<wbr>借りる<wbr>・貸す<wbr>時</a></li><li class="bx"><a href="../news.html">お知らせ</a></li></ul></div><div><p class="lbl d bx">For businesses</p><ul><li class="bx"><a href="../nyukai.html">入会案内</a></li><li class="bx"><a href="../kaigyo.html">開業を<wbr>お考えの<wbr>方</a></li><li class="bx"><a href="../takken.html">宅建協会とは</a></li></ul></div><div><p class="lbl d bx">For licensees</p><ul><li class="bx"><a href="../license.html">講習・試験</a></li><li class="bx"><a href="../shoshiki.html">書式ダウンロード</a></li><li class="bx"><a href="../kaiin/index.html">会員専用ページ</a></li></ul></div><div><p class="lbl d bx">About</p><ul><li class="bx"><a href="../about.html">支部<wbr>案内</a></li><li class="bx"><a href="../links.html">リンク集</a></li><li class="bx"><a href="../contact.html">お問い<wbr>合わせ</a></li><li class="bx"><a href="../privacy.html">個人情報の<wbr>取り扱い</a></li></ul></div></nav>
+    <p class="ft-word bx" aria-hidden="true">Takken Matsudo</p>
+    <div class="ft-bottom">
+      <p class="bx">© 2026 (一社)千葉県宅地建物取引業協会 松戸支部</p>
+      <p class="bx">この<wbr>サイトは<wbr>デザイン案Cです(機能は<wbr>動作しません)。 <a href="../../index.html">現行デザイン</a> ／ <a href="../../sample-b/">デザイン案B</a></p>
+    </div>
+  </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="../assets/c.js?v=21"></script>
+</body>
+</html>
