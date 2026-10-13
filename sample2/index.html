@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>トップ｜宅建協会 松戸支部 デザイン案C</title>
+<meta name="description" content="千葉県宅地建物取引業協会 松戸支部の公式サイト。不動産無料相談、地域の会員不動産会社のご紹介、入会案内、宅建士講習・試験情報などをご案内します。">
+<!-- デザイン検討用ページのため検索結果には出さない -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#F7F6F2">
+<link rel="icon" type="image/png" href="../assets/img/hatomark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.css">
+<link rel="stylesheet" href="../sample2/assets/c.css?v=9">
+<script>
+  // 演出の初期状態を描画前に決める(読み込み後に隠すとチラつくため)
+  (function () {
+    var d = document.documentElement, rm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    d.classList.add("js");
+    if (!rm) d.classList.add("anim");
+    try { if (!rm && sessionStorage.getItem("c-pt") === "1") { d.classList.add("pt-in"); sessionStorage.removeItem("c-pt"); } } catch (e) {}
+    // スクリプトが動かなかった場合でも内容は必ず表示する
+    setTimeout(function () { if (!d.classList.contains("ready")) d.classList.remove("anim", "pt-in"); }, 4000);
+  })();
+</script>
+</head>
+<body class="is-home">
+<div class="pt" aria-hidden="true"><span class="pt-mark"><img src="../assets/img/hatomark.png" alt=""><span>宅建協会 松戸支部</span></span></div>
+<div class="cur" aria-hidden="true"><i></i><b></b></div>
+
+<header class="hd">
+  <a href="../sample2/index.html" class="hd-brand" aria-label="宅建協会 松戸支部 トップへ">
+    <img src="../assets/img/hatomark.png" alt="" width="30" height="35">
+    <span class="hd-name"><small class="bx">一般社団法人 千葉県宅地建物取引業協会</small><strong>宅建協会 松戸支部</strong></span>
+  </a>
+  <nav class="hd-nav" aria-label="主要メニュー"><a href="../sample2/about.html">支部案内</a><a href="../sample2/consult.html">不動産相談</a><a href="../sample2/area.html">会員を探す</a><a href="../sample2/nyukai.html">入会案内</a><a href="../sample2/license.html">講習・試験</a><a href="../sample2/news.html">お知らせ</a></nav>
+  <div class="hd-cta">
+    <a href="../sample2/kaiin/index.html" class="hd-member">会員専用</a>
+    <a href="../sample2/contact.html" class="hd-contact">お問い合わせ</a>
+  </div>
+  <button class="hd-menu" type="button" aria-expanded="false" aria-controls="menu"><span class="en">Menu</span><i></i></button>
+</header>
+
+<div class="menu" id="menu" aria-hidden="true" data-lenis-prevent>
+  <div class="menu-in">
+    <div class="menu-side">
+      <figure class="menu-photo"><img src="../assets/img/yagiri.jpg" alt="" loading="lazy"></figure>
+      <div class="menu-tel">
+        <p class="mono bx">Contact</p>
+        <a href="tel:0473646904">047-364-6904</a>
+        <p class="bx">月〜金 9:00–17:00(土日・祝日休)<br>〒271-0064 千葉県松戸市上本郷3185</p>
+      </div>
+    </div>
+    <div class="menu-groups"><div class="menu-group"><p class="mono bx">For residents — 一般の<wbr>方<wbr>へ</p><ul><li style="--i:0" class="bx"><a href="../sample2/consult.html">不動産相談<span>Consultation</span></a></li><li style="--i:1" class="bx"><a href="../sample2/area.html">会員一覧・エリアマップ<span>Members</span></a></li><li style="--i:2" class="bx"><a href="../sample2/kariru.html">家を<wbr>借りる<wbr>・貸す<wbr>時<span>Renting</span></a></li><li style="--i:3" class="bx"><a href="../sample2/news.html">お知らせ<span>News</span></a></li></ul></div><div class="menu-group"><p class="mono bx">For businesses — 開業・<wbr>入会を<wbr>お考えの<wbr>方<wbr>へ</p><ul><li style="--i:4" class="bx"><a href="../sample2/nyukai.html">入会案内<span>Membership</span></a></li><li style="--i:5" class="bx"><a href="../sample2/kaigyo.html">開業を<wbr>お考えの<wbr>方<span>Start up</span></a></li><li style="--i:6" class="bx"><a href="../sample2/takken.html">宅建協会とは<span>Association</span></a></li></ul></div><div class="menu-group"><p class="mono bx">For licensees — 宅建士・会員の<wbr>方<wbr>へ</p><ul><li style="--i:7" class="bx"><a href="../sample2/license.html">講習・試験<span>License</span></a></li><li style="--i:8" class="bx"><a href="../sample2/shoshiki.html">書式ダウンロード<span>Documents</span></a></li><li style="--i:9" class="bx"><a href="../sample2/kaiin/index.html">会員専用ページ<span>Members only</span></a></li></ul></div><div class="menu-group"><p class="mono bx">About — 支部に<wbr>ついて</p><ul><li style="--i:10" class="bx"><a href="../sample2/about.html">支部<wbr>案内<span>About</span></a></li><li style="--i:11" class="bx"><a href="../sample2/links.html">リンク集<span>Links</span></a></li><li style="--i:12" class="bx"><a href="../sample2/contact.html">お問い<wbr>合わせ<span>Contact</span></a></li><li style="--i:13" class="bx"><a href="../sample2/privacy.html">個人情報の<wbr>取り扱い<span>Privacy</span></a></li></ul></div></div>
+  </div>
+</div>
+<main>
+<section class="hero" aria-label="メインビジュアル">
+  <div class="hero-slides"><figure class="hs is-active" data-cap="本土寺"><img src="../assets/img/hero-hondoji.jpg" alt="本土寺" style="object-position:35% 50%"></figure><figure class="hs" data-cap="矢切の渡し"><img src="../assets/img/yagiri.jpg" alt="矢切の渡し" style="object-position:50% 50%" loading="lazy"></figure><figure class="hs" data-cap="戸定邸"><img src="../assets/img/tojotei.jpg" alt="戸定邸" style="object-position:50% 55%" loading="lazy"></figure><figure class="hs" data-cap="21世紀の森と広場"><img src="../assets/img/mori21.jpg" alt="21世紀の森と広場" style="object-position:50% 40%" loading="lazy"></figure></div>
+  <div class="hero-shade"></div>
+  <div class="hero-in">
+    <p class="hero-label mono bx">Chiba Real Estate Transaction Association — Matsudo Branch</p>
+    <h1 class="hero-copy bx" aria-label="人と住まいを、笑顔でつなぐ。"><span class="ln" aria-hidden="true"><span style="--i:0">人と<wbr>住まいを、</span></span><span class="ln" aria-hidden="true"><span style="--i:1">笑<wbr>顔で<wbr>つなぐ。</span></span></h1>
+    <p class="hero-lead bx">松戸市を<wbr>中心とした<wbr>地域の<wbr>住まい探し・<wbr>不動産取引を、<wbr>経験豊富な<wbr>会員企業が<wbr>お手伝いします。</p>
+  </div>
+  <div class="hero-foot">
+    <a class="hero-news" href="../sample2/news.html"><span class="mono">News</span><time>2026.06.01</time><span>事務局臨時休業のお知らせ(6/3 台風のため)</span></a>
+    <div class="hero-slide-ui"><p class="hero-cap bx"><span class="mono">01 / 04</span><span>本土寺</span></p><div class="hero-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></div></div>
+  </div>
+  <p class="hero-scroll mono bx" aria-hidden="true">Scroll<i></i></p>
+</section>
+
+<section class="sec intro">
+  <div class="wrap">
+    <p class="sec-label mono bx" data-rv>About us</p>
+    <div class="intro-grid">
+      <h2 class="intro-title bx" data-rv>安心できる<wbr>不動産取引を、<br class="pc">この<wbr>街の<em>すみずみ</em>まで。</h2>
+      <div class="intro-body" data-rv style="--d:.12s">
+        <p class="bx">千葉県宅地建物取引業協会は、<wbr>昭和42年7月に<wbr>千葉県知事の<wbr>許可を<wbr>得て<wbr>設立された、<wbr>県下宅建業界唯一の<wbr>一般社団法人です。<wbr>県内の<wbr>不動産業者の<wbr>約8割に<wbr>あたる<wbr>4,000社が<wbr>加入しています。</p>
+        <p class="bx">松戸支部は<wbr>335社の<wbr>会員を<wbr>擁する<wbr>大支部です(令和6年3月31日現在)。<wbr>取引の<wbr>公正と<wbr>消費者の<wbr>保護を<wbr>大切に、<wbr>地域の<wbr>住まい探しを<wbr>お手伝いしています。</p>
+        <a class="cbtn" href="../sample2/about.html">支部案内を見る</a>
+      </div>
+    </div>
+  </div>
+  <figure class="plate" data-rv="img">
+    <div class="plate-img"><img src="../assets/img/hero-matsudo.jpg" alt="松戸駅周辺の街並み" width="2400" height="848" loading="lazy"></div>
+    <figcaption class="plate-cap bx"><span><span class="mono">Matsudo</span>松戸駅周辺の<wbr>街並み</span><span class="credit">写真提供：松戸市</span></figcaption>
+  </figure>
+</section>
+
+<section class="sec service">
+  <div class="wrap">
+    <div class="sec-head-row">
+      <div><p class="sec-label mono bx" data-rv>Service</p><p class="sec-en bx" data-rv>Guide</p><h2 class="sec-ja bx" data-rv>目的からさが<wbr>す</h2></div>
+    </div>
+    <div class="tiles">
+      <a class="tile" href="../sample2/consult.html" data-cursor="View" data-rv style="--d:0.0s"><img src="../assets/img/yagiri.jpg" alt="" loading="lazy"><div class="tile-in"><p class="tile-no mono bx">01</p><p class="tile-en bx">Consultation</p><p class="tile-ja bx">不動産相談(無料)</p><p class="tile-txt bx">不動産に<wbr>関する<wbr>ご相談を<wbr>無料で<wbr>お受けしています。</p><span class="tile-arrow" aria-hidden="true"></span></div></a>
+      <a class="tile" href="../sample2/area.html" data-cursor="View" data-rv style="--d:0.08s"><img src="../assets/img/mori21.jpg" alt="" loading="lazy"><div class="tile-in"><p class="tile-no mono bx">02</p><p class="tile-en bx">Members</p><p class="tile-ja bx">会員一覧・エリアマップ</p><p class="tile-txt bx">お住まいの<wbr>地域から<wbr>会員の<wbr>不動産会社を<wbr>探せます。</p><span class="tile-arrow" aria-hidden="true"></span></div></a>
+      <a class="tile" href="../sample2/nyukai.html" data-cursor="View" data-rv style="--d:0.16s"><img src="../assets/img/hero-hondoji.jpg" alt="" loading="lazy"><div class="tile-in"><p class="tile-no mono bx">03</p><p class="tile-en bx">Membership</p><p class="tile-ja bx">入会案内</p><p class="tile-txt bx">入会の<wbr>メリットと<wbr>手続きの<wbr>流れを<wbr>ご案内します。</p><span class="tile-arrow" aria-hidden="true"></span></div></a>
+      <a class="tile" href="../sample2/license.html" data-cursor="View" data-rv style="--d:0.0s"><img src="../assets/img/mori21.jpg" alt="" loading="lazy"><div class="tile-in"><p class="tile-no mono bx">04</p><p class="tile-en bx">License</p><p class="tile-ja bx">講習・試験</p><p class="tile-txt bx">宅建士の<wbr>法定講習会と<wbr>試験の<wbr>ご案内です。</p><span class="tile-arrow" aria-hidden="true"></span></div></a>
+    </div>
+    <nav class="sublinks" aria-label="その他のご案内">
+      <a href="../sample2/kariru.html"><span class="mono">Renting</span>家を借りる・貸す時</a>
+      <a href="../sample2/kaigyo.html"><span class="mono">Start up</span>開業をお考えの方</a>
+      <a href="../sample2/takken.html"><span class="mono">Association</span>宅建協会とは</a>
+      <a href="../sample2/shoshiki.html"><span class="mono">Documents</span>書式ダウンロード</a>
+      <a href="../sample2/links.html"><span class="mono">Links</span>リンク集</a>
+    </nav>
+  </div>
+</section>
+
+<section class="area-sec">
+  <div class="wrap area-grid2">
+    <div class="area-head">
+      <p class="sec-label mono bx" data-rv>Find a member</p>
+      <p class="sec-en bx" data-rv>Area</p>
+      <h2 class="sec-ja bx" data-rv>お住まいの<wbr>地域から<wbr>探す</h2>
+      <p class="desc bx" data-rv>松戸支部の<wbr>会員336社を、<wbr>5つの<wbr>地区ごとに<wbr>ご紹介しています。<wbr>地区を<wbr>選ぶと、<wbr>その<wbr>地域の<wbr>不動産会社の<wbr>一覧が<wbr>表示されます。</p>
+      <a class="tlink" href="../sample2/area.html" data-rv>エリアマップを見る</a>
+    </div>
+    <ol class="dlist" data-rv style="--d:.1s"><li class="bx"><a href="../sample2/area-matsudo.html"><span class="mono">01</span><span><b>松戸・矢切地区</b><small>松戸駅・矢切駅 周辺</small></span><span class="num">105<em>社</em></span></a></li><li class="bx"><a href="../sample2/area-kitamatsudo.html"><span class="mono">02</span><span><b>北松戸・馬橋地区</b><small>北松戸駅・馬橋駅 周辺</small></span><span class="num">66<em>社</em></span></a></li><li class="bx"><a href="../sample2/area-kogane.html"><span class="mono">03</span><span><b>小金・新松戸地区</b><small>北小金駅・新松戸駅 周辺</small></span><span class="num">77<em>社</em></span></a></li><li class="bx"><a href="../sample2/area-keisei.html"><span class="mono">04</span><span><b>京成松戸地区</b><small>上本郷駅・みのり台駅 周辺</small></span><span class="num">52<em>社</em></span></a></li><li class="bx"><a href="../sample2/area-tokiwadaira.html"><span class="mono">05</span><span><b>常盤平・五香地区</b><small>常盤平駅・五香駅 周辺</small></span><span class="num">36<em>社</em></span></a></li></ol>
+  </div>
+</section>
+
+<section class="sec news-sec">
+  <div class="wrap">
+    <div class="sec-head-row">
+      <div><p class="sec-label mono bx" data-rv>Information</p><p class="sec-en bx" data-rv>News</p></div>
+      <a class="tlink" href="../sample2/news.html" data-rv>一覧を見る</a>
+    </div>
+    <div data-tabs data-rv>
+      <div class="tabs" role="tablist"><button class="tab is-on" role="tab" aria-selected="true">支部からのお知らせ</button><button class="tab" role="tab" aria-selected="false">宅建ニュース</button></div>
+      <div class="tabpane"><ul class="nlist"><li class="bx"><a href="../sample2/news.html"><time>2026.06.01</time><span class="tag tag-hot">重要</span><span class="t">事務局臨時休業の<wbr>お知らせ(6/3 台風の<wbr>ため)</span></a></li><li class="bx"><a href="../sample2/news.html"><time>2026.05.26</time><span class="tag">事務局</span><span class="t">事務局業務開始時間変更の<wbr>お知らせ(5/28)</span></a></li><li class="bx"><a href="../sample2/news.html"><time>2026.05.20</time><span class="tag">販売</span><span class="t">不動産日記(手帳)発売の<wbr>お知らせ</span></a></li><li class="bx"><a href="../sample2/news.html"><time>2026.05.12</time><span class="tag">講習</span><span class="t">宅地建物取引士 法定講習会申込受付に<wbr>ついて</span></a></li><li class="bx"><a href="../sample2/news.html"><time>2026.04.28</time><span class="tag">相談</span><span class="t">不動産契約書及び重要事項説明書書式に<wbr>係る<wbr>無料電話相談の<wbr>開始に<wbr>ついて</span></a></li></ul></div>
+      <div class="tabpane" hidden><ul class="nlist"><li class="bx"><a href="../sample2/news.html"><time>2026.06.01</time><span class="tag">宅建ニュース</span><span class="t">住宅ローン返済が<wbr>安くなる<wbr>?!<wbr>「残クレ」車だけじゃない。<wbr>「残価設定型住宅ローン」<wbr>徹底解説【SUUMO】</span></a></li><li class="bx"><a href="../sample2/news.html"><time>2026.05.01</time><span class="tag">宅建ニュース</span><span class="t">映画<wbr>「正直不動産」<wbr>タイアップポスターを<wbr>全国の<wbr>会員へ<wbr>配布中!</span></a></li><li class="bx"><a href="../sample2/news.html"><time>2026.04.03</time><span class="tag">宅建ニュース</span><span class="t">首都圏の<wbr>新築マンション購入者の<wbr>平均価格は<wbr>7324万円で<wbr>最高値更新【SUUMO】</span></a></li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap cta-grid">
+    <div class="cta-head">
+      <p class="sec-label mono bx" data-rv>Free consultation</p>
+      <p class="sec-en bx" data-rv>Consult</p>
+      <h2 class="sec-ja bx" data-rv>不動産の<wbr>こと、<wbr>ひとりで<wbr>悩まず<wbr>ご相談ください。</h2>
+    </div>
+    <div class="cta-tel" data-rv>
+      <p class="mono bx">Telephone</p>
+      <a class="num" href="tel:0473646904">047-364-6904</a>
+      <p class="bx">月〜金 9:00–17:00(土日・祝日休)</p>
+      <a class="cbtn cbtn-light" href="../sample2/consult.html">無料相談のご案内</a>
+    </div>
+    <div class="cta-times">
+      <div data-rv><p class="mono bx">Every Wednesday</p><b>不動産無料相談</b><p class="bx">毎週<wbr>水曜日<wbr> 13:00–17:00<br>松戸市役所 本館2階 相談コーナー</p></div>
+      <div data-rv style="--d:.08s"><p class="mono bx">4th Friday</p><b>不動産法律無料相談</b><p class="bx">毎月<wbr>第4金曜日 15:00–17:00<br>宅建協会 松戸支部<wbr> 事務局(弁護士)</p></div>
+      <div data-rv style="--d:.16s"><p class="mono bx">3rd Friday</p><b>不動産税務 電話無料相談</b><p class="bx">毎月<wbr>第3金曜日 12:00–15:00<br>本会顧問税理士が<wbr>お電話で<wbr>お応えします</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="members">
+  <div class="wrap">
+    <div class="members-in" data-rv>
+      <p class="sec-label mono bx">For members</p>
+      <h2 class="bx">会員の<wbr>方<wbr>へ<small>研修会の<wbr>案内と<wbr>出欠回答、<wbr>本部からの<wbr>調査依頼、<wbr>各種書式の<wbr>ダウンロードなど、<wbr>会員限定の<wbr>情報を<wbr>ご利用いただけます。</small></h2>
+      <a class="cbtn" href="../sample2/kaiin/index.html">会員専用ページへ</a>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft-top">
+      <div class="ft-brand">
+        <a href="../sample2/index.html"><img src="../assets/img/hatomark.png" alt="" width="40" height="47"><span><small class="bx">一般社団法人 千葉県宅地建物取引業協会</small><strong>宅建協会 松戸支部</strong></span></a>
+        <p class="ft-addr bx">〒271-0064 千葉県松戸市上本郷3185<br>JR常磐線 北松戸駅 徒歩約8分<a class="num" href="tel:0473646904">047-364-6904</a>FAX 047-363-3142 ／ 月〜金 9:00–17:00(土日・祝日休)</p>
+      </div>
+      <nav class="ft-nav" aria-label="フッターメニュー"><div><p class="mono bx">For residents</p><ul><li class="bx"><a href="../sample2/consult.html">不動産相談</a></li><li class="bx"><a href="../sample2/area.html">会員一覧・エリアマップ</a></li><li class="bx"><a href="../sample2/kariru.html">家を<wbr>借りる<wbr>・貸す<wbr>時</a></li><li class="bx"><a href="../sample2/news.html">お知らせ</a></li></ul></div><div><p class="mono bx">For businesses</p><ul><li class="bx"><a href="../sample2/nyukai.html">入会案内</a></li><li class="bx"><a href="../sample2/kaigyo.html">開業を<wbr>お考えの<wbr>方</a></li><li class="bx"><a href="../sample2/takken.html">宅建協会とは</a></li></ul></div><div><p class="mono bx">For licensees</p><ul><li class="bx"><a href="../sample2/license.html">講習・試験</a></li><li class="bx"><a href="../sample2/shoshiki.html">書式ダウンロード</a></li><li class="bx"><a href="../sample2/kaiin/index.html">会員専用ページ</a></li></ul></div><div><p class="mono bx">About</p><ul><li class="bx"><a href="../sample2/about.html">支部<wbr>案内</a></li><li class="bx"><a href="../sample2/links.html">リンク集</a></li><li class="bx"><a href="../sample2/contact.html">お問い<wbr>合わせ</a></li><li class="bx"><a href="../sample2/privacy.html">個人情報の<wbr>取り扱い</a></li></ul></div></nav>
+    </div>
+    <p class="ft-word bx" aria-hidden="true">Takken Matsudo</p>
+    <div class="ft-bottom">
+      <p class="bx">© 2026 (一社)千葉県宅地建物取引業協会 松戸支部</p>
+      <p class="bx">この<wbr>サイトは<wbr>デザイン案Cです(機能は<wbr>動作しません)。 <a href="../index.html">現行デザイン</a> ／ <a href="../sample/">デザイン案B</a></p>
+    </div>
+  </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="../sample2/assets/c.js?v=9"></script>
+</body>
+</html>
