@@ -12,8 +12,8 @@
 
 使い方(文章を書き換えたら再実行する。何度実行しても結果は同じ):
   pip install budoux
-  python sample/tools/add_wbr.py sample/index.html
-  python sample/tools/add_wbr.py sample2/about.html --c   # 案C: 本文系のタグ全体を対象にする
+  python sample-b/tools/add_wbr.py sample-b/index.html          # 案B(クラス指定)
+  python sample/tools/add_wbr.py sample/about.html --c            # 案C: 本文系のタグ全体を対象にする
 """
 import re
 import sys
@@ -122,4 +122,4 @@ def main(path, tag_mode=False):
 
 if __name__ == "__main__":
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
-    main(args[0] if args else "sample/index.html", tag_mode="--c" in sys.argv)
+    main(args[0] if args else "sample-b/index.html", tag_mode="--c" in sys.argv)

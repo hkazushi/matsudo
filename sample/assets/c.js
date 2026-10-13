@@ -15,6 +15,9 @@
   var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   var anim = d.classList.contains("anim");
   var lenis = null;
+  // このデザインの置き場所(…/assets/c.js の2つ上)。公開ディレクトリ名に依存しないようにする
+  var me = document.currentScript && document.currentScript.src;
+  var siteRoot = me ? new URL("../", me).pathname : "/";
 
   try { init(); } catch (err) {
     if (window.console) console.error(err);
@@ -113,7 +116,7 @@
       if (url.pathname === location.pathname && url.hash) return;
       if (/\.(pdf|xlsx?|docx?|zip)$/i.test(url.pathname)) return;
       e.preventDefault();
-      if (/\/sample2\//.test(url.pathname)) { try { sessionStorage.setItem("c-pt", "1"); } catch (er) {} }
+      if (url.pathname.indexOf(siteRoot) === 0) { try { sessionStorage.setItem("c-pt", "1"); } catch (er) {} }
       d.classList.add("pt-leave");
       setTimeout(function () { location.href = url.href; }, 900);
     });
@@ -325,6 +328,12 @@
         var amt = parseFloat(wrap.getAttribute("data-px")) || 8;
         gsap.fromTo(img, { yPercent: -amt }, { yPercent: amt, ease: "none",
           scrollTrigger: { trigger: wrap, start: "top bottom", end: "bottom top", scrub: true } });
+      });
+      // 重ねた写真は、要素ごとに違う速さで漂わせて奥行きを出す
+      $$("[data-float]").forEach(function (el) {
+        var a = parseFloat(el.getAttribute("data-float")) || 8;
+        gsap.fromTo(el, { yPercent: a }, { yPercent: -a, ease: "none",
+          scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: true } });
       });
       // ヒーローの文字は、スクロールに合わせてゆっくり沈みながら薄れる
       var heroIn = $(".hero-in");
