@@ -19,7 +19,7 @@ import sys
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))   # mockup/
 OUT = os.path.join(ROOT, "sample2")
-VER = "9"
+VER = "15"
 
 # ---------------------------------------------------------------------------
 # ページ定義: slug -> (英字見出し, 分類, 写真, 写真の位置, 関連ページ)
@@ -153,13 +153,15 @@ def clean(h, depth):
 
 
 # ---------------------------------------------------------------------------
-# 共通の枠
+# 共通の枠(高級感: 漆黒×象牙×シャンパンゴールド / 細い明朝)
 # ---------------------------------------------------------------------------
-FONTS = ("https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900"
-         "&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+JP:wght@400;500;700&display=swap")
+FONTS = ("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400"
+         "&family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif+JP:wght@200;300;400;500&display=swap")
 
 
-def head(title, R, A, desc):
+def head(title, R, A, desc, intro=False):
+    intro_js = ('try { if (!rm && !sessionStorage.getItem("c-intro") && !d.classList.contains("pt-in")) d.classList.add("intro-on"); } catch (e) {}'
+                if intro else "")
     return f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -169,7 +171,7 @@ def head(title, R, A, desc):
 <meta name="description" content="{esc(desc)}">
 <!-- デザイン検討用ページのため検索結果には出さない -->
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#F7F6F2">
+<meta name="theme-color" content="#0C0F0D">
 <link rel="icon" type="image/png" href="{A}assets/img/hatomark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -183,8 +185,9 @@ def head(title, R, A, desc):
     d.classList.add("js");
     if (!rm) d.classList.add("anim");
     try {{ if (!rm && sessionStorage.getItem("c-pt") === "1") {{ d.classList.add("pt-in"); sessionStorage.removeItem("c-pt"); }} }} catch (e) {{}}
+    {intro_js}
     // スクリプトが動かなかった場合でも内容は必ず表示する
-    setTimeout(function () {{ if (!d.classList.contains("ready")) d.classList.remove("anim", "pt-in"); }}, 4000);
+    setTimeout(function () {{ if (!d.classList.contains("ready")) d.classList.remove("anim", "pt-in", "intro-on"); }}, 4000);
   }})();
 </script>
 </head>
@@ -198,43 +201,62 @@ def link(slug, R):
 def header(R, A, current):
     cur = ' class="is-current"'
     nav = "".join(f'<a href="{link(s, R)}"{cur if s == current else ""}>{t}</a>' for s, t in NAV)
-    groups = []
-    n = 0
+    groups, n = [], 0
     for en, ja, items in MENU:
         lis = []
         for s, t, e in items:
             lis.append(f'<li style="--i:{n}"><a href="{link(s, R)}">{t}<span>{e}</span></a></li>')
             n += 1
-        groups.append(f'<div class="menu-group"><p class="mono">{en} — {ja}</p><ul>{"".join(lis)}</ul></div>')
-    return f"""<div class="pt" aria-hidden="true"><span class="pt-mark"><img src="{A}assets/img/hatomark.png" alt=""><span>宅建協会 松戸支部</span></span></div>
-<div class="cur" aria-hidden="true"><i></i><b></b></div>
+        groups.append(f'<div class="menu-group"><p class="lbl d">{en}</p><ul>{"".join(lis)}</ul></div>')
+    return f"""<div class="intro" aria-hidden="true"><img class="intro-mark" src="{A}assets/img/hatomark.png" alt=""><span class="intro-line"></span><p class="intro-name">宅建協会 松戸支部</p></div>
+<div class="pt" aria-hidden="true"><i></i></div>
+<div class="cur" aria-hidden="true"><i></i><s></s><b></b></div>
 
 <header class="hd">
   <a href="{link('index', R)}" class="hd-brand" aria-label="宅建協会 松戸支部 トップへ">
-    <img src="{A}assets/img/hatomark.png" alt="" width="30" height="35">
+    <img src="{A}assets/img/hatomark.png" alt="" width="28" height="33">
     <span class="hd-name"><small>一般社団法人 千葉県宅地建物取引業協会</small><strong>宅建協会 松戸支部</strong></span>
   </a>
   <nav class="hd-nav" aria-label="主要メニュー">{nav}</nav>
   <div class="hd-cta">
     <a href="{link('kaiin/index', R)}" class="hd-member">会員専用</a>
-    <a href="{link('contact', R)}" class="hd-contact">お問い合わせ</a>
+    <a href="{link('contact', R)}" class="hd-contact">CONTACT</a>
   </div>
-  <button class="hd-menu" type="button" aria-expanded="false" aria-controls="menu"><span class="en">Menu</span><i></i></button>
+  <button class="hd-menu" type="button" aria-expanded="false" aria-controls="menu"><b>MENU</b><i></i></button>
 </header>
 
 <div class="menu" id="menu" aria-hidden="true" data-lenis-prevent>
   <div class="menu-in">
-    <div class="menu-side">
-      <figure class="menu-photo"><img src="{A}assets/img/yagiri.jpg" alt="" loading="lazy"></figure>
-      <div class="menu-tel">
-        <p class="mono">Contact</p>
-        <a href="tel:0473646904">047-364-6904</a>
+    <figure class="menu-photo"><img class="grade" src="{A}assets/img/tojotei.jpg" alt="" loading="lazy"></figure>
+    <div class="menu-body">
+      <div class="menu-groups">{"".join(groups)}</div>
+      <div class="menu-foot">
+        <div><p class="lbl d">Contact</p><a class="tel" href="tel:0473646904">047-364-6904</a></div>
         <p>月〜金 9:00–17:00(土日・祝日休)<br>〒271-0064 千葉県松戸市上本郷3185</p>
       </div>
     </div>
-    <div class="menu-groups">{"".join(groups)}</div>
   </div>
 </div>
+"""
+
+
+def contact_band(R, A):
+    """全ページ共通の、お問い合わせへの導線(写真の帯)。"""
+    return f"""<section class="cta">
+  <div class="bgimg" data-px="6"><img class="grade" src="{A}assets/img/yagiri.jpg" alt="" loading="lazy"></div>
+  <div class="wrap cta-grid">
+    <div class="cta-hd">
+      <p class="lbl d" data-rv>Contact</p>
+      <h2 class="ttl split">不動産のこと、<br>ひとりで悩まずご相談を。</h2>
+    </div>
+    <div class="cta-tel" data-rv style="--d:.2s">
+      <p class="lbl d">Telephone</p>
+      <a class="tel" href="tel:0473646904">047-364-6904</a>
+      <p>月〜金 9:00–17:00(土日・祝日休)</p>
+      <a class="lux d" href="{link('contact', R)}">お問い合わせ</a>
+    </div>
+  </div>
+</section>
 """
 
 
@@ -242,16 +264,14 @@ def footer(R, A):
     cols = []
     for en, ja, items in MENU:
         lis = "".join(f'<li><a href="{link(s, R)}">{t}</a></li>' for s, t, _ in items)
-        cols.append(f'<div><p class="mono">{en}</p><ul>{lis}</ul></div>')
+        cols.append(f'<div><p class="lbl d">{en}</p><ul>{lis}</ul></div>')
     return f"""<footer class="ft">
   <div class="wrap">
-    <div class="ft-top">
-      <div class="ft-brand">
-        <a href="{link('index', R)}"><img src="{A}assets/img/hatomark.png" alt="" width="40" height="47"><span><small>一般社団法人 千葉県宅地建物取引業協会</small><strong>宅建協会 松戸支部</strong></span></a>
-        <p class="ft-addr">〒271-0064 千葉県松戸市上本郷3185<br>JR常磐線 北松戸駅 徒歩約8分<a class="num" href="tel:0473646904">047-364-6904</a>FAX 047-363-3142 ／ 月〜金 9:00–17:00(土日・祝日休)</p>
-      </div>
-      <nav class="ft-nav" aria-label="フッターメニュー">{"".join(cols)}</nav>
+    <div class="ft-brand" data-rv>
+      <a href="{link('index', R)}"><img src="{A}assets/img/hatomark.png" alt="" width="40" height="47"><strong>宅建協会 松戸支部</strong><small>一般社団法人 千葉県宅地建物取引業協会</small></a>
     </div>
+    <p class="ft-addr" data-rv>〒271-0064 千葉県松戸市上本郷3185 ／ JR常磐線 北松戸駅 徒歩約8分<br><a class="tel" href="tel:0473646904">047-364-6904</a><br>FAX 047-363-3142 ／ 月〜金 9:00–17:00(土日・祝日休)</p>
+    <nav class="ft-nav" aria-label="フッターメニュー">{"".join(cols)}</nav>
     <p class="ft-word" aria-hidden="true">Takken Matsudo</p>
     <div class="ft-bottom">
       <p>© 2026 (一社)千葉県宅地建物取引業協会 松戸支部</p>
@@ -275,25 +295,32 @@ def scripts(R):
 def page_hero(en, cat, ja, crumbs, photo, pos, A):
     cr = ['<a href="{}">ホーム</a>'.format(crumbs[0][1])]
     for t, href in crumbs[1:]:
-        cr.append('<span aria-hidden="true">/</span>')
+        cr.append('<span aria-hidden="true">—</span>')
         cr.append(f'<a href="{href}">{t}</a>' if href else f'<span aria-current="page">{t}</span>')
-    fig = ""
-    if photo:
-        fig = f'<figure class="ph-photo" data-px><img src="{A}assets/img/{photo}" alt="" style="object-position:{pos}"></figure>'
-    else:
-        fig = '<div class="wrap"><div class="ph-rule"></div></div>'
-    return f"""<section class="ph">
-  <div class="wrap">
-    <div class="ph-head">
-      <p class="ph-cat mono">{cat}</p>
-      <p class="ph-en" aria-hidden="true">{esc(en)}</p>
-      <h1 class="ph-ja">{ja}</h1>
-      <nav class="crumbs" aria-label="現在地">{"".join(cr)}</nav>
-    </div>
+    bg = (f'<div class="ph-bg" data-px="6"><img class="grade" src="{A}assets/img/{photo}" alt="" style="object-position:{pos}"></div>'
+          if photo else "")
+    return f"""<section class="ph{'' if photo else ' plain'}">
+  {bg}
+  <div class="ph-in">
+    <p class="ph-en">{esc(en)}</p>
+    <h1 class="ph-ja split">{ja}</h1>
+    <span class="gl"></span>
+    <p class="ph-cat">{cat}</p>
   </div>
-  {fig}
+  <nav class="crumbs" aria-label="現在地">{"".join(cr)}</nav>
+  <span class="ph-scroll" aria-hidden="true"></span>
 </section>
 """
+
+
+def add_split(h):
+    """本文の h2 を1文字ずつ浮かぶ見出しにする。"""
+    def rep(m):
+        attrs = m.group(1) or ""
+        if 'class="' in attrs:
+            return "<h2" + attrs.replace('class="', 'class="split ', 1) + ">"
+        return f'<h2 class="split"{attrs}>'
+    return re.sub(r"<h2(\s[^>]*)?>", rep, h)
 
 
 def body_with_toc(blocks):
@@ -303,29 +330,30 @@ def body_with_toc(blocks):
         sid = f"s{i:02d}"
         m = re.search(r"<h2[^>]*>(.*?)</h2>", b, re.S)
         title = strip_tags(m.group(1)) if m else ""
-        num = f'<p class="blk-num">{i:02d}</p>' if m else ""
-        secs.append(f'<section class="blk" id="{sid}" data-rv>{num}{b}</section>')
+        num = f'<p class="blk-num" data-rv>{i:02d}</p>' if m else ""
+        secs.append(f'<section class="blk" id="{sid}">{num}{add_split(b)}</section>')
         if title:
             toc.append(f'<li><a href="#{sid}"><span>{i:02d}</span>{esc(title)}</a></li>')
+    body = "".join(secs)   # 章の中身(段落・表など)は CSS 側で .blk.in をきっかけに現れる
     if len(toc) >= 2:
-        side = f'<aside class="pg-toc" aria-label="このページの目次"><div class="pg-toc-in"><p class="mono">Contents</p><ol>{"".join(toc)}</ol></div></aside>'
-        return f'<div class="wrap"><div class="pg">{side}<div class="pg-body">{"".join(secs)}</div></div></div>'
-    return f'<div class="wrap"><div class="pg no-toc"><div class="pg-body">{"".join(secs)}</div></div></div>'
+        side = f'<aside class="pg-toc" aria-label="このページの目次"><div class="pg-toc-in"><p class="lbl">Contents</p><ol>{"".join(toc)}</ol></div></aside>'
+        return f'<div class="wrap"><div class="pg">{side}<div class="pg-body">{body}</div></div></div>'
+    return f'<div class="wrap"><div class="pg no-toc"><div class="pg-body">{body}</div></div></div>'
 
 
-def tile(slug, R, A, title, i=0, no=1):
+def rel_card(slug, R, A, title, i=0):
     en, txt, img = TILE[slug]
-    return (f'<a class="tile" href="{link(slug, R)}" data-cursor="View" data-rv style="--d:{i * 0.08}s">'
-            f'<img src="{A}assets/img/{img}" alt="" loading="lazy">'
-            f'<div class="tile-in"><p class="tile-no mono">{no:02d}</p><p class="tile-en">{en}</p>'
-            f'<p class="tile-ja">{title}</p><p class="tile-txt">{txt}</p><span class="tile-arrow" aria-hidden="true"></span></div></a>')
+    return (f'<a class="rel-card" href="{link(slug, R)}" data-cursor="VIEW">'
+            f'<div class="rv-img" style="--d:{i * 0.15}s"><img class="grade" src="{A}assets/img/{img}" alt="" loading="lazy"></div>'
+            f'<p class="lbl" data-rv>{en}</p><h3 data-rv>{title}</h3><p data-rv>{txt}</p></a>')
 
 
 def next_pages(slugs, R, A, titles):
-    tiles = "".join(tile(s, R, A, titles.get(s, s), i, i + 1) for i, s in enumerate(slugs) if s in TILE)
-    if not tiles:
+    cards = "".join(rel_card(s, R, A, titles.get(s, s), i) for i, s in enumerate(slugs) if s in TILE)
+    if not cards:
         return ""
-    return f'<div class="wrap"><section class="next"><p class="next-head mono">Related pages</p><div class="next-grid">{tiles}</div></section></div>'
+    return (f'<section class="rel"><div class="wrap"><div class="rel-hd"><p class="lbl c" data-rv>Related pages</p></div>'
+            f'<div class="rel-grid">{cards}</div></div></section>')
 
 
 def h1_of(src):
@@ -366,7 +394,8 @@ def build_pages(titles):
         crumbs.append((ja, ""))
         page = (head(ja, "", "../", desc_of(src)) + f'<body class="page-{slug}">\n' + header("", "../", NAV_OF.get(slug, slug if not slug.startswith("area-") else "area"))
                 + "<main>\n" + page_hero(en, cat, ja, crumbs, photo, pos, "../") + body_with_toc(blocks)
-                + next_pages(rel, "", "../", titles) + "</main>\n" + footer("", "../") + scripts(""))
+                + next_pages(rel, "", "../", titles) + ("" if slug == "contact" else contact_band("", "../"))
+                + "</main>\n" + footer("", "../") + scripts(""))
         write(f"{slug}.html", page)
     return warnings
 
@@ -400,7 +429,7 @@ def kaiin_frame(slug, body, titles, wrapped=False):
     if slug != "kaiin/index":
         crumbs.append(("会員専用", "index.html"))
     crumbs.append((ja, ""))
-    demo = ('<div class="demo-bar"><span class="mono">Design only</span>'
+    demo = ('<div class="demo-bar"><span class="lbl">Design only</span>'
             '会員専用エリアの画面デザインです。パスワード入力・資料のダウンロード・フォームの発行などの機能は持たせていません。</div>')
     return (head(ja, "../", "../../", desc_of(src)) + f'<body class="page-{slug.replace("/", "-")}">\n' + header("../", "../../", "")
             + "<main>\n" + page_hero(en, cat, ja, crumbs, photo, pos, "../../")
@@ -420,8 +449,8 @@ def build_kaiin(titles):
         href, b = m.group(1), clean(m.group(2), 1)
         h2 = re.search(r"<h2>(.*?)</h2>", b, re.S).group(1)
         p = re.search(r"<p>(.*?)</p>", b, re.S).group(1)
-        cards.append(f'<a class="entrance" href="{href}" data-cursor="Enter" data-rv><img src="../../assets/img/{img}" alt="" loading="lazy">'
-                     f'<p class="mono">{label}</p><h2>{h2}</h2><p>{p}</p><span class="cbtn cbtn-light">入室する</span></a>')
+        cards.append(f'<a class="entrance" href="{href}" data-cursor="ENTER" data-rv><img class="grade" src="../../assets/img/{img}" alt="" loading="lazy">'
+                     f'<p class="lbl d">{label}</p><h2>{h2}</h2><p>{p}</p><span class="lux d">入室する</span></a>')
     alert = re.search(r'<div class="alert warn"[^>]*>(.*?)</div>', src, re.S)
     note = ""
     if alert:
@@ -429,7 +458,7 @@ def build_kaiin(titles):
         a = re.sub(r'<br>\s*<span[^>]*>※モック版.*?</span>', "", a, flags=re.S)
         a = re.sub(r'\s*style="[^"]*"', "", a)
         note = f'<div class="alert warn" data-rv>{a}</div>'
-    body = (f'<section class="blk" data-rv><h2>入り口を選んでください</h2><p>{desc}</p></section>'
+    body = (f'<section class="blk"><h2>入り口を選んでください</h2><p>{desc}</p></section>'
             f'<div class="entrances">{"".join(cards)}</div>{note}')
     write("kaiin/index.html", kaiin_frame("kaiin/index", body, titles))
 
@@ -497,118 +526,130 @@ def build_index(titles):
     def nrows(items):
         out = []
         for dt, color, chip, t in items:
-            tag = f'<span class="tag{" tag-hot" if color == "red" else ""}">{chip}</span>' if chip else '<span class="tag">宅建ニュース</span>'
+            tag = f'<span class="tag{" hot" if color == "red" else ""}">{chip}</span>' if chip else '<span class="tag">宅建ニュース</span>'
             out.append(f'<li><a href="{link("news", R)}"><time>{dt}</time>{tag}<span class="t">{t}</span></a></li>')
         return "".join(out)
     first = news["oshirase"][0]
-    slides = [("hero-hondoji.jpg", "本土寺", "35% 50%"), ("yagiri.jpg", "矢切の渡し", "50% 50%"),
-              ("tojotei.jpg", "戸定邸", "50% 55%"), ("mori21.jpg", "21世紀の森と広場", "50% 40%")]
+    slides = [("hero-hondoji.jpg", "本土寺", "35% 50%"), ("tojotei.jpg", "戸定邸", "50% 55%"),
+              ("yagiri.jpg", "矢切の渡し", "50% 50%"), ("mori21.jpg", "21世紀の森と広場", "50% 40%")]
     lazy = ' loading="lazy"'
     hs = "".join(f'<figure class="hs{" is-active" if i == 0 else ""}" data-cap="{c}"><img src="{A}assets/img/{f}" alt="{c}" style="object-position:{p}"{"" if i == 0 else lazy}></figure>'
                  for i, (f, c, p) in enumerate(slides))
     bars = "".join("<i></i>" for _ in slides)
-    dl = "".join(f'<li><a href="{link(s, R)}"><span class="mono">{i:02d}</span><span><b>{n}</b><small>{st}</small></span><span class="num">{c}<em>社</em></span></a></li>'
+    dl = "".join(f'<li><a href="{link(s, R)}"><span class="num">{i:02d}</span><span><b>{n}</b><small>{st}</small></span><span class="cnt">{c}<em>社</em></span></a></li>'
                  for i, (s, n, st, c) in enumerate(area, 1))
     total = sum(int(c) for *_, c in area)
+    feats = [
+        ("consult", "Consultation", "yagiri.jpg", "不動産の無料相談", "売買・賃貸・契約・税金など、不動産に関するお悩みに、経験豊富な相談員が無料でお応えします。松戸市役所での相談会、弁護士による法律相談、税理士による電話相談をご用意しています。"),
+        ("area", "Find a member", "mori21.jpg", "地域の不動産会社を探す", f"松戸支部の会員{total}社を、5つの地区ごとにご紹介しています。お住まいの地域から、身近な不動産会社をお探しいただけます。"),
+        ("nyukai", "Membership", "tojotei.jpg", "入会のご案内", "宅建協会への入会は、社会的な信用の獲得にもつながります。入会のメリットと、手続きの流れをご案内します。"),
+        ("license", "License", "hero-hondoji.jpg", "講習・試験", "宅地建物取引士の法定講習会(会場・WEB受講)と、宅地建物取引士試験についてご案内します。"),
+    ]
+    fhtml = "".join(f"""
+      <article class="feat">
+        <a class="feat-img rv-img" href="{link(sl, R)}" data-cursor="VIEW"><img class="grade" src="{A}assets/img/{img}" alt="" loading="lazy"></a>
+        <div class="feat-txt">
+          <span class="feat-no num" data-rv>{i:02d}</span>
+          <p class="lbl" data-rv>{en}</p>
+          <h3 class="split">{ja}</h3>
+          <p class="t" data-rv>{tx}</p>
+          <a class="more" href="{link(sl, R)}" data-rv>View more<i></i></a>
+        </div>
+      </article>""" for i, (sl, en, img, ja, tx) in enumerate(feats, 1))
+    subs = "".join(f'<a href="{link(sl, R)}"><span class="lbl">{en}</span><b>{titles[sl]}</b></a>'
+                   for sl, en in [("kariru", "Renting"), ("kaigyo", "Start up"), ("takken", "Association"), ("shoshiki", "Documents"), ("links", "Links")])
     main = f"""<main>
 <section class="hero" aria-label="メインビジュアル">
-  <div class="hero-slides">{hs}</div>
+  {hs}
   <div class="hero-shade"></div>
   <div class="hero-in">
-    <p class="hero-label mono">Chiba Real Estate Transaction Association — Matsudo Branch</p>
-    <h1 class="hero-copy" aria-label="人と住まいを、笑顔でつなぐ。"><span class="ln" aria-hidden="true"><span style="--i:0">人と住まいを、</span></span><span class="ln" aria-hidden="true"><span style="--i:1">笑顔でつなぐ。</span></span></h1>
-    <p class="hero-lead">松戸市を中心とした地域の住まい探し・不動産取引を、経験豊富な会員企業がお手伝いします。</p>
+    <p class="lbl c">Matsudo Branch</p>
+    <h1 class="hero-catch split">人と住まいを、<br>笑顔でつなぐ。</h1>
+    <p class="hero-sub">一般社団法人 千葉県宅地建物取引業協会 松戸支部</p>
   </div>
-  <div class="hero-foot">
-    <a class="hero-news" href="{link('news', R)}"><span class="mono">News</span><time>{first[0]}</time><span>{first[3]}</span></a>
-    <div class="hero-slide-ui"><p class="hero-cap"><span class="mono">01 / 04</span><span>本土寺</span></p><div class="hero-bars" aria-hidden="true">{bars}</div></div>
+  <div class="hero-ui">
+    <div><p class="hero-cap"><span class="num">01</span><span>本土寺</span></p><div class="hero-bars" aria-hidden="true">{bars}</div></div>
+    <div class="hero-news"><p class="lbl">News</p><a href="{link('news', R)}">{first[0]}　{first[3]}</a></div>
   </div>
-  <p class="hero-scroll mono" aria-hidden="true">Scroll<i></i></p>
+  <span class="hero-scroll" aria-hidden="true"></span>
 </section>
 
-<section class="sec intro">
+<section class="sec concept">
+  <span class="concept-v" aria-hidden="true"></span>
   <div class="wrap">
-    <p class="sec-label mono" data-rv>About us</p>
-    <div class="intro-grid">
-      <h2 class="intro-title" data-rv>安心できる不動産取引を、<br class="pc">この街の<em>すみずみ</em>まで。</h2>
-      <div class="intro-body" data-rv style="--d:.12s">
-        <p>千葉県宅地建物取引業協会は、昭和42年7月に千葉県知事の許可を得て設立された、県下宅建業界唯一の一般社団法人です。県内の不動産業者の約8割にあたる4,000社が加入しています。</p>
-        <p>松戸支部は335社の会員を擁する大支部です(令和6年3月31日現在)。取引の公正と消費者の保護を大切に、地域の住まい探しをお手伝いしています。</p>
-        <a class="cbtn" href="{link('about', R)}">支部案内を見る</a>
-      </div>
+    <p class="lbl c" data-rv>Concept</p>
+    <h2 class="ttl split" style="margin-top:30px">確かな取引を、<br>この街のすみずみまで。</h2>
+    <div class="concept-body">
+      <p data-rv>千葉県宅地建物取引業協会は、昭和42年7月に千葉県知事の許可を得て設立された、県下宅建業界唯一の一般社団法人です。県内の不動産業者の約8割にあたる4,000社が加入しています。</p>
+      <p data-rv style="--d:.15s">松戸支部は335社の会員を擁する大支部です(令和6年3月31日現在)。取引の公正と消費者の保護を大切に、地域の皆さまの住まい探しをお手伝いしています。</p>
     </div>
+    <span class="gl"></span>
+    <a class="lux" href="{link('about', R)}" data-rv>支部案内</a>
   </div>
-  <figure class="plate" data-rv="img">
-    <div class="plate-img"><img src="{A}assets/img/hero-matsudo.jpg" alt="松戸駅周辺の街並み" width="2400" height="848" loading="lazy"></div>
-    <figcaption class="plate-cap"><span><span class="mono">Matsudo</span>松戸駅周辺の街並み</span><span class="credit">写真提供：松戸市</span></figcaption>
-  </figure>
 </section>
 
-<section class="sec service">
+<figure class="plate">
+  <div class="plate-img rv-img"><img src="{A}assets/img/hero-matsudo.jpg" alt="松戸駅周辺の街並み" width="2400" height="848" loading="lazy"></div>
+  <figcaption data-rv><span>松戸駅周辺の街並み</span><span class="credit">写真提供：松戸市</span></figcaption>
+</figure>
+
+<section class="sec">
   <div class="wrap">
-    <div class="sec-head-row">
-      <div><p class="sec-label mono" data-rv>Service</p><p class="sec-en" data-rv>Guide</p><h2 class="sec-ja" data-rv>目的からさがす</h2></div>
+    <div class="sec-hd">
+      <p class="lbl c" data-rv>Service</p>
+      <h2 class="ttl split">目的からさがす</h2>
     </div>
-    <div class="tiles">
-      {tile('consult', R, A, titles['consult'], 0, 1)}
-      {tile('area', R, A, titles['area'], 1, 2)}
-      {tile('nyukai', R, A, titles['nyukai'], 2, 3)}
-      {tile('license', R, A, titles['license'], 0, 4)}
+    <div class="feats">{fhtml}
     </div>
-    <nav class="sublinks" aria-label="その他のご案内">
-      <a href="{link('kariru', R)}"><span class="mono">Renting</span>{titles['kariru']}</a>
-      <a href="{link('kaigyo', R)}"><span class="mono">Start up</span>{titles['kaigyo']}</a>
-      <a href="{link('takken', R)}"><span class="mono">Association</span>{titles['takken']}</a>
-      <a href="{link('shoshiki', R)}"><span class="mono">Documents</span>{titles['shoshiki']}</a>
-      <a href="{link('links', R)}"><span class="mono">Links</span>{titles['links']}</a>
-    </nav>
+    <nav class="subs" aria-label="その他のご案内" data-rv>{subs}</nav>
   </div>
 </section>
 
-<section class="area-sec">
-  <div class="wrap area-grid2">
-    <div class="area-head">
-      <p class="sec-label mono" data-rv>Find a member</p>
-      <p class="sec-en" data-rv>Area</p>
-      <h2 class="sec-ja" data-rv>お住まいの地域から探す</h2>
-      <p class="desc" data-rv>松戸支部の会員{total}社を、5つの地区ごとにご紹介しています。地区を選ぶと、その地域の不動産会社の一覧が表示されます。</p>
-      <a class="tlink" href="{link('area', R)}" data-rv>エリアマップを見る</a>
+<section class="sec on-dark area-sec">
+  <div class="bgimg" data-px="5"><img class="grade" src="{A}assets/img/mori21.jpg" alt="" loading="lazy"></div>
+  <div class="wrap area-lay">
+    <div class="area-hd">
+      <p class="lbl d" data-rv>Find a member</p>
+      <h2 class="ttl split">お住まいの地域から、<br>探す。</h2>
+      <p data-rv>松戸支部の会員{total}社を、5つの地区ごとにご紹介しています。地区を選ぶと、その地域の不動産会社の一覧が表示されます。</p>
+      <a class="more" href="{link('area', R)}" data-rv>Area map<i></i></a>
     </div>
-    <ol class="dlist" data-rv style="--d:.1s">{dl}</ol>
+    <ol class="dlist" data-rv style="--d:.2s">{dl}</ol>
   </div>
 </section>
 
-<section class="sec news-sec">
+<section class="sec">
   <div class="wrap">
-    <div class="sec-head-row">
-      <div><p class="sec-label mono" data-rv>Information</p><p class="sec-en" data-rv>News</p></div>
-      <a class="tlink" href="{link('news', R)}" data-rv>一覧を見る</a>
+    <div class="sec-hd">
+      <p class="lbl c" data-rv>Information</p>
+      <h2 class="ttl split">お知らせ</h2>
     </div>
     <div data-tabs data-rv>
       <div class="tabs" role="tablist"><button class="tab is-on" role="tab" aria-selected="true">支部からのお知らせ</button><button class="tab" role="tab" aria-selected="false">宅建ニュース</button></div>
       <div class="tabpane"><ul class="nlist">{nrows(news['oshirase'])}</ul></div>
       <div class="tabpane" hidden><ul class="nlist">{nrows(news['takken'])}</ul></div>
     </div>
+    <p class="news-more" data-rv><a class="more" href="{link('news', R)}">View all<i></i></a></p>
   </div>
 </section>
 
 <section class="cta">
+  <div class="bgimg" data-px="6"><img class="grade" src="{A}assets/img/yagiri.jpg" alt="" loading="lazy"></div>
   <div class="wrap cta-grid">
-    <div class="cta-head">
-      <p class="sec-label mono" data-rv>Free consultation</p>
-      <p class="sec-en" data-rv>Consult</p>
-      <h2 class="sec-ja" data-rv>不動産のこと、ひとりで悩まずご相談ください。</h2>
+    <div class="cta-hd">
+      <p class="lbl d" data-rv>Free consultation</p>
+      <h2 class="ttl split">不動産のこと、<br>ひとりで悩まずご相談を。</h2>
     </div>
-    <div class="cta-tel" data-rv>
-      <p class="mono">Telephone</p>
-      <a class="num" href="tel:0473646904">047-364-6904</a>
+    <div class="cta-tel" data-rv style="--d:.2s">
+      <p class="lbl d">Telephone</p>
+      <a class="tel" href="tel:0473646904">047-364-6904</a>
       <p>月〜金 9:00–17:00(土日・祝日休)</p>
-      <a class="cbtn cbtn-light" href="{link('consult', R)}">無料相談のご案内</a>
+      <a class="lux d" href="{link('consult', R)}">無料相談のご案内</a>
     </div>
     <div class="cta-times">
-      <div data-rv><p class="mono">Every Wednesday</p><b>不動産無料相談</b><p>毎週水曜日 13:00–17:00<br>松戸市役所 本館2階 相談コーナー</p></div>
-      <div data-rv style="--d:.08s"><p class="mono">4th Friday</p><b>不動産法律無料相談</b><p>毎月第4金曜日 15:00–17:00<br>宅建協会 松戸支部 事務局(弁護士)</p></div>
-      <div data-rv style="--d:.16s"><p class="mono">3rd Friday</p><b>不動産税務 電話無料相談</b><p>毎月第3金曜日 12:00–15:00<br>本会顧問税理士がお電話でお応えします</p></div>
+      <div data-rv><p class="lbl d">Every Wednesday</p><b>不動産無料相談</b><p>毎週水曜日 13:00–17:00<br>松戸市役所 本館2階 相談コーナー</p></div>
+      <div data-rv style="--d:.12s"><p class="lbl d">4th Friday</p><b>不動産法律無料相談</b><p>毎月第4金曜日 15:00–17:00<br>宅建協会 松戸支部 事務局(弁護士)</p></div>
+      <div data-rv style="--d:.24s"><p class="lbl d">3rd Friday</p><b>不動産税務 電話無料相談</b><p>毎月第3金曜日 12:00–15:00<br>本会顧問税理士がお電話でお応えします</p></div>
     </div>
   </div>
 </section>
@@ -616,15 +657,14 @@ def build_index(titles):
 <section class="members">
   <div class="wrap">
     <div class="members-in" data-rv>
-      <p class="sec-label mono">For members</p>
-      <h2>会員の方へ<small>研修会の案内と出欠回答、本部からの調査依頼、各種書式のダウンロードなど、会員限定の情報をご利用いただけます。</small></h2>
-      <a class="cbtn" href="{link('kaiin/index', R)}">会員専用ページへ</a>
+      <div><p class="lbl">For members</p><h2>会員の方へ</h2><p>研修会の案内と出欠回答、本部からの調査依頼、各種書式のダウンロードなど、会員限定の情報をご利用いただけます。</p></div>
+      <a class="lux" href="{link('kaiin/index', R)}">会員専用ページ</a>
     </div>
   </div>
 </section>
 </main>
 """
-    page = head("トップ", R, A, desc_of(src)) + '<body class="is-home">\n' + header(R, A, "") + main + footer(R, A) + scripts(R)
+    page = head("トップ", R, A, desc_of(src), intro=True) + '<body class="is-home">\n' + header(R, A, "") + main + footer(R, A) + scripts(R)
     write("index.html", page)
 
 
@@ -636,7 +676,7 @@ def build_simple(slug, en, A_title=None):
     inner_html = re.sub(r'<div class="(?:container|brand-mark)[^"]*"[^>]*>|<img[^>]*hatomark[^>]*>', "", inner_html)
     text = re.findall(r"<p[^>]*>(.*?)</p>", inner_html, re.S)
     body = "".join(f"<p>{clean(t, 0)}</p>" for t in text if strip_tags(t) != "404")
-    blk = f'<section class="blk" data-rv>{body}<a class="cbtn" href="index.html">トップページへ戻る</a></section>'
+    blk = f'<section class="blk">{body}<p><a class="lux" href="index.html">トップページへ戻る</a></p></section>'
     page = (head(ja, "", "../", desc_of(src)) + f'<body class="page-{slug}">\n' + header("", "../", "")
             + "<main>\n" + page_hero(en, "Information", ja, [("ホーム", "index.html"), (ja, "")], None, "", "../")
             + f'<div class="wrap"><div class="pg no-toc"><div class="pg-body">{blk}</div></div></div>'

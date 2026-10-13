@@ -1,9 +1,9 @@
 /* ==========================================================================
-   デザイン案C — 共通スクリプト
-   ・ページ遷移の幕 / ヘッダー / 全画面メニュー / スクロールで現れる演出
-   ・トップの写真スライド、お知らせタブ
-   ・下層の目次の追従、会員一覧の絞り込み、会員エリアのフォルダ表示
-   ・PCのカーソル演出、慣性スクロール(Lenis)と視差(GSAP)は読み込めたときだけ
+   デザイン案C — 演出スクリプト(高級感・映画的な動き)
+   ・初回のイントロ / 暗転して金の線が走るページ遷移
+   ・見出しは文節ごとにまとめ、1文字ずつぼかしから浮かび上がらせる
+   ・写真は金色の幕が横切ってから現れる / ゆっくり寄っていくスライド
+   ・慣性スクロール(Lenis)と視差(GSAP)は読み込めたときだけ
    機能(ログイン・アップロード・送信)はデザイン案のため持たない。
    ========================================================================== */
 (function () {
@@ -13,22 +13,23 @@
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  var anim = d.classList.contains("anim");
   var lenis = null;
 
   try { init(); } catch (err) {
     if (window.console) console.error(err);
-    d.classList.remove("anim", "pt-in");   // 途中で失敗しても内容は必ず見せる
+    d.classList.remove("anim", "pt-in", "intro-on");   // 途中で失敗しても内容は必ず見せる
   }
   d.classList.add("ready");
 
   function init() {
+    splitText();
     pageTransition();
     header();
     menu();
     reveal();
-    splitTitle();
-    fitText();
     heroSlides();
+    intro();
     tabs();
     toc();
     memberFilter();
@@ -38,16 +39,67 @@
     cursor();
   }
 
-  /* ---- ページ遷移: 幕を下ろしてから移動し、移動先で幕を上げる ---- */
+  /* ---- 見出しの分割: 文節(<wbr> の区切り)は崩さず、中の文字を1字ずつ包む ---- */
+  function splitText() {
+    $$(".split").forEach(function (el) {
+      if (el.getAttribute("data-split-done")) return;
+      var html = el.innerHTML.replace(/<wbr\s*\/?>/g, "\u0000");
+      var tmp = document.createElement("div");
+      tmp.innerHTML = html;
+      var i = 0;
+      (function walk(node) {
+        Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+          if (n.nodeType === 3) {
+            var frag = document.createDocumentFragment();
+            n.textContent.split("\u0000").forEach(function (phrase, k, arr) {
+              if (phrase) {
+                var w = document.createElement("span");
+                w.className = "w";
+                Array.prototype.forEach.call(phrase, function (ch) {
+                  var c = document.createElement("span");
+                  c.className = "c";
+                  c.style.setProperty("--i", i++);
+                  c.textContent = ch;
+                  w.appendChild(c);
+                });
+                frag.appendChild(w);
+              }
+              if (k < arr.length - 1) frag.appendChild(document.createElement("wbr"));
+            });
+            n.parentNode.replaceChild(frag, n);
+          } else if (n.nodeType === 1 && n.tagName !== "BR") {
+            walk(n);
+          }
+        });
+      })(tmp);
+      el.innerHTML = tmp.innerHTML;
+      el.setAttribute("aria-label", el.textContent);
+      el.setAttribute("data-split-done", "1");
+    });
+    // 文節が1行に収まらない(括弧付きの長い名称など)ときだけ、その文節の中で折り返しを許す
+    function relax() {
+      $$(".split").forEach(function (el) {
+        var room = el.clientWidth;
+        $$(".w", el).forEach(function (w) {
+          w.classList.remove("loose");
+          if (room > 0 && w.scrollWidth > room) w.classList.add("loose");
+        });
+      });
+    }
+    relax();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(relax);
+    var t = null;
+    window.addEventListener("resize", function () { clearTimeout(t); t = setTimeout(relax, 150); });
+  }
+
+  /* ---- ページ遷移: 暗転して金の線が走り、移動先でゆっくり明ける ---- */
   function pageTransition() {
     if (d.classList.contains("pt-in")) {
-      requestAnimationFrame(function () {
-        requestAnimationFrame(function () { d.classList.add("pt-out"); });
-      });
-      setTimeout(function () { d.classList.remove("pt-in", "pt-out"); }, 1200);
+      setTimeout(function () { d.classList.add("pt-out"); }, 40);
+      setTimeout(function () { d.classList.remove("pt-in", "pt-out"); }, 1700);
     }
     window.addEventListener("pageshow", function (e) {
-      if (e.persisted) d.classList.remove("pt-leave", "pt-in", "pt-out");  // 戻るボタン(bfcache)対策
+      if (e.persisted) d.classList.remove("pt-leave", "pt-in", "pt-out");
     });
     if (reduce) return;
     document.addEventListener("click", function (e) {
@@ -63,22 +115,51 @@
       e.preventDefault();
       if (/\/sample2\//.test(url.pathname)) { try { sessionStorage.setItem("c-pt", "1"); } catch (er) {} }
       d.classList.add("pt-leave");
-      setTimeout(function () { location.href = url.href; }, 620);
+      setTimeout(function () { location.href = url.href; }, 900);
     });
   }
 
-  /* ---- ヘッダー: スクロールで背景を付け、下スクロールで隠す ---- */
+  /* ---- 初回のイントロ(セッションに1回) ---- */
+  function intro() {
+    var hero = $(".hero");
+    function startHero() {
+      d.classList.add("hero-go");
+      var catchEl = $(".hero-catch");
+      if (catchEl) catchEl.classList.add("in");
+    }
+    if (!d.classList.contains("intro-on")) {
+      if (hero) setTimeout(startHero, d.classList.contains("pt-in") ? 500 : 150);
+      return;
+    }
+    var name = $(".intro-name");
+    if (name) {
+      name.innerHTML = Array.prototype.map.call(name.textContent, function (ch, i) {
+        return '<span class="c" style="--i:' + i + '">' + ch + "</span>";
+      }).join("");
+    }
+    if (lenis) lenis.stop();
+    // rAF は裏タブ等で止まるため、タイマーで確実に開始する
+    setTimeout(function () { d.classList.add("intro-play"); }, 40);
+    setTimeout(function () { d.classList.add("intro-out"); startHero(); }, 2900);
+    setTimeout(function () {
+      d.classList.remove("intro-on", "intro-play", "intro-out");
+      try { sessionStorage.setItem("c-intro", "1"); } catch (e) {}
+      if (lenis) lenis.start();
+    }, 4400);
+  }
+
+  /* ---- ヘッダー ---- */
   function header() {
     var hd = $(".hd");
     if (!hd) return;
-    var home = document.body.classList.contains("is-home");
+    var dark = $(".hero, .ph");
     var lastY = window.scrollY;
     function onScroll() {
       var y = window.scrollY;
-      var limit = home ? Math.max(window.innerHeight - 120, 200) : 10;
+      var limit = dark ? Math.max(dark.offsetHeight - 90, 120) : 10;
       hd.classList.toggle("is-solid", y > limit);
-      if (y > lastY + 3 && y > 480 && !d.classList.contains("menu-open")) hd.classList.add("is-hidden");
-      if (y < lastY - 3 || y < 480) hd.classList.remove("is-hidden");
+      if (y > lastY + 3 && y > 520 && !d.classList.contains("menu-open")) hd.classList.add("is-hidden");
+      if (y < lastY - 3 || y < 520) hd.classList.remove("is-hidden");
       lastY = y;
     }
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -102,8 +183,8 @@
 
   /* ---- スクロールで現れる ---- */
   function reveal() {
-    var els = $$("[data-rv]");
-    if (!d.classList.contains("anim") || !("IntersectionObserver" in window)) {
+    var els = $$("[data-rv], .split:not(.hero-catch), .rv-img, .gl, .blk");
+    if (!anim || !("IntersectionObserver" in window)) {
       els.forEach(function (el) { el.classList.add("in"); });
       return;
     }
@@ -111,70 +192,34 @@
       entries.forEach(function (en) {
         if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
       });
-    }, { rootMargin: "0px 0px -8% 0px", threshold: 0 });
+    }, { rootMargin: "0px 0px -10% 0px", threshold: 0 });
     els.forEach(function (el) { io.observe(el); });
-  }
-
-  /* ---- 下層ページの英字見出しを1文字ずつ ---- */
-  function splitTitle() {
-    $$(".ph-en").forEach(function (el) {
-      var text = el.textContent;
-      el.setAttribute("aria-label", text);
-      el.innerHTML = text.split("").map(function (c, i) {
-        return '<span class="ch" aria-hidden="true" style="--i:' + i + '">' + (c === " " ? "&nbsp;" : c) + "</span>";
-      }).join("");
-    });
-  }
-
-  /* ---- 英字の大見出しを枠に収める(長い単語でも1行のまま縮める) ---- */
-  function fitText() {
-    var els = $$(".ph-en, .tile-en, .sec-en, .ft-word");
-    if (!els.length) return;
-    function run() {
-      els.forEach(function (el) {
-        el.style.fontSize = "";
-        var room = el.clientWidth, need = el.scrollWidth;
-        if (need > room && room > 0) {
-          var fs = parseFloat(window.getComputedStyle(el).fontSize);
-          el.style.fontSize = Math.floor(fs * room / need * 0.98) + "px";
-        }
-      });
-    }
-    run();
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
-    var t = null;
-    window.addEventListener("resize", function () { clearTimeout(t); t = setTimeout(run, 120); });
   }
 
   /* ---- トップの写真スライド ---- */
   function heroSlides() {
     var slides = $$(".hs");
     if (slides.length < 2) return;
-    var bars = $$(".hero-bars i"), capNo = $(".hero-cap .mono"), capTx = $(".hero-cap span:last-child");
-    var cur = 0, dur = 6500, timer = null;
+    var bars = $$(".hero-bars i"), capNo = $(".hero-cap .num"), capTx = $(".hero-cap span:last-child");
+    var cur = 0, dur = 7000, timer = null;
     function show(n) {
       var prev = slides[cur];
       slides.forEach(function (s) { s.classList.remove("is-prev"); });
       if (prev !== slides[n]) { prev.classList.remove("is-active"); prev.classList.add("is-prev"); }
       slides[n].classList.add("is-active");
-      setTimeout(function () { prev.classList.remove("is-prev"); }, 1700);
-      bars.forEach(function (b, i) {
-        b.classList.remove("is-active", "is-done");
-        if (i < n) b.classList.add("is-done");
-      });
+      setTimeout(function () { prev.classList.remove("is-prev"); }, 2300);
+      bars.forEach(function (b, i) { b.classList.remove("is-active", "is-done"); if (i < n) b.classList.add("is-done"); });
       if (bars[n]) { void bars[n].offsetWidth; bars[n].classList.add("is-active"); }
-      if (capNo) capNo.textContent = String(n + 1).padStart(2, "0") + " / " + String(slides.length).padStart(2, "0");
+      if (capNo) capNo.textContent = String(n + 1).padStart(2, "0");
       if (capTx) capTx.textContent = slides[n].getAttribute("data-cap") || "";
       cur = n;
     }
     d.style.setProperty("--dur", dur / 1000 + "s");
     show(0);
     if (reduce) return;
-    timer = setInterval(function () { show((cur + 1) % slides.length); }, dur);
-    document.addEventListener("visibilitychange", function () {
-      if (document.hidden) clearInterval(timer);
-      else { clearInterval(timer); timer = setInterval(function () { show((cur + 1) % slides.length); }, dur); }
-    });
+    function start() { clearInterval(timer); timer = setInterval(function () { show((cur + 1) % slides.length); }, dur); }
+    start();
+    document.addEventListener("visibilitychange", function () { if (document.hidden) clearInterval(timer); else start(); });
   }
 
   /* ---- お知らせのタブ ---- */
@@ -200,8 +245,7 @@
       entries.forEach(function (en) {
         if (!en.isIntersecting) return;
         links.forEach(function (a) { a.classList.remove("is-on"); });
-        var a = map[en.target.id];
-        if (a) a.classList.add("is-on");
+        if (map[en.target.id]) map[en.target.id].classList.add("is-on");
       });
     }, { rootMargin: "-30% 0px -60% 0px" });
     $$(".blk[id]").forEach(function (b) { io.observe(b); });
@@ -211,17 +255,12 @@
   function memberFilter() {
     var box = $(".mt-filter");
     if (!box) return;
-    var input = $("input", box), out = $("output", box);
-    var rows = $$(".member-table tbody tr");
+    var input = $("input", box), out = $("output", box), rows = $$(".member-table tbody tr");
     function norm(s) { return s.replace(/\s+/g, "").toLowerCase(); }
     function run() {
       var q = norm(input.value), n = 0;
-      rows.forEach(function (r) {
-        var hit = !q || norm(r.textContent).indexOf(q) !== -1;
-        r.hidden = !hit;
-        if (hit) n++;
-      });
-      out.textContent = n + " 社を表示中";
+      rows.forEach(function (r) { var hit = !q || norm(r.textContent).indexOf(q) !== -1; r.hidden = !hit; if (hit) n++; });
+      out.textContent = n + " 社";
     }
     input.addEventListener("input", run);
     run();
@@ -255,26 +294,24 @@
 
   /* ---- フォーム・管理画面は送信しない(デザイン案) ---- */
   function demoForms() {
-    $$("form.demo, .adm form").forEach(function (f) {
-      f.addEventListener("submit", function (e) { e.preventDefault(); });
-    });
+    $$("form.demo, .adm form").forEach(function (f) { f.addEventListener("submit", function (e) { e.preventDefault(); }); });
     $$(".adm button").forEach(function (b) { b.addEventListener("click", function (e) { e.preventDefault(); }); });
   }
 
-  /* ---- 慣性スクロール・視差(ライブラリが読めたときだけ) ---- */
+  /* ---- 慣性スクロール・視差 ---- */
   function smoothAndParallax() {
-    if (reduce || !d.classList.contains("anim")) return;
+    if (reduce || !anim) return;
     if (window.Lenis) {
-      lenis = new window.Lenis({ lerp: 0.1, smoothWheel: true });
+      lenis = new window.Lenis({ lerp: 0.075, smoothWheel: true, wheelMultiplier: 0.9 });
       var raf = function (t) { lenis.raf(t); requestAnimationFrame(raf); };
       requestAnimationFrame(raf);
-      // 同じページ内の目次リンクは固定ヘッダーの下で止める
+      if (d.classList.contains("intro-on")) lenis.stop();
       $$('a[href^="#"]').forEach(function (a) {
         a.addEventListener("click", function (e) {
           var t = $(a.getAttribute("href"));
           if (!t) return;
           e.preventDefault();
-          lenis.scrollTo(t, { offset: -($(".hd").offsetHeight + 16), duration: 1.3 });
+          lenis.scrollTo(t, { offset: -100, duration: 1.6 });
         });
       });
     }
@@ -285,16 +322,26 @@
       $$("[data-px]").forEach(function (wrap) {
         var img = $("img", wrap);
         if (!img) return;
-        gsap.fromTo(img, { yPercent: -6 }, {
-          yPercent: 6, ease: "none",
-          scrollTrigger: { trigger: wrap, start: "top bottom", end: "bottom top", scrub: true }
-        });
+        var amt = parseFloat(wrap.getAttribute("data-px")) || 8;
+        gsap.fromTo(img, { yPercent: -amt }, { yPercent: amt, ease: "none",
+          scrollTrigger: { trigger: wrap, start: "top bottom", end: "bottom top", scrub: true } });
       });
+      // ヒーローの文字は、スクロールに合わせてゆっくり沈みながら薄れる
+      var heroIn = $(".hero-in");
+      if (heroIn) {
+        gsap.to(heroIn, { yPercent: 18, opacity: 0, ease: "none",
+          scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+      }
+      var phIn = $(".ph-in");
+      if (phIn) {
+        gsap.to(phIn, { yPercent: 20, opacity: 0, ease: "none",
+          scrollTrigger: { trigger: ".ph", start: "top top", end: "bottom top", scrub: true } });
+      }
       window.addEventListener("load", function () { window.ScrollTrigger.refresh(); });
     }
   }
 
-  /* ---- PCのカーソル演出 ---- */
+  /* ---- PCのカーソル ---- */
   function cursor() {
     var c = $(".cur");
     if (!c || !finePointer || reduce) { if (c) c.remove(); return; }
@@ -310,7 +357,7 @@
       if (v) label.textContent = v.getAttribute("data-cursor");
     });
     (function loop() {
-      cx += (x - cx) * 0.2; cy += (y - cy) * 0.2;
+      cx += (x - cx) * 0.16; cy += (y - cy) * 0.16;
       c.style.transform = "translate3d(" + cx + "px," + cy + "px,0)";
       requestAnimationFrame(loop);
     })();

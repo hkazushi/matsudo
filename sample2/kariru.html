@@ -7,13 +7,13 @@
 <meta name="description" content="アパート・マンションを借りるとき、自宅を貸すときの基礎知識。一時金の性格、業者選び、重要事項説明など、賃貸のポイントを解説します。">
 <!-- デザイン検討用ページのため検索結果には出さない -->
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#F7F6F2">
+<meta name="theme-color" content="#0C0F0D">
 <link rel="icon" type="image/png" href="../assets/img/hatomark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif+JP:wght@200;300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.css">
-<link rel="stylesheet" href="assets/c.css?v=9">
+<link rel="stylesheet" href="assets/c.css?v=15">
 <script>
   // 演出の初期状態を描画前に決める(読み込み後に隠すとチラつくため)
   (function () {
@@ -21,59 +21,60 @@
     d.classList.add("js");
     if (!rm) d.classList.add("anim");
     try { if (!rm && sessionStorage.getItem("c-pt") === "1") { d.classList.add("pt-in"); sessionStorage.removeItem("c-pt"); } } catch (e) {}
+    
     // スクリプトが動かなかった場合でも内容は必ず表示する
-    setTimeout(function () { if (!d.classList.contains("ready")) d.classList.remove("anim", "pt-in"); }, 4000);
+    setTimeout(function () { if (!d.classList.contains("ready")) d.classList.remove("anim", "pt-in", "intro-on"); }, 4000);
   })();
 </script>
 </head>
 <body class="page-kariru">
-<div class="pt" aria-hidden="true"><span class="pt-mark"><img src="../assets/img/hatomark.png" alt=""><span>宅建協会 松戸支部</span></span></div>
-<div class="cur" aria-hidden="true"><i></i><b></b></div>
+<div class="intro" aria-hidden="true"><img class="intro-mark" src="../assets/img/hatomark.png" alt=""><span class="intro-line"></span><p class="intro-name bx">宅建協会 松戸支部</p></div>
+<div class="pt" aria-hidden="true"><i></i></div>
+<div class="cur" aria-hidden="true"><i></i><s></s><b></b></div>
 
 <header class="hd">
   <a href="index.html" class="hd-brand" aria-label="宅建協会 松戸支部 トップへ">
-    <img src="../assets/img/hatomark.png" alt="" width="30" height="35">
+    <img src="../assets/img/hatomark.png" alt="" width="28" height="33">
     <span class="hd-name"><small class="bx">一般社団法人 千葉県宅地建物取引業協会</small><strong>宅建協会 松戸支部</strong></span>
   </a>
   <nav class="hd-nav" aria-label="主要メニュー"><a href="about.html">支部案内</a><a href="consult.html" class="is-current">不動産相談</a><a href="area.html">会員を探す</a><a href="nyukai.html">入会案内</a><a href="license.html">講習・試験</a><a href="news.html">お知らせ</a></nav>
   <div class="hd-cta">
     <a href="kaiin/index.html" class="hd-member">会員専用</a>
-    <a href="contact.html" class="hd-contact">お問い合わせ</a>
+    <a href="contact.html" class="hd-contact">CONTACT</a>
   </div>
-  <button class="hd-menu" type="button" aria-expanded="false" aria-controls="menu"><span class="en">Menu</span><i></i></button>
+  <button class="hd-menu" type="button" aria-expanded="false" aria-controls="menu"><b>MENU</b><i></i></button>
 </header>
 
 <div class="menu" id="menu" aria-hidden="true" data-lenis-prevent>
   <div class="menu-in">
-    <div class="menu-side">
-      <figure class="menu-photo"><img src="../assets/img/yagiri.jpg" alt="" loading="lazy"></figure>
-      <div class="menu-tel">
-        <p class="mono bx">Contact</p>
-        <a href="tel:0473646904">047-364-6904</a>
+    <figure class="menu-photo"><img class="grade" src="../assets/img/tojotei.jpg" alt="" loading="lazy"></figure>
+    <div class="menu-body">
+      <div class="menu-groups"><div class="menu-group"><p class="lbl d bx">For residents</p><ul><li style="--i:0" class="bx"><a href="consult.html">不動産相談<span>Consultation</span></a></li><li style="--i:1" class="bx"><a href="area.html">会員一覧・エリアマップ<span>Members</span></a></li><li style="--i:2" class="bx"><a href="kariru.html">家を<wbr>借りる<wbr>・貸す<wbr>時<span>Renting</span></a></li><li style="--i:3" class="bx"><a href="news.html">お知らせ<span>News</span></a></li></ul></div><div class="menu-group"><p class="lbl d bx">For businesses</p><ul><li style="--i:4" class="bx"><a href="nyukai.html">入会案内<span>Membership</span></a></li><li style="--i:5" class="bx"><a href="kaigyo.html">開業を<wbr>お考えの<wbr>方<span>Start up</span></a></li><li style="--i:6" class="bx"><a href="takken.html">宅建協会とは<span>Association</span></a></li></ul></div><div class="menu-group"><p class="lbl d bx">For licensees</p><ul><li style="--i:7" class="bx"><a href="license.html">講習・試験<span>License</span></a></li><li style="--i:8" class="bx"><a href="shoshiki.html">書式ダウンロード<span>Documents</span></a></li><li style="--i:9" class="bx"><a href="kaiin/index.html">会員専用ページ<span>Members only</span></a></li></ul></div><div class="menu-group"><p class="lbl d bx">About</p><ul><li style="--i:10" class="bx"><a href="about.html">支部<wbr>案内<span>About</span></a></li><li style="--i:11" class="bx"><a href="links.html">リンク集<span>Links</span></a></li><li style="--i:12" class="bx"><a href="contact.html">お問い<wbr>合わせ<span>Contact</span></a></li><li style="--i:13" class="bx"><a href="privacy.html">個人情報の<wbr>取り扱い<span>Privacy</span></a></li></ul></div></div>
+      <div class="menu-foot">
+        <div><p class="lbl d bx">Contact</p><a class="tel" href="tel:0473646904">047-364-6904</a></div>
         <p class="bx">月〜金 9:00–17:00(土日・祝日休)<br>〒271-0064 千葉県松戸市上本郷3185</p>
       </div>
     </div>
-    <div class="menu-groups"><div class="menu-group"><p class="mono bx">For residents — 一般の<wbr>方<wbr>へ</p><ul><li style="--i:0" class="bx"><a href="consult.html">不動産相談<span>Consultation</span></a></li><li style="--i:1" class="bx"><a href="area.html">会員一覧・エリアマップ<span>Members</span></a></li><li style="--i:2" class="bx"><a href="kariru.html">家を<wbr>借りる<wbr>・貸す<wbr>時<span>Renting</span></a></li><li style="--i:3" class="bx"><a href="news.html">お知らせ<span>News</span></a></li></ul></div><div class="menu-group"><p class="mono bx">For businesses — 開業・<wbr>入会を<wbr>お考えの<wbr>方<wbr>へ</p><ul><li style="--i:4" class="bx"><a href="nyukai.html">入会案内<span>Membership</span></a></li><li style="--i:5" class="bx"><a href="kaigyo.html">開業を<wbr>お考えの<wbr>方<span>Start up</span></a></li><li style="--i:6" class="bx"><a href="takken.html">宅建協会とは<span>Association</span></a></li></ul></div><div class="menu-group"><p class="mono bx">For licensees — 宅建士・会員の<wbr>方<wbr>へ</p><ul><li style="--i:7" class="bx"><a href="license.html">講習・試験<span>License</span></a></li><li style="--i:8" class="bx"><a href="shoshiki.html">書式ダウンロード<span>Documents</span></a></li><li style="--i:9" class="bx"><a href="kaiin/index.html">会員専用ページ<span>Members only</span></a></li></ul></div><div class="menu-group"><p class="mono bx">About — 支部に<wbr>ついて</p><ul><li style="--i:10" class="bx"><a href="about.html">支部<wbr>案内<span>About</span></a></li><li style="--i:11" class="bx"><a href="links.html">リンク集<span>Links</span></a></li><li style="--i:12" class="bx"><a href="contact.html">お問い<wbr>合わせ<span>Contact</span></a></li><li style="--i:13" class="bx"><a href="privacy.html">個人情報の<wbr>取り扱い<span>Privacy</span></a></li></ul></div></div>
   </div>
 </div>
 <main>
 <section class="ph">
-  <div class="wrap">
-    <div class="ph-head">
-      <p class="ph-cat mono bx">For residents</p>
-      <p class="ph-en" aria-hidden="true">Renting</p>
-      <h1 class="ph-ja bx">家を<wbr>借りる<wbr>・貸す<wbr>時</h1>
-      <nav class="crumbs" aria-label="現在地"><a href="index.html">ホーム</a><span aria-hidden="true">/</span><span aria-current="page">家を借りる・貸す時</span></nav>
-    </div>
+  <div class="ph-bg" data-px="6"><img class="grade" src="../assets/img/yagiri.jpg" alt="" style="object-position:50% 35%"></div>
+  <div class="ph-in">
+    <p class="ph-en">Renting</p>
+    <h1 class="ph-ja split bx">家を<wbr>借りる<wbr>・貸す<wbr>時</h1>
+    <span class="gl"></span>
+    <p class="ph-cat bx">For residents</p>
   </div>
-  <figure class="ph-photo" data-px><img src="../assets/img/yagiri.jpg" alt="" style="object-position:50% 35%"></figure>
+  <nav class="crumbs" aria-label="現在地"><a href="index.html">ホーム</a><span aria-hidden="true">—</span><span aria-current="page">家を借りる・貸す時</span></nav>
+  <span class="ph-scroll" aria-hidden="true"></span>
 </section>
-<div class="wrap"><div class="pg"><aside class="pg-toc" aria-label="このページの目次"><div class="pg-toc-in"><p class="mono bx">Contents</p><ol><li class="bx"><a href="#s01"><span>01</span>マイルーム探しと貸す<wbr>場合の<wbr>知識</a></li><li class="bx"><a href="#s02"><span>02</span>【1】<wbr>「借りる」<wbr>場合の<wbr>条件整理</a></li><li class="bx"><a href="#s03"><span>03</span>【2】一時<wbr>金の<wbr>性格</a></li><li class="bx"><a href="#s04"><span>04</span>【3】情報収集と<wbr>業者選択</a></li><li class="bx"><a href="#s05"><span>05</span>【4】現地に<wbr>足を<wbr>運び部屋を<wbr>チェック</a></li><li class="bx"><a href="#s06"><span>06</span>【5】賃貸住宅も<wbr>重要事項説明を<wbr>受けて<wbr>契約を</a></li><li class="bx"><a href="#s07"><span>07</span>【6】自宅を<wbr>短期間<wbr>「貸す」<wbr>場合の<wbr>知識</a></li><li class="bx"><a href="#s08"><span>08</span>【7】公的住宅ローンは<wbr>どうなる</a></li><li class="bx"><a href="#s09"><span>09</span>お困りの<wbr>ことが<wbr>あれば<wbr>無料相談へ</a></li></ol></div></aside><div class="pg-body"><section class="blk" id="s01" data-rv><p class="blk-num bx">01</p>
-      <h2 class="bx">マイルーム探しと貸す<wbr>場合の<wbr>知識</h2>
+<div class="wrap"><div class="pg"><aside class="pg-toc" aria-label="このページの目次"><div class="pg-toc-in"><p class="lbl bx">Contents</p><ol><li class="bx"><a href="#s01"><span>01</span>マイルーム探しと貸す<wbr>場合の<wbr>知識</a></li><li class="bx"><a href="#s02"><span>02</span>【1】<wbr>「借りる」<wbr>場合の<wbr>条件整理</a></li><li class="bx"><a href="#s03"><span>03</span>【2】一時<wbr>金の<wbr>性格</a></li><li class="bx"><a href="#s04"><span>04</span>【3】情報収集と<wbr>業者選択</a></li><li class="bx"><a href="#s05"><span>05</span>【4】現地に<wbr>足を<wbr>運び部屋を<wbr>チェック</a></li><li class="bx"><a href="#s06"><span>06</span>【5】賃貸住宅も<wbr>重要事項説明を<wbr>受けて<wbr>契約を</a></li><li class="bx"><a href="#s07"><span>07</span>【6】自宅を<wbr>短期間<wbr>「貸す」<wbr>場合の<wbr>知識</a></li><li class="bx"><a href="#s08"><span>08</span>【7】公的住宅ローンは<wbr>どうなる</a></li><li class="bx"><a href="#s09"><span>09</span>お困りの<wbr>ことが<wbr>あれば<wbr>無料相談へ</a></li></ol></div></aside><div class="pg-body"><section class="blk" id="s01"><p class="blk-num bx" data-rv>01</p>
+      <h2 class="split bx">マイルーム探しと貸す<wbr>場合の<wbr>知識</h2>
       <p class="bx">アパートや<wbr>マンションを<wbr>借りる<wbr>場合や、<wbr>自宅を<wbr>転勤などで<wbr>短期間貸したいと<wbr>いった<wbr>ケースに<wbr>ついても、<wbr>ある<wbr>程度の<wbr>知識が<wbr>必要です。</p>
       <p class="bx">不動産の<wbr>賃貸も、<wbr>法律(宅地建物取引業法)に<wbr>よる<wbr>決まりが<wbr>ありますし、<wbr>快適に<wbr>生活する<wbr>ためにも、<wbr>「借りる」<wbr>「貸す」に<wbr>関しての<wbr>チェックポイントが<wbr>あります。</p>
-    </section><section class="blk" id="s02" data-rv><p class="blk-num bx">02</p>
-      <h2 class="bx">【1】<wbr>「借りる」<wbr>場合の<wbr>条件整理</h2>
+    </section><section class="blk" id="s02"><p class="blk-num bx" data-rv>02</p>
+      <h2 class="split bx">【1】<wbr>「借りる」<wbr>場合の<wbr>条件整理</h2>
       <p class="bx">希望条件を<wbr>明確に<wbr>しておく<wbr>必要が<wbr>あります。</p>
       <ul class="disc">
         <li class="bx">月々の<wbr>賃料・管理費等は<wbr>いくらか</li>
@@ -83,47 +84,60 @@
         <li class="bx">周辺環境は</li>
       </ul>
       <p class="bx">などを<wbr>整理してみてください。</p>
-    </section><section class="blk" id="s03" data-rv><p class="blk-num bx">03</p>
-      <h2 class="bx">【2】一時<wbr>金の<wbr>性格</h2>
+    </section><section class="blk" id="s03"><p class="blk-num bx" data-rv>03</p>
+      <h2 class="split bx">【2】一時<wbr>金の<wbr>性格</h2>
       <p class="bx">一時金は、<wbr>地域に<wbr>よって<wbr>商慣習が<wbr>異なりますが、<wbr>敷金・保証金・礼金等です。</p>
       <ul class="disc">
         <li class="bx"><strong>敷金</strong>は<wbr>預り金で、<wbr>賃借人の<wbr>退去の<wbr>ときに<wbr>戻ってくる<wbr>性格の<wbr>お金ですが、<wbr>退去の<wbr>際、<wbr>借主の<wbr>責任に<wbr>帰する<wbr>住居の<wbr>損傷などが<wbr>あれば<wbr>修繕費用と<wbr>して<wbr>差し引かれる<wbr>ことがあります。</li>
         <li class="bx"><strong>保証金</strong>は<wbr>預り<wbr>金の<wbr>性格を<wbr>持ちますが、<wbr>退去の<wbr>際、<wbr>償却される<wbr>ケースが<wbr>あります。</li>
         <li class="bx"><strong>礼金</strong>は、<wbr>賃貸借契約締結に<wbr>際し、<wbr>借主から<wbr>貸主に<wbr>対しお礼の<wbr>意味で<wbr>支払われる<wbr>ことの<wbr>ある<wbr>金員で、<wbr>退去の<wbr>際は<wbr>戻りません。</li>
       </ul>
-    </section><section class="blk" id="s04" data-rv><p class="blk-num bx">04</p>
-      <h2 class="bx">【3】情報収集と<wbr>業者選択</h2>
+    </section><section class="blk" id="s04"><p class="blk-num bx" data-rv>04</p>
+      <h2 class="split bx">【3】情報収集と<wbr>業者選択</h2>
       <p class="bx">情報誌に<wbr>目を<wbr>通して<wbr>相場を<wbr>知る<wbr>ことも<wbr>重要ですが、<wbr>最も<wbr>情報を<wbr>もっているのは、<wbr>地元に<wbr>密着した<wbr>仲介業者です。<wbr>信頼の<wbr>「ハトマーク」の<wbr>お店へ<wbr>どうぞ。</p>
       <a href="area.html" class="btn btn-green">松戸の会員不動産会社を探す</a>
-    </section><section class="blk" id="s05" data-rv><p class="blk-num bx">05</p>
-      <h2 class="bx">【4】現地に<wbr>足を<wbr>運び部屋を<wbr>チェック</h2>
+    </section><section class="blk" id="s05"><p class="blk-num bx" data-rv>05</p>
+      <h2 class="split bx">【4】現地に<wbr>足を<wbr>運び部屋を<wbr>チェック</h2>
       <p class="bx">必ず<wbr>現地に<wbr>足を<wbr>運び、<wbr>通勤や<wbr>通学の<wbr>時間を<wbr>調べてください。<wbr>この<wbr>時、<wbr>周辺の<wbr>商店、<wbr>飲食店の<wbr>様子、<wbr>開店・閉店時間も<wbr>チェックしたい<wbr>ものです。<wbr>部屋も<wbr>自分の<wbr>生活時間、<wbr>趣味等を<wbr>考えて<wbr>選ぶことが<wbr>大切です。</p>
-    </section><section class="blk" id="s06" data-rv><p class="blk-num bx">06</p>
-      <h2 class="bx">【5】賃貸住宅も<wbr>重要事項説明を<wbr>受けて<wbr>契約を</h2>
+    </section><section class="blk" id="s06"><p class="blk-num bx" data-rv>06</p>
+      <h2 class="split bx">【5】賃貸住宅も<wbr>重要事項説明を<wbr>受けて<wbr>契約を</h2>
       <p class="bx">賃貸住宅を<wbr>借りる<wbr>場合も、<wbr>宅地建物取引士が<wbr>重要事項を<wbr>説明し、<wbr>重要事項説明書を<wbr>交付した後でなければ、<wbr>契約締結は<wbr>できません。</p>
-    </section><section class="blk" id="s07" data-rv><p class="blk-num bx">07</p>
-      <h2 class="bx">【6】自宅を<wbr>短期間<wbr>「貸す」<wbr>場合の<wbr>知識</h2>
+    </section><section class="blk" id="s07"><p class="blk-num bx" data-rv>07</p>
+      <h2 class="split bx">【6】自宅を<wbr>短期間<wbr>「貸す」<wbr>場合の<wbr>知識</h2>
       <p class="bx">転勤などで、<wbr>自宅を<wbr>期限付きで<wbr>貸さなければならない<wbr>場合が<wbr>あります。<wbr>この<wbr>ケースでは、<wbr>仲介業者に<wbr>依頼して<wbr>「不在中の<wbr>期限付建物賃貸借契約」で<wbr>賃借人を<wbr>斡旋(仲介)して<wbr>もらうことになります。</p>
       <p class="bx">ここで<wbr>重要なのは、<wbr>転勤の<wbr>間だけの<wbr>賃貸ですから、<wbr>期限を<wbr>確実に<wbr>守って<wbr>もらう<wbr>契約内容に<wbr>しなければなりません。<wbr>その分、<wbr>賃料も<wbr>相場より<wbr>低く<wbr>するなどの<wbr>工夫が<wbr>必要と<wbr>なります。</p>
       <p class="bx">また、<wbr>賃借人の<wbr>募集と<wbr>いう<wbr>仲介業務と<wbr>併せて、<wbr>家賃の<wbr>集金と<wbr>いった<wbr>管理業務を<wbr>委託した<wbr>ほうが<wbr>スムーズに<wbr>いく<wbr>場合が<wbr>多いようです。<wbr>家賃収入は<wbr>不動産所得に<wbr>なりますので、<wbr>所得申告が<wbr>必要に<wbr>なります。</p>
-    </section><section class="blk" id="s08" data-rv><p class="blk-num bx">08</p>
-      <h2 class="bx">【7】公的住宅ローンは<wbr>どうなる</h2>
+    </section><section class="blk" id="s08"><p class="blk-num bx" data-rv>08</p>
+      <h2 class="split bx">【7】公的住宅ローンは<wbr>どうなる</h2>
       <p class="bx">自宅を<wbr>期限付き賃貸に<wbr>出す場合、<wbr>公的住宅ローンは<wbr>どうなるのかの<wbr>問題が<wbr>ありますが、<wbr>転勤などの<wbr>ケースでは<wbr>救済措置が<wbr>あります。<wbr>会社からの<wbr>転勤証明書を<wbr>提出すれば、<wbr>融資は<wbr>そのまま<wbr>継続されます。</p>
       <div class="alert warn">※本ページは現行サイト(最終更新2015年)の内容を移行したものです。「住宅金融公庫」等の旧制度名を含むため、公開前に事務局にて内容の最新化確認をお願いします(住宅金融公庫→現・住宅金融支援機構)。</div>
-    </section><section class="blk" id="s09" data-rv><p class="blk-num bx">09</p>
-      <h2 style="text-align:left;" class="bx">お困りの<wbr>ことが<wbr>あれば<wbr>無料相談へ</h2>
+    </section><section class="blk" id="s09"><p class="blk-num bx" data-rv>09</p>
+      <h2 class="split bx" style="text-align:left;">お困りの<wbr>ことが<wbr>あれば<wbr>無料相談へ</h2>
       <p class="bx">賃貸の<wbr>こと、<wbr>契約の<wbr>こと、<wbr>まずは<wbr>お気軽に<wbr>ご相談ください。</p>
       <a href="consult.html" class="btn btn-red">不動産無料相談のご案内</a>
-    </section></div></div></div><div class="wrap"><section class="next"><p class="next-head mono bx">Related pages</p><div class="next-grid"><a class="tile" href="consult.html" data-cursor="View" data-rv style="--d:0.0s"><img src="../assets/img/yagiri.jpg" alt="" loading="lazy"><div class="tile-in"><p class="tile-no mono bx">01</p><p class="tile-en bx">Consultation</p><p class="tile-ja bx">不動産相談(無料)</p><p class="tile-txt bx">不動産に<wbr>関する<wbr>ご相談を<wbr>無料で<wbr>お受けしています。</p><span class="tile-arrow" aria-hidden="true"></span></div></a><a class="tile" href="area.html" data-cursor="View" data-rv style="--d:0.08s"><img src="../assets/img/mori21.jpg" alt="" loading="lazy"><div class="tile-in"><p class="tile-no mono bx">02</p><p class="tile-en bx">Members</p><p class="tile-ja bx">会員一覧・エリアマップ</p><p class="tile-txt bx">お住まいの<wbr>地域から<wbr>会員の<wbr>不動産会社を<wbr>探せます。</p><span class="tile-arrow" aria-hidden="true"></span></div></a></div></section></div></main>
+    </section></div></div></div><section class="rel"><div class="wrap"><div class="rel-hd"><p class="lbl c bx" data-rv>Related pages</p></div><div class="rel-grid"><a class="rel-card" href="consult.html" data-cursor="VIEW"><div class="rv-img" style="--d:0.0s"><img class="grade" src="../assets/img/yagiri.jpg" alt="" loading="lazy"></div><p class="lbl bx" data-rv>Consultation</p><h3 data-rv class="bx">不動産相談(無料)</h3><p data-rv class="bx">不動産に<wbr>関する<wbr>ご相談を<wbr>無料で<wbr>お受けしています。</p></a><a class="rel-card" href="area.html" data-cursor="VIEW"><div class="rv-img" style="--d:0.15s"><img class="grade" src="../assets/img/mori21.jpg" alt="" loading="lazy"></div><p class="lbl bx" data-rv>Members</p><h3 data-rv class="bx">会員一覧・エリアマップ</h3><p data-rv class="bx">お住まいの<wbr>地域から<wbr>会員の<wbr>不動産会社を<wbr>探せます。</p></a></div></div></section><section class="cta">
+  <div class="bgimg" data-px="6"><img class="grade" src="../assets/img/yagiri.jpg" alt="" loading="lazy"></div>
+  <div class="wrap cta-grid">
+    <div class="cta-hd">
+      <p class="lbl d bx" data-rv>Contact</p>
+      <h2 class="ttl split bx">不動産の<wbr>こと、<br>ひとりで<wbr>悩まず<wbr>ご相談を。</h2>
+    </div>
+    <div class="cta-tel" data-rv style="--d:.2s">
+      <p class="lbl d bx">Telephone</p>
+      <a class="tel" href="tel:0473646904">047-364-6904</a>
+      <p class="bx">月〜金 9:00–17:00(土日・祝日休)</p>
+      <a class="lux d" href="contact.html">お問い合わせ</a>
+    </div>
+  </div>
+</section>
+</main>
 <footer class="ft">
   <div class="wrap">
-    <div class="ft-top">
-      <div class="ft-brand">
-        <a href="index.html"><img src="../assets/img/hatomark.png" alt="" width="40" height="47"><span><small class="bx">一般社団法人 千葉県宅地建物取引業協会</small><strong>宅建協会 松戸支部</strong></span></a>
-        <p class="ft-addr bx">〒271-0064 千葉県松戸市上本郷3185<br>JR常磐線 北松戸駅 徒歩約8分<a class="num" href="tel:0473646904">047-364-6904</a>FAX 047-363-3142 ／ 月〜金 9:00–17:00(土日・祝日休)</p>
-      </div>
-      <nav class="ft-nav" aria-label="フッターメニュー"><div><p class="mono bx">For residents</p><ul><li class="bx"><a href="consult.html">不動産相談</a></li><li class="bx"><a href="area.html">会員一覧・エリアマップ</a></li><li class="bx"><a href="kariru.html">家を<wbr>借りる<wbr>・貸す<wbr>時</a></li><li class="bx"><a href="news.html">お知らせ</a></li></ul></div><div><p class="mono bx">For businesses</p><ul><li class="bx"><a href="nyukai.html">入会案内</a></li><li class="bx"><a href="kaigyo.html">開業を<wbr>お考えの<wbr>方</a></li><li class="bx"><a href="takken.html">宅建協会とは</a></li></ul></div><div><p class="mono bx">For licensees</p><ul><li class="bx"><a href="license.html">講習・試験</a></li><li class="bx"><a href="shoshiki.html">書式ダウンロード</a></li><li class="bx"><a href="kaiin/index.html">会員専用ページ</a></li></ul></div><div><p class="mono bx">About</p><ul><li class="bx"><a href="about.html">支部<wbr>案内</a></li><li class="bx"><a href="links.html">リンク集</a></li><li class="bx"><a href="contact.html">お問い<wbr>合わせ</a></li><li class="bx"><a href="privacy.html">個人情報の<wbr>取り扱い</a></li></ul></div></nav>
+    <div class="ft-brand" data-rv>
+      <a href="index.html"><img src="../assets/img/hatomark.png" alt="" width="40" height="47"><strong>宅建協会 松戸支部</strong><small class="bx">一般社団法人 千葉県宅地建物取引業協会</small></a>
     </div>
+    <p class="ft-addr bx" data-rv>〒271-0064 千葉県松戸市上本郷3185 ／ JR常磐線 北松戸駅 徒歩約8分<br><a class="tel" href="tel:0473646904">047-364-6904</a><br>FAX 047-363-3142 ／ 月〜金 9:00–17:00(土日・祝日休)</p>
+    <nav class="ft-nav" aria-label="フッターメニュー"><div><p class="lbl d bx">For residents</p><ul><li class="bx"><a href="consult.html">不動産相談</a></li><li class="bx"><a href="area.html">会員一覧・エリアマップ</a></li><li class="bx"><a href="kariru.html">家を<wbr>借りる<wbr>・貸す<wbr>時</a></li><li class="bx"><a href="news.html">お知らせ</a></li></ul></div><div><p class="lbl d bx">For businesses</p><ul><li class="bx"><a href="nyukai.html">入会案内</a></li><li class="bx"><a href="kaigyo.html">開業を<wbr>お考えの<wbr>方</a></li><li class="bx"><a href="takken.html">宅建協会とは</a></li></ul></div><div><p class="lbl d bx">For licensees</p><ul><li class="bx"><a href="license.html">講習・試験</a></li><li class="bx"><a href="shoshiki.html">書式ダウンロード</a></li><li class="bx"><a href="kaiin/index.html">会員専用ページ</a></li></ul></div><div><p class="lbl d bx">About</p><ul><li class="bx"><a href="about.html">支部<wbr>案内</a></li><li class="bx"><a href="links.html">リンク集</a></li><li class="bx"><a href="contact.html">お問い<wbr>合わせ</a></li><li class="bx"><a href="privacy.html">個人情報の<wbr>取り扱い</a></li></ul></div></nav>
     <p class="ft-word bx" aria-hidden="true">Takken Matsudo</p>
     <div class="ft-bottom">
       <p class="bx">© 2026 (一社)千葉県宅地建物取引業協会 松戸支部</p>
@@ -134,6 +148,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-<script src="assets/c.js?v=9"></script>
+<script src="assets/c.js?v=15"></script>
 </body>
 </html>
