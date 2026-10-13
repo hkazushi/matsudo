@@ -1,5 +1,5 @@
 """
-デザイン案C(/sample/)の全ページを生成する。
+新デザイン案(/sample/)の全ページを生成する。
 
 現行サイト(mockup/*.html, mockup/kaiin/*.html)の本文をそのまま取り込み、
 案Cの枠(ヘッダー・ページ見出し・目次・関連ページ・フッター)で組み直して書き出す。
@@ -22,7 +22,7 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))   # 
 OUT = os.path.join(ROOT, "sample")
 SITE = "sample"          # 公開URLのディレクトリ名
 OLD_SITES = ["sample2"]  # 旧URL。同じページへ転送する
-VER = "21"
+VER = "22"
 
 # ---------------------------------------------------------------------------
 # ページ定義: slug -> (英字見出し, 分類, 写真, 写真の位置, 関連ページ)
@@ -170,7 +170,7 @@ def head(title, R, A, desc, intro=False):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{esc(title)}｜宅建協会 松戸支部 デザイン案C</title>
+<title>{esc(title)}｜宅建協会 松戸支部 新デザイン案</title>
 <meta name="description" content="{esc(desc)}">
 <!-- デザイン検討用ページのため検索結果には出さない -->
 <meta name="robots" content="noindex, nofollow">
@@ -278,7 +278,7 @@ def footer(R, A):
     <p class="ft-word" aria-hidden="true">Takken Matsudo</p>
     <div class="ft-bottom">
       <p>© 2026 (一社)千葉県宅地建物取引業協会 松戸支部</p>
-      <p>このサイトはデザイン案Cです(機能は動作しません)。 <a href="{A}index.html">現行デザイン</a> ／ <a href="{A}sample-b/">デザイン案B</a></p>
+      <p>このサイトは新デザイン案です(機能は動作しません)。 <a href="{A}index.html">現行のサイトを見る</a></p>
     </div>
   </div>
 </footer>
