@@ -7,13 +7,13 @@
 <meta name="description" content="宅建協会松戸支部のご案内。支部概要、事業案内、組織図(役員・8委員会・5地区)、アクセス情報を掲載しています。">
 <!-- デザイン検討用ページのため検索結果には出さない -->
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#F7F6F2">
+<meta name="theme-color" content="#0C0F0D">
 <link rel="icon" type="image/png" href="../assets/img/hatomark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif+JP:wght@200;300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.css">
-<link rel="stylesheet" href="assets/c.css?v=9">
+<link rel="stylesheet" href="assets/c.css?v=15">
 <script>
   // 演出の初期状態を描画前に決める(読み込み後に隠すとチラつくため)
   (function () {
@@ -21,61 +21,62 @@
     d.classList.add("js");
     if (!rm) d.classList.add("anim");
     try { if (!rm && sessionStorage.getItem("c-pt") === "1") { d.classList.add("pt-in"); sessionStorage.removeItem("c-pt"); } } catch (e) {}
+    
     // スクリプトが動かなかった場合でも内容は必ず表示する
-    setTimeout(function () { if (!d.classList.contains("ready")) d.classList.remove("anim", "pt-in"); }, 4000);
+    setTimeout(function () { if (!d.classList.contains("ready")) d.classList.remove("anim", "pt-in", "intro-on"); }, 4000);
   })();
 </script>
 </head>
 <body class="page-about">
-<div class="pt" aria-hidden="true"><span class="pt-mark"><img src="../assets/img/hatomark.png" alt=""><span>宅建協会 松戸支部</span></span></div>
-<div class="cur" aria-hidden="true"><i></i><b></b></div>
+<div class="intro" aria-hidden="true"><img class="intro-mark" src="../assets/img/hatomark.png" alt=""><span class="intro-line"></span><p class="intro-name bx">宅建協会 松戸支部</p></div>
+<div class="pt" aria-hidden="true"><i></i></div>
+<div class="cur" aria-hidden="true"><i></i><s></s><b></b></div>
 
 <header class="hd">
   <a href="index.html" class="hd-brand" aria-label="宅建協会 松戸支部 トップへ">
-    <img src="../assets/img/hatomark.png" alt="" width="30" height="35">
+    <img src="../assets/img/hatomark.png" alt="" width="28" height="33">
     <span class="hd-name"><small class="bx">一般社団法人 千葉県宅地建物取引業協会</small><strong>宅建協会 松戸支部</strong></span>
   </a>
   <nav class="hd-nav" aria-label="主要メニュー"><a href="about.html" class="is-current">支部案内</a><a href="consult.html">不動産相談</a><a href="area.html">会員を探す</a><a href="nyukai.html">入会案内</a><a href="license.html">講習・試験</a><a href="news.html">お知らせ</a></nav>
   <div class="hd-cta">
     <a href="kaiin/index.html" class="hd-member">会員専用</a>
-    <a href="contact.html" class="hd-contact">お問い合わせ</a>
+    <a href="contact.html" class="hd-contact">CONTACT</a>
   </div>
-  <button class="hd-menu" type="button" aria-expanded="false" aria-controls="menu"><span class="en">Menu</span><i></i></button>
+  <button class="hd-menu" type="button" aria-expanded="false" aria-controls="menu"><b>MENU</b><i></i></button>
 </header>
 
 <div class="menu" id="menu" aria-hidden="true" data-lenis-prevent>
   <div class="menu-in">
-    <div class="menu-side">
-      <figure class="menu-photo"><img src="../assets/img/yagiri.jpg" alt="" loading="lazy"></figure>
-      <div class="menu-tel">
-        <p class="mono bx">Contact</p>
-        <a href="tel:0473646904">047-364-6904</a>
+    <figure class="menu-photo"><img class="grade" src="../assets/img/tojotei.jpg" alt="" loading="lazy"></figure>
+    <div class="menu-body">
+      <div class="menu-groups"><div class="menu-group"><p class="lbl d bx">For residents</p><ul><li style="--i:0" class="bx"><a href="consult.html">不動産相談<span>Consultation</span></a></li><li style="--i:1" class="bx"><a href="area.html">会員一覧・エリアマップ<span>Members</span></a></li><li style="--i:2" class="bx"><a href="kariru.html">家を<wbr>借りる<wbr>・貸す<wbr>時<span>Renting</span></a></li><li style="--i:3" class="bx"><a href="news.html">お知らせ<span>News</span></a></li></ul></div><div class="menu-group"><p class="lbl d bx">For businesses</p><ul><li style="--i:4" class="bx"><a href="nyukai.html">入会案内<span>Membership</span></a></li><li style="--i:5" class="bx"><a href="kaigyo.html">開業を<wbr>お考えの<wbr>方<span>Start up</span></a></li><li style="--i:6" class="bx"><a href="takken.html">宅建協会とは<span>Association</span></a></li></ul></div><div class="menu-group"><p class="lbl d bx">For licensees</p><ul><li style="--i:7" class="bx"><a href="license.html">講習・試験<span>License</span></a></li><li style="--i:8" class="bx"><a href="shoshiki.html">書式ダウンロード<span>Documents</span></a></li><li style="--i:9" class="bx"><a href="kaiin/index.html">会員専用ページ<span>Members only</span></a></li></ul></div><div class="menu-group"><p class="lbl d bx">About</p><ul><li style="--i:10" class="bx"><a href="about.html">支部<wbr>案内<span>About</span></a></li><li style="--i:11" class="bx"><a href="links.html">リンク集<span>Links</span></a></li><li style="--i:12" class="bx"><a href="contact.html">お問い<wbr>合わせ<span>Contact</span></a></li><li style="--i:13" class="bx"><a href="privacy.html">個人情報の<wbr>取り扱い<span>Privacy</span></a></li></ul></div></div>
+      <div class="menu-foot">
+        <div><p class="lbl d bx">Contact</p><a class="tel" href="tel:0473646904">047-364-6904</a></div>
         <p class="bx">月〜金 9:00–17:00(土日・祝日休)<br>〒271-0064 千葉県松戸市上本郷3185</p>
       </div>
     </div>
-    <div class="menu-groups"><div class="menu-group"><p class="mono bx">For residents — 一般の<wbr>方<wbr>へ</p><ul><li style="--i:0" class="bx"><a href="consult.html">不動産相談<span>Consultation</span></a></li><li style="--i:1" class="bx"><a href="area.html">会員一覧・エリアマップ<span>Members</span></a></li><li style="--i:2" class="bx"><a href="kariru.html">家を<wbr>借りる<wbr>・貸す<wbr>時<span>Renting</span></a></li><li style="--i:3" class="bx"><a href="news.html">お知らせ<span>News</span></a></li></ul></div><div class="menu-group"><p class="mono bx">For businesses — 開業・<wbr>入会を<wbr>お考えの<wbr>方<wbr>へ</p><ul><li style="--i:4" class="bx"><a href="nyukai.html">入会案内<span>Membership</span></a></li><li style="--i:5" class="bx"><a href="kaigyo.html">開業を<wbr>お考えの<wbr>方<span>Start up</span></a></li><li style="--i:6" class="bx"><a href="takken.html">宅建協会とは<span>Association</span></a></li></ul></div><div class="menu-group"><p class="mono bx">For licensees — 宅建士・会員の<wbr>方<wbr>へ</p><ul><li style="--i:7" class="bx"><a href="license.html">講習・試験<span>License</span></a></li><li style="--i:8" class="bx"><a href="shoshiki.html">書式ダウンロード<span>Documents</span></a></li><li style="--i:9" class="bx"><a href="kaiin/index.html">会員専用ページ<span>Members only</span></a></li></ul></div><div class="menu-group"><p class="mono bx">About — 支部に<wbr>ついて</p><ul><li style="--i:10" class="bx"><a href="about.html">支部<wbr>案内<span>About</span></a></li><li style="--i:11" class="bx"><a href="links.html">リンク集<span>Links</span></a></li><li style="--i:12" class="bx"><a href="contact.html">お問い<wbr>合わせ<span>Contact</span></a></li><li style="--i:13" class="bx"><a href="privacy.html">個人情報の<wbr>取り扱い<span>Privacy</span></a></li></ul></div></div>
   </div>
 </div>
 <main>
 <section class="ph">
-  <div class="wrap">
-    <div class="ph-head">
-      <p class="ph-cat mono bx">Matsudo Branch</p>
-      <p class="ph-en" aria-hidden="true">About</p>
-      <h1 class="ph-ja bx">支部<wbr>案内</h1>
-      <nav class="crumbs" aria-label="現在地"><a href="index.html">ホーム</a><span aria-hidden="true">/</span><span aria-current="page">支部案内</span></nav>
-    </div>
+  <div class="ph-bg" data-px="6"><img class="grade" src="../assets/img/tojotei.jpg" alt="" style="object-position:50% 60%"></div>
+  <div class="ph-in">
+    <p class="ph-en">About</p>
+    <h1 class="ph-ja split bx">支部<wbr>案内</h1>
+    <span class="gl"></span>
+    <p class="ph-cat bx">Matsudo Branch</p>
   </div>
-  <figure class="ph-photo" data-px><img src="../assets/img/tojotei.jpg" alt="" style="object-position:50% 60%"></figure>
+  <nav class="crumbs" aria-label="現在地"><a href="index.html">ホーム</a><span aria-hidden="true">—</span><span aria-current="page">支部案内</span></nav>
+  <span class="ph-scroll" aria-hidden="true"></span>
 </section>
-<div class="wrap"><div class="pg"><aside class="pg-toc" aria-label="このページの目次"><div class="pg-toc-in"><p class="mono bx">Contents</p><ol><li class="bx"><a href="#s01"><span>01</span>宅建協会とは</a></li><li class="bx"><a href="#s02"><span>02</span>事業案内</a></li><li class="bx"><a href="#s03"><span>03</span>組織図(役員委員会分掌表)</a></li><li class="bx"><a href="#s04"><span>04</span>開業を<wbr>お考えの<wbr>方<wbr>へ</a></li><li class="bx"><a href="#s05"><span>05</span>支部情報・アクセス</a></li></ol></div></aside><div class="pg-body"><section class="blk" id="s01" data-rv><p class="blk-num bx">01</p>
-      <h2 class="bx">宅建協会とは</h2>
+<div class="wrap"><div class="pg"><aside class="pg-toc" aria-label="このページの目次"><div class="pg-toc-in"><p class="lbl bx">Contents</p><ol><li class="bx"><a href="#s01"><span>01</span>宅建協会とは</a></li><li class="bx"><a href="#s02"><span>02</span>事業案内</a></li><li class="bx"><a href="#s03"><span>03</span>組織図(役員委員会分掌表)</a></li><li class="bx"><a href="#s04"><span>04</span>開業を<wbr>お考えの<wbr>方<wbr>へ</a></li><li class="bx"><a href="#s05"><span>05</span>支部情報・アクセス</a></li></ol></div></aside><div class="pg-body"><section class="blk" id="s01"><p class="blk-num bx" data-rv>01</p>
+      <h2 class="split bx">宅建協会とは</h2>
       <p class="bx">千葉県宅地建物取引業協会は、<wbr>宅地建物取引業の<wbr>適正な<wbr>運営を<wbr>確保し、<wbr>業界の<wbr>健全な<wbr>発展を<wbr>図る<wbr>ため、<wbr>研修等に<wbr>より<wbr>会員を<wbr>指導育成するとともに<wbr>消費者の<wbr>利益を<wbr>保護する<wbr>ことで、<wbr>公共の<wbr>福祉に<wbr>貢献する<wbr>ことを<wbr>目的と<wbr>しています。<wbr>昭和42年7月、<wbr>宅地建物取引業法第74条に<wbr>基づき、<wbr>千葉県知事の<wbr>許可を<wbr>得て<wbr>設立された<wbr>県下宅建業界唯一の<wbr>一般社団法人です。</p>
       <p class="bx">県下11ヵ所に<wbr>支部を<wbr>置き、<wbr>現在県内の<wbr>不動産業者の<wbr>約8割に<wbr>あたる<wbr>4,000社が<wbr>加入しています。<wbr>当松戸支部は、<wbr>335社の<wbr>会員を<wbr>擁する<wbr>大支部です。<wbr>(令和6年3月31日現在)</p>
       <div class="alert info">加入業者の店頭には「ハトマーク」ステッカーが表示されています。ハトマークの2羽の鳩は"会員業者と消費者の信頼と繁栄"を意味し、赤は「太陽」、緑は「大地」、白は「取引の公正」を表しています。</div>
       <a href="takken.html" class="btn btn-green" style="margin-top:8px;">宅建協会・全宅保証について詳しく見る</a>
-    </section><section class="blk" id="s02" data-rv><p class="blk-num bx">02</p>
-      <h2 class="bx">事業案内</h2>
+    </section><section class="blk" id="s02"><p class="blk-num bx" data-rv>02</p>
+      <h2 class="split bx">事業案内</h2>
       <p class="bx">松戸支部では、<wbr>弁償業務、<wbr>苦情解決業務を<wbr>はじめ会員の<wbr>研修業務、<wbr>総合的な<wbr>保証制度の<wbr>研修などを<wbr>実施しています。</p>
       <ul class="disc">
         <li class="bx">不動産相談(松戸市役所・市民相談室)</li>
@@ -84,8 +85,8 @@
         <li class="bx">宅建協会会員用無料パソコン教室</li>
       </ul>
       <p class="note bx">※現行サイトの<wbr>「事業案内」<wbr>「支部<wbr>案内」の<wbr>記載を<wbr>移行しています。<wbr>内容の<wbr>見直しが<wbr>あれば<wbr>ご指示ください。</p>
-    </section><section class="blk" id="s03" data-rv><p class="blk-num bx">03</p>
-      <h2 class="bx">組織図(役員委員会分掌表)</h2>
+    </section><section class="blk" id="s03"><p class="blk-num bx" data-rv>03</p>
+      <h2 class="split bx">組織図(役員委員会分掌表)</h2>
       <p style="font-weight:700;color:var(--green-dark);" class="bx">─ スローガン ─ われわれ宅建松戸は<wbr>「たより<wbr>"guys"(ガイ)」の<wbr>ある<wbr>集団です。</p>
 
       <h3 class="bx">役員</h3>
@@ -118,13 +119,13 @@
         <tr><th class="bx">常盤平・五香地区</th><td class="bx">地区長 齋藤 弘志 / 副地区長 下堀 大介・星野 卓士</td></tr>
       </table>
       <p class="note bx">※現行サイトの<wbr>「役員委員会分掌表」を<wbr>全件<wbr>移行しています。<wbr>役員改選等で<wbr>変更が<wbr>ある<wbr>場合は<wbr>事務局より<wbr>ご連絡ください。</p>
-    </section><section class="blk" id="s04" data-rv><p class="blk-num bx">04</p>
-      <h2 class="bx">開業を<wbr>お考えの<wbr>方<wbr>へ</h2>
+    </section><section class="blk" id="s04"><p class="blk-num bx" data-rv>04</p>
+      <h2 class="split bx">開業を<wbr>お考えの<wbr>方<wbr>へ</h2>
       <p class="bx">不動産業の<wbr>開業には、<wbr>宅地建物取引業の<wbr>免許取得を<wbr>はじめ、<wbr>様々な<wbr>手続きが<wbr>必要です。<wbr>宅建協会では、<wbr>開業を<wbr>お考えの<wbr>方への<wbr>支援・<wbr>ご案内を<wbr>行っています。</p>
       <p class="bx">入会に<wbr>関する<wbr>ご相談・<wbr>資料請求は、<wbr>お気軽に<wbr>事務局まで<wbr>お問い<wbr>合わせください。</p>
       <a href="nyukai.html" class="btn btn-green">入会案内を見る</a>
-    </section><section class="blk" id="s05" data-rv><p class="blk-num bx">05</p>
-      <h2 class="bx">支部情報・アクセス</h2>
+    </section><section class="blk" id="s05"><p class="blk-num bx" data-rv>05</p>
+      <h2 class="split bx">支部情報・アクセス</h2>
       <table class="info-table">
         <tr><th class="bx">名称</th><td class="bx">一般社団法人 千葉県宅地建物取引業協会 松戸支部</td></tr>
         <tr><th class="bx">所在地</th><td class="bx">〒271-0064 千葉県松戸市上本郷3185</td></tr>
@@ -140,16 +141,29 @@
           title="宅建協会松戸支部の地図(千葉県松戸市上本郷3185)"></iframe>
       </div>
       <p class="note bx" style="margin-top:10px;"><a href="https://www.google.com/maps/search/?api=1&query=%E5%8D%83%E8%91%89%E7%9C%8C%E6%9D%BE%E6%88%B8%E5%B8%82%E4%B8%8A%E6%9C%AC%E9%83%B73185" target="_blank" rel="noopener">Googleマップで<wbr>開く<wbr>(経路案内)</a></p>
-    </section></div></div></div><div class="wrap"><section class="next"><p class="next-head mono bx">Related pages</p><div class="next-grid"><a class="tile" href="takken.html" data-cursor="View" data-rv style="--d:0.0s"><img src="../assets/img/hero-hondoji.jpg" alt="" loading="lazy"><div class="tile-in"><p class="tile-no mono bx">01</p><p class="tile-en bx">Association</p><p class="tile-ja bx">宅建協会とは</p><p class="tile-txt bx">宅建協会と<wbr>全宅<wbr>保証の<wbr>役割を<wbr>ご紹介します。</p><span class="tile-arrow" aria-hidden="true"></span></div></a><a class="tile" href="consult.html" data-cursor="View" data-rv style="--d:0.08s"><img src="../assets/img/yagiri.jpg" alt="" loading="lazy"><div class="tile-in"><p class="tile-no mono bx">02</p><p class="tile-en bx">Consultation</p><p class="tile-ja bx">不動産相談(無料)</p><p class="tile-txt bx">不動産に<wbr>関する<wbr>ご相談を<wbr>無料で<wbr>お受けしています。</p><span class="tile-arrow" aria-hidden="true"></span></div></a></div></section></div></main>
+    </section></div></div></div><section class="rel"><div class="wrap"><div class="rel-hd"><p class="lbl c bx" data-rv>Related pages</p></div><div class="rel-grid"><a class="rel-card" href="takken.html" data-cursor="VIEW"><div class="rv-img" style="--d:0.0s"><img class="grade" src="../assets/img/hero-hondoji.jpg" alt="" loading="lazy"></div><p class="lbl bx" data-rv>Association</p><h3 data-rv class="bx">宅建協会とは</h3><p data-rv class="bx">宅建協会と<wbr>全宅<wbr>保証の<wbr>役割を<wbr>ご紹介します。</p></a><a class="rel-card" href="consult.html" data-cursor="VIEW"><div class="rv-img" style="--d:0.15s"><img class="grade" src="../assets/img/yagiri.jpg" alt="" loading="lazy"></div><p class="lbl bx" data-rv>Consultation</p><h3 data-rv class="bx">不動産相談(無料)</h3><p data-rv class="bx">不動産に<wbr>関する<wbr>ご相談を<wbr>無料で<wbr>お受けしています。</p></a></div></div></section><section class="cta">
+  <div class="bgimg" data-px="6"><img class="grade" src="../assets/img/yagiri.jpg" alt="" loading="lazy"></div>
+  <div class="wrap cta-grid">
+    <div class="cta-hd">
+      <p class="lbl d bx" data-rv>Contact</p>
+      <h2 class="ttl split bx">不動産の<wbr>こと、<br>ひとりで<wbr>悩まず<wbr>ご相談を。</h2>
+    </div>
+    <div class="cta-tel" data-rv style="--d:.2s">
+      <p class="lbl d bx">Telephone</p>
+      <a class="tel" href="tel:0473646904">047-364-6904</a>
+      <p class="bx">月〜金 9:00–17:00(土日・祝日休)</p>
+      <a class="lux d" href="contact.html">お問い合わせ</a>
+    </div>
+  </div>
+</section>
+</main>
 <footer class="ft">
   <div class="wrap">
-    <div class="ft-top">
-      <div class="ft-brand">
-        <a href="index.html"><img src="../assets/img/hatomark.png" alt="" width="40" height="47"><span><small class="bx">一般社団法人 千葉県宅地建物取引業協会</small><strong>宅建協会 松戸支部</strong></span></a>
-        <p class="ft-addr bx">〒271-0064 千葉県松戸市上本郷3185<br>JR常磐線 北松戸駅 徒歩約8分<a class="num" href="tel:0473646904">047-364-6904</a>FAX 047-363-3142 ／ 月〜金 9:00–17:00(土日・祝日休)</p>
-      </div>
-      <nav class="ft-nav" aria-label="フッターメニュー"><div><p class="mono bx">For residents</p><ul><li class="bx"><a href="consult.html">不動産相談</a></li><li class="bx"><a href="area.html">会員一覧・エリアマップ</a></li><li class="bx"><a href="kariru.html">家を<wbr>借りる<wbr>・貸す<wbr>時</a></li><li class="bx"><a href="news.html">お知らせ</a></li></ul></div><div><p class="mono bx">For businesses</p><ul><li class="bx"><a href="nyukai.html">入会案内</a></li><li class="bx"><a href="kaigyo.html">開業を<wbr>お考えの<wbr>方</a></li><li class="bx"><a href="takken.html">宅建協会とは</a></li></ul></div><div><p class="mono bx">For licensees</p><ul><li class="bx"><a href="license.html">講習・試験</a></li><li class="bx"><a href="shoshiki.html">書式ダウンロード</a></li><li class="bx"><a href="kaiin/index.html">会員専用ページ</a></li></ul></div><div><p class="mono bx">About</p><ul><li class="bx"><a href="about.html">支部<wbr>案内</a></li><li class="bx"><a href="links.html">リンク集</a></li><li class="bx"><a href="contact.html">お問い<wbr>合わせ</a></li><li class="bx"><a href="privacy.html">個人情報の<wbr>取り扱い</a></li></ul></div></nav>
+    <div class="ft-brand" data-rv>
+      <a href="index.html"><img src="../assets/img/hatomark.png" alt="" width="40" height="47"><strong>宅建協会 松戸支部</strong><small class="bx">一般社団法人 千葉県宅地建物取引業協会</small></a>
     </div>
+    <p class="ft-addr bx" data-rv>〒271-0064 千葉県松戸市上本郷3185 ／ JR常磐線 北松戸駅 徒歩約8分<br><a class="tel" href="tel:0473646904">047-364-6904</a><br>FAX 047-363-3142 ／ 月〜金 9:00–17:00(土日・祝日休)</p>
+    <nav class="ft-nav" aria-label="フッターメニュー"><div><p class="lbl d bx">For residents</p><ul><li class="bx"><a href="consult.html">不動産相談</a></li><li class="bx"><a href="area.html">会員一覧・エリアマップ</a></li><li class="bx"><a href="kariru.html">家を<wbr>借りる<wbr>・貸す<wbr>時</a></li><li class="bx"><a href="news.html">お知らせ</a></li></ul></div><div><p class="lbl d bx">For businesses</p><ul><li class="bx"><a href="nyukai.html">入会案内</a></li><li class="bx"><a href="kaigyo.html">開業を<wbr>お考えの<wbr>方</a></li><li class="bx"><a href="takken.html">宅建協会とは</a></li></ul></div><div><p class="lbl d bx">For licensees</p><ul><li class="bx"><a href="license.html">講習・試験</a></li><li class="bx"><a href="shoshiki.html">書式ダウンロード</a></li><li class="bx"><a href="kaiin/index.html">会員専用ページ</a></li></ul></div><div><p class="lbl d bx">About</p><ul><li class="bx"><a href="about.html">支部<wbr>案内</a></li><li class="bx"><a href="links.html">リンク集</a></li><li class="bx"><a href="contact.html">お問い<wbr>合わせ</a></li><li class="bx"><a href="privacy.html">個人情報の<wbr>取り扱い</a></li></ul></div></nav>
     <p class="ft-word bx" aria-hidden="true">Takken Matsudo</p>
     <div class="ft-bottom">
       <p class="bx">© 2026 (一社)千葉県宅地建物取引業協会 松戸支部</p>
@@ -160,6 +174,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-<script src="assets/c.js?v=9"></script>
+<script src="assets/c.js?v=15"></script>
 </body>
 </html>
