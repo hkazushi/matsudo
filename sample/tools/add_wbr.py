@@ -1,5 +1,5 @@
 """
-デザイン案B: 日本語の文章に文節単位の改行位置(<wbr>)を書き込む。
+日本語の文章に文節単位の改行位置(<wbr>)を書き込む(新デザイン案の build.py から呼ばれる)。
 
 背景:
   CSS の word-break: auto-phrase は iPhone の Safari が未対応のため、
@@ -12,8 +12,7 @@
 
 使い方(文章を書き換えたら再実行する。何度実行しても結果は同じ):
   pip install budoux
-  python sample-b/tools/add_wbr.py sample-b/index.html          # 案B(クラス指定)
-  python sample/tools/add_wbr.py sample/about.html --c            # 案C: 本文系のタグ全体を対象にする
+  python sample/tools/add_wbr.py sample/about.html --c   # 本文系のタグ全体を対象にする
 """
 import re
 import sys
@@ -28,7 +27,7 @@ PARENT_RULES = {
     ("town-item", "p"), ("contact-tel", "p"), ("contact-side", "p"),
     ("ft-note", "p"), ("menu-side", "p"),
 }
-# 案C(--c): 現行ページから移した本文はクラスが一定しないため、文章を持つタグで指定する
+# --c: 現行ページから移した本文はクラスが一定しないため、文章を持つタグで指定する
 TARGET_TAGS_C = {"p", "li", "td", "th", "dd", "dt", "h1", "h2", "h3", "h4", "small", "figcaption", "label"}
 VOID = {"br", "img", "wbr", "meta", "link", "input", "hr", "source"}
 RAW = {"script", "style", "title", "select", "option", "textarea"}   # 中身に <wbr> を入れてはいけない要素
@@ -122,4 +121,4 @@ def main(path, tag_mode=False):
 
 if __name__ == "__main__":
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
-    main(args[0] if args else "sample-b/index.html", tag_mode="--c" in sys.argv)
+    main(args[0] if args else "sample/index.html", tag_mode="--c" in sys.argv)
