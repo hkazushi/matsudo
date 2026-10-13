@@ -13,6 +13,7 @@
 使い方(文章を書き換えたら再実行する。何度実行しても結果は同じ):
   pip install budoux
   python sample/tools/add_wbr.py sample/index.html
+  python sample/tools/add_wbr.py sample2/about.html --c   # 案C: 本文系のタグ全体を対象にする
 """
 import re
 import sys
@@ -27,8 +28,10 @@ PARENT_RULES = {
     ("town-item", "p"), ("contact-tel", "p"), ("contact-side", "p"),
     ("ft-note", "p"), ("menu-side", "p"),
 }
+# 案C(--c): 現行ページから移した本文はクラスが一定しないため、文章を持つタグで指定する
+TARGET_TAGS_C = {"p", "li", "td", "th", "dd", "dt", "h1", "h2", "h3", "h4", "small", "figcaption", "label"}
 VOID = {"br", "img", "wbr", "meta", "link", "input", "hr", "source"}
-RAW = {"script", "style"}
+RAW = {"script", "style", "title", "select", "option", "textarea"}   # 中身に <wbr> を入れてはいけない要素
 
 parser = budoux.load_default_japanese_parser()
 TOKEN = re.compile(r"<!--.*?-->|<[^>]+>|[^<]+", re.S)
@@ -58,7 +61,7 @@ def phrase(text):
     return lead + "<wbr>".join(parser.parse(text.strip())) + trail
 
 
-def main(path):
+def main(path, tag_mode=False):
     src = open(path, encoding="utf-8").read()
     out, stack, buf = [], [], []   # stack: [(tag, classes, is_target)]
     raw_until = None
@@ -98,9 +101,12 @@ def main(path):
             continue
         cls = classes_of(m.group(3))
         ancestors = set().union(*(c for _, c, _ in stack))
-        target = bool(cls & TARGET_CLASSES) or any(
-            tag == name and anc in ancestors for anc, tag in PARENT_RULES
-        )
+        if tag_mode:
+            target = name in TARGET_TAGS_C and "ph-en" not in cls
+        else:
+            target = bool(cls & TARGET_CLASSES) or any(
+                tag == name and anc in ancestors for anc, tag in PARENT_RULES
+            )
         if target and not in_target():
             tok = add_bx(tok)
             applied += 1
@@ -115,4 +121,5 @@ def main(path):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1] if len(sys.argv) > 1 else "sample/index.html")
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    main(args[0] if args else "sample/index.html", tag_mode="--c" in sys.argv)

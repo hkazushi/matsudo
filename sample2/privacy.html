@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>個人情報の取り扱い｜宅建協会 松戸支部 デザイン案C</title>
+<meta name="description" content="宅建協会松戸支部における個人情報の取り扱いについて。お問い合わせ・宅地建物取引士証交付・法定講習に係る個人情報の利用目的を掲載しています。">
+<!-- デザイン検討用ページのため検索結果には出さない -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#F7F6F2">
+<link rel="icon" type="image/png" href="../assets/img/hatomark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.css">
+<link rel="stylesheet" href="assets/c.css?v=9">
+<script>
+  // 演出の初期状態を描画前に決める(読み込み後に隠すとチラつくため)
+  (function () {
+    var d = document.documentElement, rm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    d.classList.add("js");
+    if (!rm) d.classList.add("anim");
+    try { if (!rm && sessionStorage.getItem("c-pt") === "1") { d.classList.add("pt-in"); sessionStorage.removeItem("c-pt"); } } catch (e) {}
+    // スクリプトが動かなかった場合でも内容は必ず表示する
+    setTimeout(function () { if (!d.classList.contains("ready")) d.classList.remove("anim", "pt-in"); }, 4000);
+  })();
+</script>
+</head>
+<body class="page-privacy">
+<div class="pt" aria-hidden="true"><span class="pt-mark"><img src="../assets/img/hatomark.png" alt=""><span>宅建協会 松戸支部</span></span></div>
+<div class="cur" aria-hidden="true"><i></i><b></b></div>
+
+<header class="hd">
+  <a href="index.html" class="hd-brand" aria-label="宅建協会 松戸支部 トップへ">
+    <img src="../assets/img/hatomark.png" alt="" width="30" height="35">
+    <span class="hd-name"><small class="bx">一般社団法人 千葉県宅地建物取引業協会</small><strong>宅建協会 松戸支部</strong></span>
+  </a>
+  <nav class="hd-nav" aria-label="主要メニュー"><a href="about.html">支部案内</a><a href="consult.html">不動産相談</a><a href="area.html">会員を探す</a><a href="nyukai.html">入会案内</a><a href="license.html">講習・試験</a><a href="news.html">お知らせ</a></nav>
+  <div class="hd-cta">
+    <a href="kaiin/index.html" class="hd-member">会員専用</a>
+    <a href="contact.html" class="hd-contact">お問い合わせ</a>
+  </div>
+  <button class="hd-menu" type="button" aria-expanded="false" aria-controls="menu"><span class="en">Menu</span><i></i></button>
+</header>
+
+<div class="menu" id="menu" aria-hidden="true" data-lenis-prevent>
+  <div class="menu-in">
+    <div class="menu-side">
+      <figure class="menu-photo"><img src="../assets/img/yagiri.jpg" alt="" loading="lazy"></figure>
+      <div class="menu-tel">
+        <p class="mono bx">Contact</p>
+        <a href="tel:0473646904">047-364-6904</a>
+        <p class="bx">月〜金 9:00–17:00(土日・祝日休)<br>〒271-0064 千葉県松戸市上本郷3185</p>
+      </div>
+    </div>
+    <div class="menu-groups"><div class="menu-group"><p class="mono bx">For residents — 一般の<wbr>方<wbr>へ</p><ul><li style="--i:0" class="bx"><a href="consult.html">不動産相談<span>Consultation</span></a></li><li style="--i:1" class="bx"><a href="area.html">会員一覧・エリアマップ<span>Members</span></a></li><li style="--i:2" class="bx"><a href="kariru.html">家を<wbr>借りる<wbr>・貸す<wbr>時<span>Renting</span></a></li><li style="--i:3" class="bx"><a href="news.html">お知らせ<span>News</span></a></li></ul></div><div class="menu-group"><p class="mono bx">For businesses — 開業・<wbr>入会を<wbr>お考えの<wbr>方<wbr>へ</p><ul><li style="--i:4" class="bx"><a href="nyukai.html">入会案内<span>Membership</span></a></li><li style="--i:5" class="bx"><a href="kaigyo.html">開業を<wbr>お考えの<wbr>方<span>Start up</span></a></li><li style="--i:6" class="bx"><a href="takken.html">宅建協会とは<span>Association</span></a></li></ul></div><div class="menu-group"><p class="mono bx">For licensees — 宅建士・会員の<wbr>方<wbr>へ</p><ul><li style="--i:7" class="bx"><a href="license.html">講習・試験<span>License</span></a></li><li style="--i:8" class="bx"><a href="shoshiki.html">書式ダウンロード<span>Documents</span></a></li><li style="--i:9" class="bx"><a href="kaiin/index.html">会員専用ページ<span>Members only</span></a></li></ul></div><div class="menu-group"><p class="mono bx">About — 支部に<wbr>ついて</p><ul><li style="--i:10" class="bx"><a href="about.html">支部<wbr>案内<span>About</span></a></li><li style="--i:11" class="bx"><a href="links.html">リンク集<span>Links</span></a></li><li style="--i:12" class="bx"><a href="contact.html">お問い<wbr>合わせ<span>Contact</span></a></li><li style="--i:13" class="bx"><a href="privacy.html">個人情報の<wbr>取り扱い<span>Privacy</span></a></li></ul></div></div>
+  </div>
+</div>
+<main>
+<section class="ph">
+  <div class="wrap">
+    <div class="ph-head">
+      <p class="ph-cat mono bx">Information</p>
+      <p class="ph-en" aria-hidden="true">Privacy</p>
+      <h1 class="ph-ja bx">個人情報の<wbr>取り扱い</h1>
+      <nav class="crumbs" aria-label="現在地"><a href="index.html">ホーム</a><span aria-hidden="true">/</span><span aria-current="page">個人情報の取り扱い</span></nav>
+    </div>
+  </div>
+  <div class="wrap"><div class="ph-rule"></div></div>
+</section>
+<div class="wrap"><div class="pg"><aside class="pg-toc" aria-label="このページの目次"><div class="pg-toc-in"><p class="mono bx">Contents</p><ol><li class="bx"><a href="#s01"><span>01</span>お問い<wbr>合わせ等に<wbr>おける<wbr>個人情報の<wbr>取り扱い</a></li><li class="bx"><a href="#s02"><span>02</span>宅地建物取引士の<wbr>個人情報の<wbr>取り扱いに<wbr>ついて</a></li></ol></div></aside><div class="pg-body"><section class="blk" id="s01" data-rv><p class="blk-num bx">01</p>
+      <h2 class="bx">お問い<wbr>合わせ等に<wbr>おける<wbr>個人情報の<wbr>取り扱い</h2>
+      <p class="bx">一般社団法人千葉県宅地建物取引業協会 松戸支部<wbr>(以下<wbr>「当支部」)は、<wbr>お問い<wbr>合わせフォーム・<wbr>資料請求等で<wbr>ご提供いただいた<wbr>個人情報(氏名、<wbr>会社名、<wbr>メールアドレス、<wbr>お問い<wbr>合わせ内容等)を、<wbr>次の<wbr>目的の<wbr>範囲内で<wbr>のみ<wbr>利用します。</p>
+      <ul class="disc">
+        <li class="bx">お問い<wbr>合わせ・<wbr>ご相談への<wbr>回答、<wbr>資料の<wbr>送付</li>
+        <li class="bx">入会手続き等、<wbr>当支部の<wbr>事業運営上必要な<wbr>ご連絡</li>
+      </ul>
+      <p class="bx">法令に<wbr>基づく<wbr>場合など<wbr>正当な<wbr>事由が<wbr>ある<wbr>場合を<wbr>除き、<wbr>本人の<wbr>同意なく<wbr>個人情報を<wbr>第三者に<wbr>提供する<wbr>ことは<wbr>ありません。<wbr>また、<wbr>その<wbr>取り扱う<wbr>個人情報の<wbr>漏えい、<wbr>滅失又は<wbr>き損の<wbr>防止<wbr>その<wbr>他の<wbr>個人情報の<wbr>安全管理に<wbr>努めます。</p>
+      <p class="note bx">※本項は<wbr>新サイト用の<wbr>案です。<wbr>文言は<wbr>公開前に<wbr>支部にて<wbr>ご確認ください。</p>
+    </section><section class="blk" id="s02" data-rv><p class="blk-num bx">02</p>
+      <h2 class="bx">宅地建物取引士の<wbr>個人情報の<wbr>取り扱いに<wbr>ついて</h2>
+      <p class="bx">当協会は、<wbr>宅地建物取引士の<wbr>方に<wbr>係る<wbr>個人情報に<wbr>ついて、<wbr>次の<wbr>とおり取り扱います。</p>
+
+      <h3 class="bx">1 宅地建物取引士証の<wbr>交付関係</h3>
+      <p class="bx">当協会は、<wbr>千葉県から<wbr>宅地建物取引業法に<wbr>基づく<wbr>宅地建物取引士証の<wbr>交付に<wbr>係る<wbr>事務を<wbr>受託しています。</p>
+      <p class="bx"><strong>(1)申請書の<wbr>受付等</strong><br>
+      宅地建物取引業法に<wbr>基づく<wbr>宅地建物取引士(以下<wbr>「取引士」と<wbr>いう。<wbr>)の<wbr>方から<wbr>提出の<wbr>あった<wbr>宅地建物取引士証交付申請書(宅地建物取引業法施行規則様式第7号の<wbr>2の<wbr>2。<wbr>添付書類含む)は、<wbr>当協会で<wbr>受け付け、<wbr>千葉県に<wbr>送付します。<wbr>また、<wbr>取引士証の<wbr>交付状況を<wbr>千葉県に<wbr>報告します。</p>
+      <p class="bx"><strong>(2)個人情報の<wbr>利用目的</strong><br>
+      当協会は、<wbr>上記(1)の<wbr>申請書及び千葉県から<wbr>提供を<wbr>受けた<wbr>登録情報に<wbr>含まれる<wbr>個人情報は、<wbr>次の<wbr>目的に<wbr>限り利用します。</p>
+      <ul class="disc">
+        <li class="bx">上記(1)の<wbr>申請書の<wbr>受付け及び宅地建物取引士証の<wbr>交付</li>
+        <li class="bx">宅地建物取引士証の<wbr>交付に<wbr>係る<wbr>業務を<wbr>遂行する<wbr>上で<wbr>必要な<wbr>行為</li>
+        <li class="bx">宅地建物取引業法第22条の<wbr>2第2項に<wbr>規定する<wbr>講習会(以下<wbr>「法定講習会」と<wbr>いう。<wbr>)の<wbr>取引士への<wbr>受講案内</li>
+        <li class="bx">宅地建物取引士証更新対象者、<wbr>宅地建物取引士証交付一覧管理台帳等の<wbr>作成</li>
+      </ul>
+
+      <h3 class="bx">2 取引士の<wbr>法定講習関係</h3>
+      <p class="bx">当協会は、<wbr>宅地建物取引業法第22条の<wbr>2第2項の<wbr>規定に<wbr>基づき、<wbr>宅地建物取引士証の<wbr>交付を<wbr>受ける<wbr>ために<wbr>必要な<wbr>法定講習を<wbr>実施する<wbr>団体と<wbr>して<wbr>千葉県から<wbr>指定を<wbr>受けています。</p>
+      <p class="bx"><strong>(1)申請書の<wbr>受付等</strong><br>
+      当協会は、<wbr>法定講習を<wbr>受講していただく<wbr>ため取引士の<wbr>方に<wbr>「宅地建物取引士講習受講申込書」<wbr>(写真を<wbr>貼った<wbr>もの<wbr>)及び<wbr>「講習受講票」<wbr>(写真を<wbr>貼った<wbr>もの<wbr>)を<wbr>提出していただきます。<wbr>また、<wbr>法定講習の<wbr>受講結果を<wbr>千葉県に<wbr>報告します。</p>
+      <p class="bx"><strong>(2)個人情報の<wbr>利用目的</strong><br>
+      当協会は、<wbr>上記(1)の<wbr>申請書及び当該申請書を<wbr>受け付ける<wbr>ために<wbr>千葉県から<wbr>提供を<wbr>受けた<wbr>登録情報に<wbr>含まれる<wbr>個人情報は、<wbr>次の<wbr>目的に<wbr>限り利用します。</p>
+      <ul class="disc">
+        <li class="bx">上記(1)の<wbr>申請書の<wbr>受付け</li>
+        <li class="bx">法定講習会の<wbr>実施</li>
+      </ul>
+
+      <h3 class="bx">3 安全管理</h3>
+      <p class="bx">当協会は、<wbr>その<wbr>取り扱う<wbr>個人情報の<wbr>漏えい、<wbr>滅失又は<wbr>き損の<wbr>防止<wbr>その<wbr>他の<wbr>個人情報の<wbr>安全管理に<wbr>努めます。</p>
+
+      <h3 class="bx">4 目的外利用</h3>
+      <p class="bx">当協会は、<wbr>法令に<wbr>基づく<wbr>場合など、<wbr>正当な<wbr>事由が<wbr>ある<wbr>場合を<wbr>除き、<wbr>本人の<wbr>同意を<wbr>得る<wbr>ことなく、<wbr>個人情報を<wbr>上記の<wbr>目的以外に<wbr>利用したり、<wbr>第三者に<wbr>提供する<wbr>ことは<wbr>ありません。</p>
+      <p style="text-align:right;margin-top:16px;" class="bx">(一社)千葉県宅地建物取引業協会</p>
+    </section></div></div></div><div class="wrap"><section class="next"><p class="next-head mono bx">Related pages</p><div class="next-grid"><a class="tile" href="contact.html" data-cursor="View" data-rv style="--d:0.0s"><img src="../assets/img/mori21.jpg" alt="" loading="lazy"><div class="tile-in"><p class="tile-no mono bx">01</p><p class="tile-en bx">Contact</p><p class="tile-ja bx">お問い<wbr>合わせ</p><p class="tile-txt bx">お電話・フォームでの<wbr>お問い<wbr>合わせ。</p><span class="tile-arrow" aria-hidden="true"></span></div></a><a class="tile" href="about.html" data-cursor="View" data-rv style="--d:0.08s"><img src="../assets/img/tojotei.jpg" alt="" loading="lazy"><div class="tile-in"><p class="tile-no mono bx">02</p><p class="tile-en bx">About</p><p class="tile-ja bx">支部<wbr>案内</p><p class="tile-txt bx">支部の<wbr>事業・組織・アクセスの<wbr>ご案内です。</p><span class="tile-arrow" aria-hidden="true"></span></div></a></div></section></div></main>
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft-top">
+      <div class="ft-brand">
+        <a href="index.html"><img src="../assets/img/hatomark.png" alt="" width="40" height="47"><span><small class="bx">一般社団法人 千葉県宅地建物取引業協会</small><strong>宅建協会 松戸支部</strong></span></a>
+        <p class="ft-addr bx">〒271-0064 千葉県松戸市上本郷3185<br>JR常磐線 北松戸駅 徒歩約8分<a class="num" href="tel:0473646904">047-364-6904</a>FAX 047-363-3142 ／ 月〜金 9:00–17:00(土日・祝日休)</p>
+      </div>
+      <nav class="ft-nav" aria-label="フッターメニュー"><div><p class="mono bx">For residents</p><ul><li class="bx"><a href="consult.html">不動産相談</a></li><li class="bx"><a href="area.html">会員一覧・エリアマップ</a></li><li class="bx"><a href="kariru.html">家を<wbr>借りる<wbr>・貸す<wbr>時</a></li><li class="bx"><a href="news.html">お知らせ</a></li></ul></div><div><p class="mono bx">For businesses</p><ul><li class="bx"><a href="nyukai.html">入会案内</a></li><li class="bx"><a href="kaigyo.html">開業を<wbr>お考えの<wbr>方</a></li><li class="bx"><a href="takken.html">宅建協会とは</a></li></ul></div><div><p class="mono bx">For licensees</p><ul><li class="bx"><a href="license.html">講習・試験</a></li><li class="bx"><a href="shoshiki.html">書式ダウンロード</a></li><li class="bx"><a href="kaiin/index.html">会員専用ページ</a></li></ul></div><div><p class="mono bx">About</p><ul><li class="bx"><a href="about.html">支部<wbr>案内</a></li><li class="bx"><a href="links.html">リンク集</a></li><li class="bx"><a href="contact.html">お問い<wbr>合わせ</a></li><li class="bx"><a href="privacy.html">個人情報の<wbr>取り扱い</a></li></ul></div></nav>
+    </div>
+    <p class="ft-word bx" aria-hidden="true">Takken Matsudo</p>
+    <div class="ft-bottom">
+      <p class="bx">© 2026 (一社)千葉県宅地建物取引業協会 松戸支部</p>
+      <p class="bx">この<wbr>サイトは<wbr>デザイン案Cです(機能は<wbr>動作しません)。 <a href="../index.html">現行デザイン</a> ／ <a href="../sample/">デザイン案B</a></p>
+    </div>
+  </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="assets/c.js?v=9"></script>
+</body>
+</html>
