@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /kaiin/
 
-Sitemap: https://takkenmatsudo.com/sitemap.xml
+Sitemap: https://takken-matsudo.com/sitemap.xml
