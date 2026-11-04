@@ -4,7 +4,7 @@
    ・見出しは文節ごとにまとめ、1文字ずつぼかしから浮かび上がらせる
    ・写真は金色の幕が横切ってから現れる / ゆっくり寄っていくスライド
    ・慣性スクロール(Lenis)と視差(GSAP)は読み込めたときだけ
-   機能(ログイン・アップロード・送信)はデザイン案のため持たない。
+   機能(会員エリア・管理画面・お問い合わせ・お知らせ)は live.js が受け持つ。
    ========================================================================== */
 (function () {
   "use strict";
@@ -254,39 +254,50 @@
     $$(".blk[id]").forEach(function (b) { io.observe(b); });
   }
 
-  /* ---- 会員一覧の絞り込み(表示上の機能のみ) ---- */
+  /* ---- 会員一覧の絞り込み(行は live.js が名簿データで差し替えるため、毎回数え直す) ---- */
   function memberFilter() {
     var box = $(".mt-filter");
     if (!box) return;
-    var input = $("input", box), out = $("output", box), rows = $$(".member-table tbody tr");
+    var input = $("input", box), out = $("output", box);
     function norm(s) { return s.replace(/\s+/g, "").toLowerCase(); }
     function run() {
       var q = norm(input.value), n = 0;
-      rows.forEach(function (r) { var hit = !q || norm(r.textContent).indexOf(q) !== -1; r.hidden = !hit; if (hit) n++; });
+      $$(".member-table tbody tr").forEach(function (r) { var hit = !q || norm(r.textContent).indexOf(q) !== -1; r.hidden = !hit; if (hit) n++; });
       out.textContent = n + " 社";
     }
     input.addEventListener("input", run);
+    document.addEventListener("members:updated", run);
     run();
   }
 
-  /* ---- 会員エリア: フォルダを押すと中身(見本)を表示 ---- */
+  /* ---- 会員エリア: フォルダを押すと中身を表示 ----
+     live.js が読み込まれていれば window.liveRoom が実データ(資料・フォーム・カレンダー)を描く。
+     無ければ HTML 内の見本(template)を出す。window.cModal で他のスクリプトからも開閉できる。 */
   function folders() {
     var cm = $(".cm");
     if (!cm) return;
     var body = $(".cm-body", cm), ttl = $(".cm-top h3", cm), last = null;
     function close() { cm.classList.remove("is-open"); if (lenis) lenis.start(); if (last) last.focus(); }
+    function show(title, html) {
+      ttl.textContent = title;
+      body.innerHTML = html;
+      if (!cm.classList.contains("is-open")) {
+        cm.classList.add("is-open");
+        if (lenis) lenis.stop();
+        $(".cm-close", cm).focus();
+      }
+      return body;
+    }
+    window.cModal = { open: show, close: close, body: body };
     $$(".folder[data-room]").forEach(function (f) {
       f.setAttribute("tabindex", "0");
       f.setAttribute("role", "button");
       function open() {
-        var tpl = document.getElementById("room-" + f.getAttribute("data-room"));
-        ttl.textContent = $("h3", f).textContent;
-        body.innerHTML = tpl ? tpl.innerHTML : '<p class="note">掲載中の資料はありません。</p>';
-        var h = $("h3", body); if (h && h.textContent.trim() === ttl.textContent.trim()) h.remove();
         last = f;
-        cm.classList.add("is-open");
-        if (lenis) lenis.stop();
-        $(".cm-close", cm).focus();
+        if (window.liveRoom) { window.liveRoom(f); return; }
+        var tpl = document.getElementById("room-" + f.getAttribute("data-room"));
+        show($("h3", f).textContent, tpl ? tpl.innerHTML : '<p class="note">掲載中の資料はありません。</p>');
+        var h = $("h3", body); if (h && h.textContent.trim() === ttl.textContent.trim()) h.remove();
       }
       f.addEventListener("click", open);
       f.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
@@ -295,10 +306,9 @@
     document.addEventListener("keydown", function (e) { if (e.key === "Escape" && cm.classList.contains("is-open")) close(); });
   }
 
-  /* ---- フォーム・管理画面は送信しない(デザイン案) ---- */
+  /* ---- 見本のフォームは送信しない ---- */
   function demoForms() {
-    $$("form.demo, .adm form").forEach(function (f) { f.addEventListener("submit", function (e) { e.preventDefault(); }); });
-    $$(".adm button").forEach(function (b) { b.addEventListener("click", function (e) { e.preventDefault(); }); });
+    $$("form.demo").forEach(function (f) { f.addEventListener("submit", function (e) { e.preventDefault(); }); });
   }
 
   /* ---- 慣性スクロール・視差 ---- */

@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif+JP:wght@200;300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.css">
-<link rel="stylesheet" href="../assets/c.css?v=22">
+<link rel="stylesheet" href="../assets/c.css?v=23">
 <script>
   // 演出の初期状態を描画前に決める(読み込み後に隠すとチラつくため)
   (function () {
@@ -71,7 +71,7 @@
   <nav class="crumbs" aria-label="現在地"><a href="../index.html">ホーム</a><span aria-hidden="true">—</span><a href="index.html">会員専用</a><span aria-hidden="true">—</span><span aria-current="page">① 一般会員エリア</span></nav>
   <span class="ph-scroll" aria-hidden="true"></span>
 </section>
-<div class="wrap"><div class="pg no-toc"><div class="pg-body"><div class="demo-bar"><span class="lbl">Design only</span>会員専用エリアの画面デザインです。パスワード入力・資料のダウンロード・フォームの発行などの機能は持たせていません。</div>
+<div class="wrap"><div class="pg no-toc"><div class="pg-body"><div class="gate" data-gate="ippan" data-hash="5a146aa7f757c9f872c010b153f6f97710cb73cd6e909f84bae61277a546d4a7"><div class="gate-in"><p class="lbl bx">Members only</p><h2 class="split bx">一般会員エリア</h2><p class="bx">事務局から<wbr>配布された<wbr>パスワードを<wbr>入力してください。</p><form><input type="password" placeholder="パスワードを入力" aria-label="パスワード" autocomplete="off"><p class="err bx" hidden>パスワードが<wbr>違います</p><button class="lux" type="submit">入室する</button></form></div></div><div id="gated-content" hidden>
 
   <div><div class="alert info">各フォルダをクリックすると資料をご覧いただけます(フォルダごとの追加パスワードはありません)。<br><span style="font-size:12px;">※資料のダウンロードと、勉強会・研修会への参加(出欠回答)がご利用いただけます。</span></div>
 
@@ -171,7 +171,7 @@
     <li class="bx"><span class="f-type pdf">PDF</span>松戸市役所市民相談室 不動産相談所運営要綱<a class="dl" href="#" onclick="return false;">DL</a></li>
     <li class="bx"><span class="f-type pdf">PDF</span>会員自社ホームページの<wbr>運用に<wbr>役立つ情報<a class="dl" href="#" onclick="return false;">DL</a></li>
   </ul>
-</template><div class="cm" role="dialog" aria-modal="true" aria-label="フォルダの中身"><div class="cm-panel"><div class="cm-top"><h3 class="bx"></h3><button class="cm-close" type="button">Close</button></div><div class="cm-body"></div></div></div></div></div></div></main>
+</template></div></div></div></div><div class="cm" role="dialog" aria-modal="true" aria-label="フォルダの中身"><div class="cm-panel"><div class="cm-top"><h3 class="bx"></h3><button class="cm-close" type="button">Close</button></div><div class="cm-body"></div></div></div></main>
 <footer class="ft">
   <div class="wrap">
     <div class="ft-brand" data-rv>
@@ -182,13 +182,16 @@
     <p class="ft-word bx" aria-hidden="true">Takken Matsudo</p>
     <div class="ft-bottom">
       <p class="bx">© 2026 (一社)千葉県宅地建物取引業協会 松戸支部</p>
-      <p class="bx">この<wbr>サイトは<wbr>新デザイン案です(機能は<wbr>動作しません)。 <a href="../../index.html">現行の<wbr>サイトを<wbr>見る</a></p>
+      <p class="bx">この<wbr>サイトは<wbr>新デザイン案です。 <a href="../../index.html">現行の<wbr>サイトを<wbr>見る</a></p>
     </div>
   </div>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="../../assets/config.js?v=23"></script>
+<script src="../assets/live.js?v=23"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-<script src="../assets/c.js?v=22"></script>
+<script src="../assets/c.js?v=23"></script>
 </body>
 </html>
