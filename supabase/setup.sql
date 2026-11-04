@@ -94,3 +94,6 @@ create policy "events_write" on public.events for all to authenticated using (tr
 
 -- 完了。次にダッシュボードの Authentication → Users → Add user で
 -- 事務局用ログイン(メール+パスワード)を1件作成してください。
+
+-- API(PostgREST)に新しい表・列をすぐ認識させる
+notify pgrst, 'reload schema';
