@@ -16,4 +16,7 @@ window.SITE_CONFIG = {
   GAS_FORM_URL: "https://script.google.com/macros/s/AKfycbwH3yFgFFMcnCvcsuBFakGUYuTt6sLgLPhT5KFd4tJqmVmTwK00DbF0ArCPwNcC_pro/exec",
   // GAS側の SECRET と同じ文字列(簡易な悪用防止)
   GAS_SECRET: "matsudo-form-2026",
+  // 先方の確認期間中だけ true。新デザインの会員エリアの鍵を、パスワードなしで開けるようにする
+  // (事務局ログインは対象外)。本番のパスワードが決まったら false にする
+  SKIP_PASSWORDS: true,
 };
