@@ -23,7 +23,7 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))   # 
 OUT = os.path.join(ROOT, "sample")
 SITE = "sample"          # 公開URLのディレクトリ名
 OLD_SITES = ["sample2"]  # 旧URL。同じページへ転送する
-VER = "27"
+VER = "28"
 SUPABASE_JS = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"
 
 # ---------------------------------------------------------------------------
