@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif+JP:wght@200;300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.css">
-<link rel="stylesheet" href="assets/c.css?v=22">
+<link rel="stylesheet" href="assets/c.css?v=25">
 <script>
   // 演出の初期状態を描画前に決める(読み込み後に隠すとチラつくため)
   (function () {
@@ -76,7 +76,7 @@
       <p class="note bx">エリア: 松戸駅・矢切駅 周辺 / 掲載情報は<wbr>現行サイトより<wbr>移行(市外局番の<wbr>ない<wbr>番号は<wbr> 047)。<wbr>変更が<wbr>ある<wbr>場合は<wbr>事務局(047-364-6904)まで<wbr>ご連絡ください。</p>
       <nav class="area-switch" aria-label="地区の切り替え"><span class="as-label">地区を選ぶ</span><span class="as-item current">松戸・矢切地区</span><a class="as-item" href="area-kitamatsudo.html">北松戸・馬橋地区</a><a class="as-item" href="area-kogane.html">小金・新松戸地区</a><a class="as-item" href="area-keisei.html">京成松戸地区</a><a class="as-item" href="area-tokiwadaira.html">常盤平・五香地区</a></nav>
       <div class="mt-filter"><input type="search" placeholder="会社名・代表者・住所で絞り込む" aria-label="会員の絞り込み"><output></output></div>
-<div class="table-scroll"><table class="member-table">
+<div class="table-scroll"><table class="member-table" data-area="matsudo">
           <thead><tr><th class="bx">商号又は<wbr>名称</th><th class="bx">代表者名</th><th class="bx">事務所所在地</th><th class="bx">TEL / FAX</th><th class="bx">営業時間・定休日</th><th class="bx">業種</th></tr></thead>
           <tbody>
 <tr><td class="mt-name bx">アールフィールズ(株)松戸店</td><td class="bx">野田 亮</td><td class="bx">271-0091 本町14-12</td><td class="bx">0120-210-327<br><span class="note">FAX 700-5802</span></td><td class="bx"></td><td class="bx"></td></tr>
@@ -214,13 +214,16 @@
     <p class="ft-word bx" aria-hidden="true">Takken Matsudo</p>
     <div class="ft-bottom">
       <p class="bx">© 2026 (一社)千葉県宅地建物取引業協会 松戸支部</p>
-      <p class="bx">この<wbr>サイトは<wbr>新デザイン案です(機能は<wbr>動作しません)。 <a href="../index.html">現行の<wbr>サイトを<wbr>見る</a></p>
+      <p class="bx">この<wbr>サイトは<wbr>新デザイン案です。 <a href="../index.html">現行の<wbr>サイトを<wbr>見る</a></p>
     </div>
   </div>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="../assets/config.js?v=25"></script>
+<script src="assets/live.js?v=25"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-<script src="assets/c.js?v=22"></script>
+<script src="assets/c.js?v=25"></script>
 </body>
 </html>

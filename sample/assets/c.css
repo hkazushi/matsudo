@@ -592,7 +592,12 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 .ft-nav li { margin-bottom: 11px; }
 .ft-nav a { font-size: 12.5px; letter-spacing: 0.1em; color: var(--text-d2); transition: color 0.4s; }
 .ft-nav a:hover { color: var(--gold-2); }
-.ft-word { margin-top: 80px; text-align: center; font-family: var(--f-lat); font-weight: 300; font-size: clamp(42px, 9.6vw, 150px); line-height: 1; letter-spacing: 0.12em; text-transform: uppercase; color: transparent; -webkit-text-stroke: 1px rgba(201, 180, 138, 0.22); white-space: nowrap; overflow: hidden; }
+.ft-word { margin-top: 80px; text-align: center; font-family: var(--f-lat); font-weight: 300; font-size: min(8vw, 104px); line-height: 1.1; letter-spacing: 0.12em; padding-left: 0.12em; text-transform: uppercase; color: transparent; -webkit-text-stroke: 1px rgba(201, 180, 138, 0.22); white-space: nowrap; overflow: hidden; }
+/* 英字の帯は枠の幅いっぱいに収める(文字列の幅は文字の大きさの約10.6倍) */
+@supports (font-size: 1cqw) {
+  .ft > .wrap { container-type: inline-size; }
+  .ft-word { font-size: calc(100cqw / 10.9); }
+}
 .ft-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 30px; margin-top: 50px; padding-top: 24px; border-top: 1px solid var(--line-d); font-size: 11px; letter-spacing: 0.1em; color: var(--text-d2); }
 .ft-bottom a { color: var(--text-d); border-bottom: 1px solid var(--gold); }
 .ft-bottom a:hover { color: var(--gold-2); }
@@ -882,4 +887,113 @@ body::after {
   .feat-txt { margin-top: 64px; }
   .flow span { font-size: 46px; }
   .blk-num[data-n]::before { font-size: 84px; }
+}
+
+/* ==========================================================================
+   機能部品(live.js): 入口の鍵 / フォルダの中身 / カレンダー / 管理画面
+   ========================================================================== */
+.gate { display: flex; justify-content: center; padding: clamp(20px, 4vw, 60px) 0 clamp(60px, 8vw, 120px); }
+.gate-in { width: min(520px, 100%); padding: clamp(36px, 5vw, 64px) clamp(24px, 4vw, 56px); border: 1px solid var(--line); background: var(--paper); text-align: center; }
+.gate-in .lbl { justify-content: center; }
+.gate-in h2 { margin: 18px 0 14px; font-family: var(--f-serif); font-weight: 300; font-size: clamp(22px, 2.4vw, 28px); letter-spacing: 0.14em; line-height: 1.6; }
+.gate-in > p { font-size: 13.5px; color: var(--ink-2); line-height: 2; }
+.gate form, .lockform { display: flex; flex-direction: column; align-items: stretch; gap: 14px; margin-top: 30px; }
+.gate input, .lockform input { width: 100%; padding: 14px 4px; border: 0; border-bottom: 1px solid var(--ink); background: transparent; border-radius: 0; font-size: 16px; letter-spacing: 0.2em; text-align: center; outline: none; }
+.gate input:focus, .lockform input:focus { border-color: var(--gold); }
+.gate .lux, .lockform .lux { width: 100%; min-width: 0; margin-top: 10px; }
+.gate .err, .lockform .err { font-size: 12.5px; color: var(--red); }
+.lockform > p:first-child { font-size: 13.5px; color: var(--ink-2); }
+.folder.is-open .lock::after { content: "OPEN"; color: var(--gold); }
+
+/* フォルダの中身(モーダル) */
+.cm .tabs.cm-tabs { justify-content: flex-start; flex-wrap: wrap; gap: 6px 30px; margin: 0 0 6px; border-bottom: 1px solid var(--line); }
+.cm-tabs .tab { font-size: 14px; padding: 10px 0 12px; }
+.cm .file-list { margin-top: 18px; }
+.f-meta { display: block; margin-top: 2px; }
+.file-list .dl { font-family: var(--f-lat); font-weight: 500; font-size: 12px; letter-spacing: 0.18em; padding: 8px 16px; border: 1px solid var(--line); white-space: nowrap; transition: border-color 0.4s, background 0.4s, color 0.4s; }
+.file-list .dl:hover { border-color: var(--ink); background: var(--ink); color: var(--ivory); }
+.file-list a.dl + .dl, .file-list .dl + .dl { margin-left: 0; }
+.dl.del { color: var(--red); }
+.dl.del:hover { border-color: var(--red) !important; background: var(--red) !important; color: var(--ivory) !important; }
+.cm-admin { margin-top: 24px; }
+.cm-admin a { text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: 4px; }
+
+/* カレンダー */
+.cal { margin-top: 22px; }
+.cal-hd { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.cal-ttl { font-family: var(--f-lat); font-weight: 300; font-size: 40px; line-height: 1; letter-spacing: 0.04em; color: var(--ink); display: flex; align-items: baseline; gap: 10px; }
+.cal-ttl small { font-size: 14px; letter-spacing: 0.2em; color: var(--mute); }
+.cal-ttl span { font-family: var(--f-serif); font-size: 14px; letter-spacing: 0.1em; }
+.cal-nav { font-family: var(--f-lat); font-weight: 500; font-size: 11.5px; letter-spacing: 0.24em; text-transform: uppercase; padding: 8px 14px; border: 1px solid var(--line); transition: border-color 0.4s; }
+.cal-nav:hover { border-color: var(--ink); }
+.cal-grid { width: 100%; border-collapse: collapse; table-layout: fixed; border-top: 1px solid var(--ink); }
+.cal-grid th { padding: 10px 0; font-family: var(--f-serif); font-weight: 400; font-size: 12px; color: var(--mute); text-align: center; border-bottom: 1px solid var(--line); }
+.cal-grid td { height: 52px; padding: 0; text-align: center; vertical-align: middle; border-bottom: 1px solid var(--line); font-family: var(--f-lat); font-size: 16px; color: var(--ink-2); }
+.cal-grid td.sun { color: var(--red); }
+.cal-grid td.sat { color: #4A6A8A; }
+.cal-grid td > span, .cal-grid td > button { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; width: 40px; height: 40px; line-height: 1; color: inherit; }
+.cal-grid td.is-today > span, .cal-grid td.is-today > button { border: 1px solid var(--ink); }
+.cal-grid td.has > button { background: var(--night); color: var(--gold-2); cursor: pointer; transition: background 0.4s; }
+.cal-grid td.has > button:hover { background: var(--gold); color: var(--night); }
+.cal-grid td.has i { display: block; width: 4px; height: 4px; margin-top: 5px; border-radius: 50%; background: currentColor; }
+.cal-list { margin-top: 26px; border-top: 1px solid var(--ink); }
+.cal-list li { display: flex; align-items: flex-start; flex-wrap: wrap; gap: 6px 22px; padding: 18px 0; border-bottom: 1px solid var(--line); scroll-margin: 20px; transition: background 1.2s; }
+.cal-list li.is-past { opacity: 0.55; }
+.cal-list li.is-hit { animation: cal-hit 1.6s ease; }
+@keyframes cal-hit { 0% { background: rgba(201, 180, 138, 0.35); } 100% { background: transparent; } }
+.cal-list li > div { flex: 1 1 240px; }
+.cal-d { flex: 0 0 74px; font-family: var(--f-lat); line-height: 1.2; }
+.cal-d b { display: block; font-weight: 400; font-size: 24px; color: var(--ink); }
+.cal-d small { font-size: 12px; color: var(--mute); letter-spacing: 0.06em; }
+.cal-t { font-family: var(--f-serif); font-size: 15px; letter-spacing: 0.08em; line-height: 1.7; }
+.cal-list .note { margin-top: 2px; }
+.cal-none { margin-top: 20px; }
+
+/* 管理画面 */
+.adm-bar { display: flex; justify-content: flex-end; align-items: center; gap: 16px; padding-top: 30px; font-size: 12.5px; color: var(--mute); }
+.adm-bar .dl { font-family: var(--f-lat); font-size: 12px; letter-spacing: 0.2em; padding: 8px 16px; border: 1px solid var(--line); }
+.adm-login { max-width: 640px; }
+.fld { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 6px 28px; align-items: start; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.fld > label, .fld-l { padding-top: 14px; font-family: var(--f-serif); font-size: 14px; letter-spacing: 0.1em; color: var(--ink); }
+.fld .note { margin-top: 6px; }
+.adm input[type="email"], .adm input[type="password"], .adm input[type="date"] { width: 100%; padding: 14px 4px; background: transparent; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; font-size: 15px; letter-spacing: 0.06em; outline: none; }
+.adm input[type="file"] { padding: 12px 0; font-size: 14px; max-width: 100%; }
+.adm select { appearance: none; -webkit-appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%), linear-gradient(135deg, var(--ink) 50%, transparent 50%); background-position: calc(100% - 14px) 52%, calc(100% - 9px) 52%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 30px; }
+.act { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; margin-top: 28px; }
+.act .dl { font-family: var(--f-lat); font-size: 12px; letter-spacing: 0.2em; padding: 10px 18px; border: 1px solid var(--line); }
+.lux:disabled { opacity: 0.45; cursor: wait; }
+.adm-msg { margin-top: 14px; font-size: 13.5px; line-height: 1.9; color: #3F6B4E; min-height: 0; }
+.adm-msg:empty { display: none; }
+.adm-msg.bad, .note.bad { color: var(--red); }
+.adm-result:empty { display: none; }
+.m-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; margin: 26px 0 8px; }
+.m-tools select { width: auto !important; min-width: 200px; }
+.m-tools input { flex: 1 1 220px; width: auto !important; }
+.m-tools output { font-family: var(--f-lat); font-size: 14px; letter-spacing: 0.1em; color: var(--gold); }
+.m-tools .dl { font-size: 12.5px; letter-spacing: 0.14em; padding: 10px 18px; border: 1px solid var(--ink); }
+.m-form { margin: 18px 0 30px; padding: 6px clamp(18px, 3vw, 36px) 30px; background: var(--paper); border: 1px solid var(--line); }
+.m-form h3 { margin-top: 26px; }
+.adm-table { width: 100%; border-collapse: collapse; margin-top: 14px; border-top: 1px solid var(--ink); font-size: 13.5px; }
+.adm-table th { text-align: left; font-family: var(--f-serif); font-weight: 400; font-size: 12px; letter-spacing: 0.12em; color: var(--mute); padding: 12px 12px 12px 0; border-bottom: 1px solid var(--line); }
+.adm-table td { padding: 14px 12px 14px 0; border-bottom: 1px solid var(--line); vertical-align: top; line-height: 1.7; }
+.adm-table td:last-child { text-align: right; padding-right: 0; white-space: nowrap; }
+.adm-table .dl { font-family: var(--f-lat); font-size: 12px; letter-spacing: 0.18em; padding: 7px 14px; border: 1px solid var(--line); }
+.adm-table .dl:hover { border-color: var(--ink); }
+
+@media (max-width: 760px) {
+  .fld { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 12px 0; }
+  .fld > label, .fld-l { padding-top: 4px; font-size: 13px; }
+  .cal-ttl { font-size: 32px; }
+  .cal-grid td { height: 44px; font-size: 14px; }
+  .cal-grid td > span, .cal-grid td > button { width: 34px; height: 34px; }
+  .cal-nav { padding: 7px 10px; letter-spacing: 0.16em; }
+  .cal-d { flex-basis: 60px; }
+  .m-tools select, .m-tools input { flex: 1 1 100%; min-width: 0; }
+  .adm-table thead { display: none; }
+  .adm-table td:nth-child(2) { display: none; }
+  .file-list .dl { padding: 7px 12px; }
+}
+@media (max-width: 360px) {
+  .cal-grid td > span, .cal-grid td > button { width: 30px; height: 30px; }
+  .cal-hd { gap: 6px; }
 }

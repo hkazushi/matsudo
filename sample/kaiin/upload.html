@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif+JP:wght@200;300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.css">
-<link rel="stylesheet" href="../assets/c.css?v=22">
+<link rel="stylesheet" href="../assets/c.css?v=25">
 <script>
   // 演出の初期状態を描画前に決める(読み込み後に隠すとチラつくため)
   (function () {
@@ -71,81 +71,7 @@
   <nav class="crumbs" aria-label="現在地"><a href="../index.html">ホーム</a><span aria-hidden="true">—</span><a href="index.html">会員専用</a><span aria-hidden="true">—</span><span aria-current="page">資料アップロード管理</span></nav>
   <span class="ph-scroll" aria-hidden="true"></span>
 </section>
-<div class="wrap"><div class="pg no-toc"><div class="pg-body"><div class="demo-bar"><span class="lbl">Design only</span>会員専用エリアの画面デザインです。パスワード入力・資料のダウンロード・フォームの発行などの機能は持たせていません。</div></div></div></div><div class="adm"><div class="wrap"><div class="pg"><aside class="pg-toc" aria-label="このページの目次"><div class="pg-toc-in"><p class="lbl bx">Contents</p><ol><li class="bx"><a href="#s01"><span>01</span>資料の<wbr>アップロード</a></li><li class="bx"><a href="#s02"><span>02</span>フォルダ内の<wbr>ファイル</a></li><li class="bx"><a href="#s03"><span>03</span>勉強会・研修会フォームの<wbr>作成</a></li><li class="bx"><a href="#s04"><span>04</span>お知らせ・宅建ニュースの<wbr>編集</a></li></ol></div></aside><div class="pg-body"><section class="blk" id="s01"><p class="blk-num bx" data-n="01" data-rv>01</p><form class="adm-form" onsubmit="return false"><h2 class="split bx">資料の<wbr>アップロード</h2>
-        <table class="info-table">
-          <tr><th class="bx">アップロード先フォルダ</th><td class="bx">
-            <select id="room-select"><option>① 会員向けお知らせ</option><option>① 協会行事・会議等日程表</option><option>① 書式ダウンロード</option><option>① 支部規定・施行細則</option><option>① 会員のための行事報告</option><option>① 研修会・勉強会</option><option>① 調査・アンケート</option><option>① 各種資料</option><option>② 幹事会(全体)</option><option>② 総務委員会</option><option>② 財務委員会</option><option>② 綱紀・研修委員会</option><option>② 厚生委員会</option><option>② 広報委員会</option><option>② 入会審査委員会</option><option>② 無料相談業務委員会</option><option>② 流通委員会</option></select>
-          </td></tr>
-          <tr><th class="bx">ファイル(複数可)</th><td class="bx">
-            <input id="file-input" type="file" multiple>
-            <p class="note">PDF・Excel・Word等。<wbr>同名ファイルは<wbr>上<wbr>書きされます。</p>
-          </td></tr>
-        </table>
-        <div><button id="upload-btn" class="btn btn-green"> アップロード</button>
-          
-        </div>
-        <p id="upload-status" class="bx"></p>
-      </form></section><section class="blk" id="s02"><p class="blk-num bx" data-n="02" data-rv>02</p><form class="adm-form" onsubmit="return false"><h2 class="split bx">フォルダ内の<wbr>ファイル</h2>
-        <p class="note bx">上で<wbr>選択中の<wbr>フォルダの<wbr>内容です。<wbr>「削除」で<wbr>即時削除されます(取り消し不可)。</p>
-        <ul class="file-list"><li class="bx"><span class="f-type pdf">PDF</span><div>令和8年度 総会資料.pdf</div><span class="f-meta">2026.06.01 ／ 1.2 MB</span><a class="dl" href="#">確認</a><a class="dl" href="#">削除</a></li><li class="bx"><span class="f-type xlsx">XLSX</span><div>会員名簿(更新用).xlsx</div><span class="f-meta">2026.05.20 ／ 48 KB</span><a class="dl" href="#">確認</a><a class="dl" href="#">削除</a></li></ul>
-        <p id="file-status" class="bx"></p>
-      </form></section><section class="blk" id="s03"><p class="blk-num bx" data-n="03" data-rv>03</p><form class="adm-form" onsubmit="return false"><h2 class="split bx">勉強会・研修会フォームの<wbr>作成</h2>
-        <p class="note bx">出欠回答フォーム(Googleフォーム)と<wbr>集計スプレッドシートを<wbr>作成します。<wbr>作成すると、<wbr>選んだ<wbr>フォルダの<wbr>「勉強会」<wbr>タブに<wbr>参加リンクが<wbr>自動掲載され、<wbr>会員が<wbr>その<wbr>場から<wbr>回答できます。</p>
-        <table class="info-table">
-          <tr><th class="bx">掲載先フォルダ</th><td class="bx">
-            <select id="form-room"><option>① 会員向けお知らせ</option><option>① 協会行事・会議等日程表</option><option>① 書式ダウンロード</option><option>① 支部規定・施行細則</option><option>① 会員のための行事報告</option><option>① 研修会・勉強会</option><option>① 調査・アンケート</option><option>① 各種資料</option><option>② 幹事会(全体)</option><option>② 総務委員会</option><option>② 財務委員会</option><option>② 綱紀・研修委員会</option><option>② 厚生委員会</option><option>② 広報委員会</option><option>② 入会審査委員会</option><option>② 無料相談業務委員会</option><option>② 流通委員会</option></select>
-          </td></tr>
-          <tr><th class="bx">勉強会・研修会名 <span style="color:var(--red);font-size:11px;">必須</span></th><td class="bx">
-            <input id="issue-title" type="text" placeholder="例)宅建業法改正セミナー(8月開催)">
-          </td></tr>
-        </table>
-        <div><button id="issue-btn" class="btn btn-green"> Googleフォームを作成</button>
-        </div>
-        <p class="note bx">※作成には<wbr>20秒ほどかかる<wbr>場合が<wbr>あります。</p>
-
-        <h3 style="margin-top:26px;" class="bx">作成済みフォーム</h3>
-        <ul class="file-list"><li class="bx"><span class="f-type link">FORM</span><div><strong>宅建業法改正セミナー(8月開催)</strong><br><span class="note">① 研修会・勉強会</span></div><a class="dl" href="#">フォーム</a><a class="dl" href="#">集計</a><a class="dl" href="#">リンクを<wbr>コピー</a></li></ul>
-      </form></section><section class="blk" id="s04"><p class="blk-num bx" data-n="04" data-rv>04</p><form class="adm-form" onsubmit="return false"><h2 class="split bx">お知らせ・宅建ニュースの<wbr>編集</h2>
-        <p class="note bx">ここで<wbr>追加した<wbr>記事が、<wbr>トップページとお知らせページに<wbr>即時反映されます(新しい<wbr>ものが<wbr>上に<wbr>表示)。</p>
-        <table class="info-table">
-          <tr><th class="bx">掲載先</th><td class="bx">
-            <select id="news-kind">
-              <option value="oshirase">支部からのお知らせ</option>
-              <option value="takken">宅建ニュース</option>
-            </select>
-          </td></tr>
-          <tr><th class="bx">日付</th><td class="bx">
-            <input id="news-date" type="text" placeholder="2026.07.27">
-          </td></tr>
-          <tr id="news-cat-row"><th class="bx">カテゴリ</th><td class="bx">
-            <select id="news-cat">
-              <option value="">(なし)</option>
-              <option value="重要|red">重要(赤)</option>
-              <option value="事務局|green">事務局</option>
-              <option value="講習|green">講習</option>
-              <option value="相談|green">相談</option>
-              <option value="会員向け|green">会員向け</option>
-              <option value="販売|gold">販売</option>
-              <option value="その他|gold">その他</option>
-            </select>
-          </td></tr>
-          <tr><th class="bx">タイトル <span style="color:var(--red);font-size:11px;">必須</span></th><td class="bx">
-            <input id="news-title" type="text" placeholder="例)事務局臨時休業のお知らせ">
-          </td></tr>
-          <tr><th class="bx">本文(任意)</th><td class="bx">
-            <textarea id="news-body" rows="3" placeholder="お知らせ一覧ページにタイトルの後ろに表示されます"></textarea>
-          </td></tr>
-        </table>
-        <div><button id="news-add-btn" class="btn btn-green"> 追加して公開</button>
-        </div>
-        <p id="news-status" class="bx"></p>
-
-        <h3 style="margin-top:26px;" class="bx">掲載中の<wbr>記事</h3>
-        <p class="bx">支部からの<wbr>お知らせ</p>
-        <ul class="file-list"><li class="bx"><span class="f-type link">重要</span><div>事務局臨時休業の<wbr>お知らせ(6/3 台風の<wbr>ため)<br><span class="note">2026.06.01</span></div><a class="dl" href="#">削除</a></li><li class="bx"><span class="f-type link">事務局</span><div>事務局業務開始時間変更の<wbr>お知らせ(5/28)<br><span class="note">2026.05.26</span></div><a class="dl" href="#">削除</a></li><li class="bx"><span class="f-type link">販売</span><div>不動産日記(手帳)発売の<wbr>お知らせ<br><span class="note">2026.05.20</span></div><a class="dl" href="#">削除</a></li></ul>
-        <p class="bx">宅建ニュース</p>
-        <ul class="file-list"><li class="note bx">(表示例は<wbr>省略)</li></ul>
-      </form></section></div></div></div></div></main>
+<div id="adm" class="adm"><div class="wrap"><div class="pg no-toc"><div class="pg-body"><p id="adm-off" class="alert warn bx" hidden>接続設定(assets/config.js)が<wbr>無いため、<wbr>管理画面を<wbr>使えません。</p><section id="adm-login" class="blk adm-login" hidden><h2 class="split bx">事務局ログイン</h2><p class="bx">資料・フォーム・予定・会員名簿・<wbr>お知らせの<wbr>編集は、<wbr>事務局の<wbr>アカウントで<wbr>ログインして<wbr>行います。</p><form id="adm-login-form"><div class="fld"><label for="adm-email" class="bx">メールアドレス</label><div class="fld-c"><input id="adm-email" type="email" autocomplete="username" required></div></div><div class="fld"><label for="adm-pass" class="bx">パスワード</label><div class="fld-c"><input id="adm-pass" type="password" autocomplete="current-password" required></div></div><p id="adm-login-err" class="adm-msg bx" role="alert"></p><div class="act"><button class="lux" type="submit">ログイン</button></div></form></section></div></div></div><div id="adm-main" hidden><div class="wrap"><div class="adm-bar"><span id="adm-user"></span><button id="adm-logout" class="dl" type="button">ログアウト</button></div></div><div class="wrap"><div class="pg"><aside class="pg-toc" aria-label="このページの目次"><div class="pg-toc-in"><p class="lbl bx">Contents</p><ol><li class="bx"><a href="#s01"><span>01</span>資料の<wbr>アップロード</a></li><li class="bx"><a href="#s02"><span>02</span>フォームの<wbr>作成(出欠・アンケート)</a></li><li class="bx"><a href="#s03"><span>03</span>行事・研修会の<wbr>予定</a></li><li class="bx"><a href="#s04"><span>04</span>会員名簿</a></li><li class="bx"><a href="#s05"><span>05</span>お知らせ・宅建ニュース</a></li></ol></div></aside><div class="pg-body"><section class="blk" id="s01"><p class="blk-num bx" data-n="01" data-rv>01</p><h2 class="split bx">資料の<wbr>アップロード</h2><p class="bx">会員エリアの<wbr>フォルダに<wbr>資料を<wbr>載せます。<wbr>同じ<wbr>名前の<wbr>ファイルは<wbr>上<wbr>書きされます。</p><div class="fld"><label for="f-room" class="bx">フォルダ</label><div class="fld-c"><select id="f-room"></select></div></div><div class="fld"><label for="f-input" class="bx">ファイル</label><div class="fld-c"><input id="f-input" type="file" multiple><p class="note bx">PDF・Excel・Word など。<wbr>複数まとめて<wbr>選べます。</p></div></div><div class="act"><button id="f-up" class="lux" type="button">アップロード</button></div><p id="f-status" class="adm-msg bx" role="status"></p><h3 class="bx">この<wbr>フォルダの<wbr>資料</h3><ul id="f-list" class="file-list"></ul></section><section class="blk" id="s02"><p class="blk-num bx" data-n="02" data-rv>02</p><h2 class="split bx">フォームの<wbr>作成(出欠・アンケート)</h2><p class="bx">Google フォームと<wbr>集計用の<wbr>スプレッドシートを<wbr>作り、<wbr>選んだ<wbr>フォルダに<wbr>載せます。<wbr>会員は<wbr>フォルダを<wbr>開いて、<wbr>その<wbr>場から<wbr>回答できます。</p><div class="fld"><label for="q-room" class="bx">載せる<wbr>フォルダ</label><div class="fld-c"><select id="q-room"></select><p class="note bx">研修会・勉強会は<wbr>「① 研修会・勉強会」、<wbr>調査は<wbr>「① 調査・アンケート」を<wbr>選びます。</p></div></div><div class="fld"><label for="q-title" class="bx">タイトル<span class="req">必須</span></label><div class="fld-c"><input id="q-title" type="text" placeholder="例)宅建業法改正セミナー(12月開催)"></div></div><div class="fld" id="q-date-row"><label for="q-date" class="bx">開催日</label><div class="fld-c"><input id="q-date" type="date"><p class="note bx">入れると、<wbr>会員エリアの<wbr>カレンダーにも<wbr>載ります。</p></div></div><div class="act"><button id="q-btn" class="lux" type="button">フォームを作成</button></div><p id="q-status" class="adm-msg bx" role="status"></p><ul id="q-result" class="file-list adm-result"></ul><h3 class="bx">作成済みの<wbr>フォーム</h3><ul id="q-list" class="file-list"></ul></section><section class="blk" id="s03"><p class="blk-num bx" data-n="03" data-rv>03</p><h2 class="split bx">行事・研修会の<wbr>予定</h2><p class="bx">会員エリアの<wbr>「協会行事・会議等日程表」<wbr>「研修会・勉強会」の<wbr>カレンダーに<wbr>載せる<wbr>予定を<wbr>登録します。<wbr>出欠フォームの<wbr>ある<wbr>研修会は、<wbr>上の<wbr>「フォームの<wbr>作成」で<wbr>開催日を<wbr>入れれば、<wbr>ここで<wbr>登録しなくても<wbr>カレンダーに<wbr>載ります。</p><div class="fld"><label for="e-room" class="bx">カレンダー</label><div class="fld-c"><select id="e-room"></select></div></div><div class="fld"><label for="e-date" class="bx">日付<span class="req">必須</span></label><div class="fld-c"><input id="e-date" type="date"></div></div><div class="fld"><label for="e-time" class="bx">開始時刻</label><div class="fld-c"><input id="e-time" type="text" placeholder="例)14:00"></div></div><div class="fld"><label for="e-title" class="bx">名称<span class="req">必須</span></label><div class="fld-c"><input id="e-title" type="text" placeholder="例)定例幹事会"></div></div><div class="fld"><label for="e-place" class="bx">場所</label><div class="fld-c"><input id="e-place" type="text" placeholder="例)支部会議室"></div></div><div class="fld"><label for="e-note" class="bx">補足</label><div class="fld-c"><input id="e-note" type="text" placeholder="例)終了後に懇親会あり"></div></div><div class="act"><button id="e-btn" class="lux" type="button">予定を登録</button></div><p id="e-status" class="adm-msg bx" role="status"></p><h3 class="bx">登録済みの<wbr>予定(先月以降<wbr>)</h3><ul id="e-list" class="file-list"></ul></section><section class="blk" id="s04"><p class="blk-num bx" data-n="04" data-rv>04</p><h2 class="split bx">会員名簿</h2><p class="bx">エリアページの<wbr>会員一覧です。<wbr>住所の<wbr>変更・脱退・<wbr>入会の<wbr>連絡が<wbr>あったら、<wbr>ここで<wbr>直すと<wbr>すぐ<wbr>サイトに<wbr>反映されます。</p><div class="m-tools"><select id="m-area" aria-label="エリア"></select><input id="m-q" type="text" placeholder="会社名・代表者・住所で探す" aria-label="名簿を探す"><output id="m-count"></output><button id="m-new" class="dl" type="button">会社を追加</button></div><p id="m-saved" class="adm-msg bx" role="status"></p><form id="m-form" class="m-form" hidden><h3 id="mf-title" class="bx"></h3><div class="fld"><label for="mf-area" class="bx">エリア</label><div class="fld-c"><select id="mf-area"></select><p class="note bx">移転で<wbr>エリアが<wbr>変わる<wbr>ときは、<wbr>ここを<wbr>変えます。</p></div></div><div class="fld"><label for="mf-name" class="bx">商号又は<wbr>名称<span class="req">必須</span></label><div class="fld-c"><input id="mf-name" type="text"></div></div><div class="fld"><label for="mf-rep" class="bx">代表者名</label><div class="fld-c"><input id="mf-rep" type="text"></div></div><div class="fld"><label for="mf-address" class="bx">事務所所在地</label><div class="fld-c"><input id="mf-address" type="text" placeholder="例)271-0064 上本郷3185"></div></div><div class="fld"><label for="mf-tel" class="bx">TEL</label><div class="fld-c"><input id="mf-tel" type="text"></div></div><div class="fld"><label for="mf-fax" class="bx">FAX</label><div class="fld-c"><input id="mf-fax" type="text"></div></div><div class="fld"><label for="mf-email" class="bx">メール</label><div class="fld-c"><input id="mf-email" type="text"></div></div><div class="fld"><label for="mf-hours" class="bx">営業時間</label><div class="fld-c"><input id="mf-hours" type="text" placeholder="例)9:00～18:00"></div></div><div class="fld"><label for="mf-holiday" class="bx">定休日</label><div class="fld-c"><input id="mf-holiday" type="text" placeholder="例)水曜 年末年始"></div></div><div class="fld"><label for="mf-business" class="bx">業種</label><div class="fld-c"><input id="mf-business" type="text" placeholder="例)売買 / 賃貸"></div></div><div class="fld"><label for="mf-sort" class="bx">表示順</label><div class="fld-c"><input id="mf-sort" type="text" inputmode="numeric"><p class="note bx">小さい<wbr>数ほど上に<wbr>出ます。<wbr>今の<wbr>会社は<wbr> 10, 20, 30…<wbr> と<wbr>10<wbr>おきです(例: 135 なら<wbr> 130 と<wbr> 140 の<wbr>間)。</p></div></div><p id="m-status" class="adm-msg bx" role="status"></p><div class="act"><button class="lux" type="submit">保存する</button><button id="mf-cancel" class="dl" type="button">やめる</button><button id="mf-del" class="dl del" type="button">名簿から削除</button></div></form><div class="table-scroll"><table class="adm-table"><thead><tr><th class="bx">会社</th><th class="bx">所在地・電話</th><th class="bx"></th></tr></thead><tbody id="m-list"></tbody></table></div></section><section class="blk" id="s05"><p class="blk-num bx" data-n="05" data-rv>05</p><h2 class="split bx">お知らせ・宅建ニュース</h2><p class="bx">追加した<wbr>記事は、<wbr>トップページとお知らせページに<wbr>すぐ<wbr>載ります(新しい<wbr>ものが<wbr>上)。</p><div class="fld"><label for="n-kind" class="bx">載せる<wbr>場所</label><div class="fld-c"><select id="n-kind"><option value="oshirase">支部からのお知らせ</option><option value="takken">宅建ニュース</option></select></div></div><div class="fld"><label for="n-date" class="bx">日付</label><div class="fld-c"><input id="n-date" type="text" placeholder="2026.11.04"></div></div><div class="fld" id="n-cat-row"><label for="n-cat" class="bx">分類</label><div class="fld-c"><select id="n-cat"><option value="">(なし)</option><option value="重要|red">重要(赤)</option><option value="事務局|green">事務局</option><option value="講習|green">講習</option><option value="相談|green">相談</option><option value="会員向け|green">会員向け</option><option value="販売|gold">販売</option><option value="その他|gold">その他</option></select></div></div><div class="fld"><label for="n-title" class="bx">タイトル<span class="req">必須</span></label><div class="fld-c"><input id="n-title" type="text" placeholder="例)事務局臨時休業のお知らせ"></div></div><div class="fld"><label for="n-body" class="bx">本文</label><div class="fld-c"><textarea id="n-body" rows="3" placeholder="お知らせページで、タイトルの後ろに表示されます"></textarea></div></div><div class="act"><button id="n-add" class="lux" type="button">追加して公開</button></div><p id="n-status" class="adm-msg bx" role="status"></p><h3 class="bx">支部からの<wbr>お知らせ</h3><ul id="n-list-oshirase" class="file-list"></ul><h3 class="bx">宅建ニュース</h3><ul id="n-list-takken" class="file-list"></ul></section></div></div></div></div></div><div class="cm" role="dialog" aria-modal="true" aria-label="詳細"><div class="cm-panel"><div class="cm-top"><h3 class="bx"></h3><button class="cm-close" type="button">Close</button></div><div class="cm-body"></div></div></div></main>
 <footer class="ft">
   <div class="wrap">
     <div class="ft-brand" data-rv>
@@ -156,13 +82,16 @@
     <p class="ft-word bx" aria-hidden="true">Takken Matsudo</p>
     <div class="ft-bottom">
       <p class="bx">© 2026 (一社)千葉県宅地建物取引業協会 松戸支部</p>
-      <p class="bx">この<wbr>サイトは<wbr>新デザイン案です(機能は<wbr>動作しません)。 <a href="../../index.html">現行の<wbr>サイトを<wbr>見る</a></p>
+      <p class="bx">この<wbr>サイトは<wbr>新デザイン案です。 <a href="../../index.html">現行の<wbr>サイトを<wbr>見る</a></p>
     </div>
   </div>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="../../assets/config.js?v=25"></script>
+<script src="../assets/live.js?v=25"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-<script src="../assets/c.js?v=22"></script>
+<script src="../assets/c.js?v=25"></script>
 </body>
 </html>

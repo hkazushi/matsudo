@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif+JP:wght@200;300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.css">
-<link rel="stylesheet" href="../sample/assets/c.css?v=22">
+<link rel="stylesheet" href="../sample/assets/c.css?v=25">
 <script>
   // 演出の初期状態を描画前に決める(読み込み後に隠すとチラつくため)
   (function () {
@@ -71,7 +71,7 @@
   </div>
   <div class="hero-ui">
     <div><p class="hero-cap bx"><span class="num">01</span><span>本土寺</span></p><div class="hero-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></div></div>
-    <div class="hero-news"><p class="lbl bx">News</p><a href="../sample/news.html">2026.06.01　事務局臨時休業のお知らせ(6/3 台風のため)</a></div>
+    <div class="hero-news"><p class="lbl bx">News</p><a href="../sample/news.html" data-news-hero>2026.06.01　事務局臨時休業のお知らせ(6/3 台風のため)</a></div>
   </div>
   <span class="hero-scroll" aria-hidden="true"></span>
 </section>
@@ -176,7 +176,7 @@
       <p data-rv class="bx">松戸支部の<wbr>会員336社を、<wbr>5つの<wbr>地区ごとに<wbr>ご紹介しています。<wbr>地区を<wbr>選ぶと、<wbr>その<wbr>地域の<wbr>不動産会社の<wbr>一覧が<wbr>表示されます。</p>
       <a class="more" href="../sample/area.html" data-rv>Area map<i></i></a>
     </div>
-    <ol class="dlist" data-rv style="--d:.2s"><li class="bx"><a href="../sample/area-matsudo.html"><span class="num">01</span><span><b>松戸・矢切地区</b><small>松戸駅・矢切駅 周辺</small></span><span class="cnt">105<em>社</em></span></a></li><li class="bx"><a href="../sample/area-kitamatsudo.html"><span class="num">02</span><span><b>北松戸・馬橋地区</b><small>北松戸駅・馬橋駅 周辺</small></span><span class="cnt">66<em>社</em></span></a></li><li class="bx"><a href="../sample/area-kogane.html"><span class="num">03</span><span><b>小金・新松戸地区</b><small>北小金駅・新松戸駅 周辺</small></span><span class="cnt">77<em>社</em></span></a></li><li class="bx"><a href="../sample/area-keisei.html"><span class="num">04</span><span><b>京成松戸地区</b><small>上本郷駅・みのり台駅 周辺</small></span><span class="cnt">52<em>社</em></span></a></li><li class="bx"><a href="../sample/area-tokiwadaira.html"><span class="num">05</span><span><b>常盤平・五香地区</b><small>常盤平駅・五香駅 周辺</small></span><span class="cnt">36<em>社</em></span></a></li></ol>
+    <ol class="dlist" data-rv style="--d:.2s"><li class="bx"><a href="../sample/area-matsudo.html"><span class="num">01</span><span><b>松戸・矢切地区</b><small>松戸駅・矢切駅 周辺</small></span><span class="cnt"><span data-area-count="matsudo">105</span><em>社</em></span></a></li><li class="bx"><a href="../sample/area-kitamatsudo.html"><span class="num">02</span><span><b>北松戸・馬橋地区</b><small>北松戸駅・馬橋駅 周辺</small></span><span class="cnt"><span data-area-count="kitamatsudo">66</span><em>社</em></span></a></li><li class="bx"><a href="../sample/area-kogane.html"><span class="num">03</span><span><b>小金・新松戸地区</b><small>北小金駅・新松戸駅 周辺</small></span><span class="cnt"><span data-area-count="kogane">77</span><em>社</em></span></a></li><li class="bx"><a href="../sample/area-keisei.html"><span class="num">04</span><span><b>京成松戸地区</b><small>上本郷駅・みのり台駅 周辺</small></span><span class="cnt"><span data-area-count="keisei">52</span><em>社</em></span></a></li><li class="bx"><a href="../sample/area-tokiwadaira.html"><span class="num">05</span><span><b>常盤平・五香地区</b><small>常盤平駅・五香駅 周辺</small></span><span class="cnt"><span data-area-count="tokiwadaira">36</span><em>社</em></span></a></li></ol>
   </div>
 </section>
 
@@ -185,8 +185,8 @@
     <div class="sec-hd shd c"><p class="shd-no bx" data-rv>04</p><p class="shd-en split bx" aria-hidden="true">News</p><h2 class="shd-ja split bx">お知らせ</h2></div>
     <div data-tabs data-rv>
       <div class="tabs" role="tablist"><button class="tab is-on" role="tab" aria-selected="true">支部からのお知らせ</button><button class="tab" role="tab" aria-selected="false">宅建ニュース</button></div>
-      <div class="tabpane"><ul class="nlist"><li class="bx"><a href="../sample/news.html"><time>2026.06.01</time><span class="tag hot">重要</span><span class="t">事務局臨時休業の<wbr>お知らせ(6/3 台風の<wbr>ため)</span></a></li><li class="bx"><a href="../sample/news.html"><time>2026.05.26</time><span class="tag">事務局</span><span class="t">事務局業務開始時間変更の<wbr>お知らせ(5/28)</span></a></li><li class="bx"><a href="../sample/news.html"><time>2026.05.20</time><span class="tag">販売</span><span class="t">不動産日記(手帳)発売の<wbr>お知らせ</span></a></li><li class="bx"><a href="../sample/news.html"><time>2026.05.12</time><span class="tag">講習</span><span class="t">宅地建物取引士 法定講習会申込受付に<wbr>ついて</span></a></li><li class="bx"><a href="../sample/news.html"><time>2026.04.28</time><span class="tag">相談</span><span class="t">不動産契約書及び重要事項説明書書式に<wbr>係る<wbr>無料電話相談の<wbr>開始に<wbr>ついて</span></a></li></ul></div>
-      <div class="tabpane" hidden><ul class="nlist"><li class="bx"><a href="../sample/news.html"><time>2026.06.01</time><span class="tag">宅建ニュース</span><span class="t">住宅ローン返済が<wbr>安くなる<wbr>?!<wbr>「残クレ」車だけじゃない。<wbr>「残価設定型住宅ローン」<wbr>徹底解説【SUUMO】</span></a></li><li class="bx"><a href="../sample/news.html"><time>2026.05.01</time><span class="tag">宅建ニュース</span><span class="t">映画<wbr>「正直不動産」<wbr>タイアップポスターを<wbr>全国の<wbr>会員へ<wbr>配布中!</span></a></li><li class="bx"><a href="../sample/news.html"><time>2026.04.03</time><span class="tag">宅建ニュース</span><span class="t">首都圏の<wbr>新築マンション購入者の<wbr>平均価格は<wbr>7324万円で<wbr>最高値更新【SUUMO】</span></a></li></ul></div>
+      <div class="tabpane"><ul class="nlist" data-news="oshirase" data-limit="5"><li class="bx"><a href="../sample/news.html"><time>2026.06.01</time><span class="tag hot">重要</span><span class="t">事務局臨時休業の<wbr>お知らせ(6/3 台風の<wbr>ため)</span></a></li><li class="bx"><a href="../sample/news.html"><time>2026.05.26</time><span class="tag">事務局</span><span class="t">事務局業務開始時間変更の<wbr>お知らせ(5/28)</span></a></li><li class="bx"><a href="../sample/news.html"><time>2026.05.20</time><span class="tag">販売</span><span class="t">不動産日記(手帳)発売の<wbr>お知らせ</span></a></li><li class="bx"><a href="../sample/news.html"><time>2026.05.12</time><span class="tag">講習</span><span class="t">宅地建物取引士 法定講習会申込受付に<wbr>ついて</span></a></li><li class="bx"><a href="../sample/news.html"><time>2026.04.28</time><span class="tag">相談</span><span class="t">不動産契約書及び重要事項説明書書式に<wbr>係る<wbr>無料電話相談の<wbr>開始に<wbr>ついて</span></a></li></ul></div>
+      <div class="tabpane" hidden><ul class="nlist" data-news="takken" data-limit="3"><li class="bx"><a href="../sample/news.html"><time>2026.06.01</time><span class="tag">宅建ニュース</span><span class="t">住宅ローン返済が<wbr>安くなる<wbr>?!<wbr>「残クレ」車だけじゃない。<wbr>「残価設定型住宅ローン」<wbr>徹底解説【SUUMO】</span></a></li><li class="bx"><a href="../sample/news.html"><time>2026.05.01</time><span class="tag">宅建ニュース</span><span class="t">映画<wbr>「正直不動産」<wbr>タイアップポスターを<wbr>全国の<wbr>会員へ<wbr>配布中!</span></a></li><li class="bx"><a href="../sample/news.html"><time>2026.04.03</time><span class="tag">宅建ニュース</span><span class="t">首都圏の<wbr>新築マンション購入者の<wbr>平均価格は<wbr>7324万円で<wbr>最高値更新【SUUMO】</span></a></li></ul></div>
     </div>
     <p class="news-more bx" data-rv><a class="more" href="../sample/news.html">View all<i></i></a></p>
   </div>
@@ -233,13 +233,16 @@
     <p class="ft-word bx" aria-hidden="true">Takken Matsudo</p>
     <div class="ft-bottom">
       <p class="bx">© 2026 (一社)千葉県宅地建物取引業協会 松戸支部</p>
-      <p class="bx">この<wbr>サイトは<wbr>新デザイン案です(機能は<wbr>動作しません)。 <a href="../index.html">現行の<wbr>サイトを<wbr>見る</a></p>
+      <p class="bx">この<wbr>サイトは<wbr>新デザイン案です。 <a href="../index.html">現行の<wbr>サイトを<wbr>見る</a></p>
     </div>
   </div>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="../assets/config.js?v=25"></script>
+<script src="../sample/assets/live.js?v=25"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-<script src="../sample/assets/c.js?v=22"></script>
+<script src="../sample/assets/c.js?v=25"></script>
 </body>
 </html>

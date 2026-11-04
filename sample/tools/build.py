@@ -12,6 +12,7 @@ URL の注意: Vercel は /sample(末尾スラッシュなし)をリダイレク
 トップページだけは ../sample/ を経由して参照する(R と A の接頭辞で吸収している)。
 旧URL /sample2/ には、同じページへ転送するだけの小さなページを書き出す。
 """
+import hashlib
 import html as htmllib
 import os
 import re
@@ -22,7 +23,8 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))   # 
 OUT = os.path.join(ROOT, "sample")
 SITE = "sample"          # 公開URLのディレクトリ名
 OLD_SITES = ["sample2"]  # 旧URL。同じページへ転送する
-VER = "22"
+VER = "25"
+SUPABASE_JS = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"
 
 # ---------------------------------------------------------------------------
 # ページ定義: slug -> (英字見出し, 分類, 写真, 写真の位置, 関連ページ)
@@ -278,15 +280,20 @@ def footer(R, A):
     <p class="ft-word" aria-hidden="true">Takken Matsudo</p>
     <div class="ft-bottom">
       <p>© 2026 (一社)千葉県宅地建物取引業協会 松戸支部</p>
-      <p>このサイトは新デザイン案です(機能は動作しません)。 <a href="{A}index.html">現行のサイトを見る</a></p>
+      <p>このサイトは新デザイン案です。 <a href="{A}index.html">現行のサイトを見る</a></p>
     </div>
   </div>
 </footer>
 """
 
 
-def scripts(R):
-    return f"""<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+def scripts(R, A, sb=False):
+    """sb=True のページは Supabase(会員エリア・お知らせ・会員名簿)を読み込む。
+    live.js は c.js より先(入口の鍵を、演出の初期化より前に外すため)。"""
+    lib = f'<script src="{SUPABASE_JS}"></script>\n' if sb else ""
+    return f"""{lib}<script src="{A}assets/config.js?v={VER}"></script>
+<script src="{R}assets/live.js?v={VER}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script src="{R}assets/c.js?v={VER}"></script>
@@ -390,9 +397,11 @@ def build_pages(titles):
             warnings.append(f"{slug}: content-block 外の文字 → {left[:60]}")
         blocks = [clean(b, 0) for b in blocks]
         if slug.startswith("area-"):
-            blocks = [area_detail(b) for b in blocks]
+            blocks = [area_detail(b, slug[5:]) for b in blocks]
+        if slug == "area":
+            blocks = [area_counts(b) for b in blocks]
         if slug == "contact":
-            blocks = [demo_form(b) for b in blocks]
+            blocks = [live_form(b) for b in blocks]
         crumbs = [("ホーム", "index.html")]
         if slug.startswith("area-"):
             crumbs.append(("会員一覧", "area.html"))
@@ -400,33 +409,44 @@ def build_pages(titles):
         page = (head(ja, "", "../", desc_of(src)) + f'<body class="page-{slug}">\n' + header("", "../", NAV_OF.get(slug, slug if not slug.startswith("area-") else "area"))
                 + "<main>\n" + page_hero(en, cat, ja, crumbs, photo, pos, "../") + body_with_toc(blocks)
                 + next_pages(rel, "", "../", titles) + ("" if slug == "contact" else contact_band("", "../"))
-                + "</main>\n" + footer("", "../") + scripts(""))
+                + "</main>\n" + footer("", "../") + scripts("", "../", sb=slug == "news" or slug.startswith("area")))
         write(f"{slug}.html", page)
     return warnings
 
 
-def area_detail(b):
-    """会員一覧の表の前に絞り込み欄を置く(表示上の機能のみ)。"""
+def area_detail(b, area):
+    """会員一覧の表の前に絞り込み欄を置く。表は live.js が名簿データ(members)で差し替える。
+    HTML に残す行は、データが読めなかったときの控え。"""
+    b = b.replace('<table class="member-table">', f'<table class="member-table" data-area="{area}">', 1)
     return b.replace('<div class="table-scroll">',
                      '<div class="mt-filter"><input type="search" placeholder="会社名・代表者・住所で絞り込む" aria-label="会員の絞り込み"><output></output></div>\n<div class="table-scroll">', 1)
 
 
-def demo_form(b):
-    """お問い合わせフォームは送信先を外し、見た目だけにする。"""
+def area_counts(b):
+    """エリアごとの社数を、名簿データから数え直せるよう印を付ける。"""
+    return re.sub(r'(<a href="area-([a-z]+)\.html" class="area-card">.*?<strong>)(\d+)社</strong>',
+                  r'\1<span data-area-count="\2">\3</span>社</strong>', b, flags=re.S)
+
+
+def live_form(b):
+    """お問い合わせフォーム(FormSubmit へ送信)。見た目だけ新デザインに合わせる。"""
     if "<form" not in b:
         return b
-    b = re.sub(r"<form[^>]*>", '<form class="demo" onsubmit="return false">', b, count=1)
-    b = re.sub(r'<input type="(hidden|text)" name="_[^"]*"[^>]*>\s*', "", b)
     b = re.sub(r'(<(?:input|select|textarea|button)[^>]*?)\s+style="[^"]*"', r"\1", b)
+    b = b.replace('name="_honey"', 'name="_honey" style="display:none"')   # ロボット除けの欄は隠したまま
     b = re.sub(r'<span style="color:var\(--red\);font-size:11px;">必須</span>', '<span class="req">必須</span>', b)
-    b = b.replace("</form>", '<span class="demo-note">※デザイン案のため、送信は行われません。</span></form>')
     return b
+
+
+def pass_hash(p):
+    """会員エリアのパスワードは平文で載せず、live.js と同じ方式のハッシュ値で照合する。"""
+    return hashlib.sha256(("matsudo:" + p).encode("utf-8")).hexdigest()
 
 
 # ---------------------------------------------------------------------------
 # 会員専用(デザインのみ)
 # ---------------------------------------------------------------------------
-def kaiin_frame(slug, body, titles, wrapped=False):
+def kaiin_frame(slug, body, titles, wrapped=False, after=""):
     en, cat, photo, pos = KAIIN[slug]
     src = read(f"{slug}.html")
     ja = h1_of(src)
@@ -434,13 +454,12 @@ def kaiin_frame(slug, body, titles, wrapped=False):
     if slug != "kaiin/index":
         crumbs.append(("会員専用", "index.html"))
     crumbs.append((ja, ""))
-    demo = ('<div class="demo-bar"><span class="lbl">Design only</span>'
-            '会員専用エリアの画面デザインです。パスワード入力・資料のダウンロード・フォームの発行などの機能は持たせていません。</div>')
+    demo = ""
     return (head(ja, "../", "../../", desc_of(src)) + f'<body class="page-{slug.replace("/", "-")}">\n' + header("../", "../../", "")
             + "<main>\n" + page_hero(en, cat, ja, crumbs, photo, pos, "../../")
-            + (f'<div class="wrap"><div class="pg no-toc"><div class="pg-body">{demo}</div></div></div>{body}' if wrapped
+            + (body if wrapped
                else f'<div class="wrap"><div class="pg no-toc"><div class="pg-body">{demo}{body}</div></div></div>')
-            + "</main>\n" + footer("../", "../../") + scripts("../"))
+            + after + "</main>\n" + footer("../", "../../") + scripts("../", "../../", sb=True))
 
 
 def build_kaiin(titles):
@@ -467,9 +486,15 @@ def build_kaiin(titles):
             f'<div class="entrances">{"".join(cards)}</div>{note}')
     write("kaiin/index.html", kaiin_frame("kaiin/index", body, titles))
 
-    # 一般会員・幹事委員会(鍵の画面を外し、フォルダを直接表示)
+    # 一般会員・幹事委員会(入口の鍵 → フォルダ。委員会フォルダは個別の鍵)
     for slug in ("kaiin/ippan", "kaiin/kanji"):
         src = read(f"{slug}.html")
+        gm = re.search(r'<div data-gate="([^"]+)" data-pass="([^"]+)">\s*<div class="lockscreen">.*?<h2>(.*?)</h2>\s*<p>(.*?)</p>', src, re.S)
+        gate = (f'<div class="gate" data-gate="{gm.group(1)}" data-hash="{pass_hash(gm.group(2))}"><div class="gate-in">'
+                f'<p class="lbl">Members only</p><h2 class="split">{gm.group(3)}</h2><p>{gm.group(4)}</p>'
+                '<form><input type="password" placeholder="パスワードを入力" aria-label="パスワード" autocomplete="off">'
+                '<p class="err" hidden>パスワードが違います</p><button class="lux" type="submit">入室する</button></form></div></div>')
+        room_pass = dict(re.findall(r'<div class="folder" data-room="([^"]+)" data-pass="([^"]+)"', src))
         g = re.search(r'<div id="gated-content"[^>]*>', src)
         gated = inner(src[g.start():match_div(src, g.start())])
         gated = re.sub(r'<div class="breadcrumb">.*?</div>', "", gated, flags=re.S)
@@ -483,37 +508,103 @@ def build_kaiin(titles):
             return f'<div class="f-icon">{n[0]:02d}</div>'
         gated = re.sub(r'<div class="f-icon[^"]*">.*?</div>', num, gated, flags=re.S)
         gated = re.sub(r'(<div class="alert[^"]*")\s*style="[^"]*"', r"\1", gated)
+        for room, pw in room_pass.items():
+            gated = gated.replace(f'<div class="folder" data-room="{room}">', f'<div class="folder" data-room="{room}" data-hash="{pass_hash(pw)}">', 1)
+        assert gated.count("data-hash=") == len(room_pass), slug
         tpls = "".join(clean(t, 1) for t in re.findall(r'<template id="room-[^"]+">.*?</template>', src, re.S))
         modal = ('<div class="cm" role="dialog" aria-modal="true" aria-label="フォルダの中身"><div class="cm-panel">'
                  '<div class="cm-top"><h3></h3><button class="cm-close" type="button">Close</button></div>'
                  '<div class="cm-body"></div></div></div>')
-        write(f"{slug}.html", kaiin_frame(slug, gated + tpls + modal, titles))
+        write(f"{slug}.html", kaiin_frame(slug, gate + f'<div id="gated-content" hidden>{gated}{tpls}</div>', titles, after=modal))
 
-    # 事務局の管理画面(ログイン後の画面を見本として表示)
-    src = read("kaiin/upload.html")
-    a = re.search(r'<div id="admin-box"[^>]*>', src)
-    box = inner(src[a.start():match_div(src, a.start())])
-    box = clean(box, 1)
-    blocks, _ = blocks_of(box)
-    opts = "".join(f'<option>{esc(t)}</option>' for _, t in ROOMS)
-    sample_files = ('<li><span class="f-type pdf">PDF</span><div>令和8年度 総会資料.pdf</div><span class="f-meta">2026.06.01 ／ 1.2 MB</span><a class="dl" href="#">確認</a><a class="dl" href="#">削除</a></li>'
-                    '<li><span class="f-type xlsx">XLSX</span><div>会員名簿(更新用).xlsx</div><span class="f-meta">2026.05.20 ／ 48 KB</span><a class="dl" href="#">確認</a><a class="dl" href="#">削除</a></li>')
-    sample_forms = ('<li><span class="f-type link">FORM</span><div><strong>宅建業法改正セミナー(8月開催)</strong><br><span class="note">① 研修会・勉強会</span></div>'
-                    '<a class="dl" href="#">フォーム</a><a class="dl" href="#">集計</a><a class="dl" href="#">リンクをコピー</a></li>')
-    news = re.findall(r'<li><a href="news\.html"><span class="date">([^<]*)</span>(?:<span class="chip [a-z]+">([^<]*)</span>)?<span class="ttl">([^<]*)</span>', read("index.html"))
-    sample_news = "".join(f'<li><span class="f-type link">{esc(c or "記事")}</span><div>{esc(t)}<br><span class="note">{esc(dt)}</span></div><a class="dl" href="#">削除</a></li>' for dt, c, t in news[:3])
-    fixed = []
-    for b in blocks:
-        b = re.sub(r'(<(?:input|select|textarea|button|ul|p|table|div)[^>]*?)\s+style="[^"]*"', r"\1", b)
-        b = re.sub(r'(<select id="(?:room-select|form-room)"[^>]*>)</select>', r"\1" + opts + "</select>", b)
-        b = re.sub(r'<ul id="file-list" class="file-list"></ul>', f'<ul class="file-list">{sample_files}</ul>', b)
-        b = re.sub(r'<ul id="form-list" class="file-list"></ul>', f'<ul class="file-list">{sample_forms}</ul>', b)
-        b = re.sub(r'<ul id="news-list-oshirase" class="file-list"></ul>', f'<ul class="file-list">{sample_news}</ul>', b)
-        b = re.sub(r'<ul id="news-list-takken" class="file-list"></ul>', '<ul class="file-list"><li class="note">(表示例は省略)</li></ul>', b)
-        b = re.sub(r'<button id="logout-btn"[^>]*>.*?</button>', "", b, flags=re.S)
-        fixed.append(f'<form class="adm-form" onsubmit="return false">{b}</form>')
-    body = '<div class="adm">' + body_with_toc(fixed) + "</div>"
-    write("kaiin/upload.html", kaiin_frame("kaiin/upload", body, titles, wrapped=True))
+    # 事務局の管理画面
+    write("kaiin/upload.html", kaiin_frame("kaiin/upload", admin_body(), titles, wrapped=True))
+
+
+def fld(label, ctrl, note="", rid=""):
+    """管理画面の入力欄1つ分(ラベル・入力・補足)。"""
+    m = re.search(r'id="([^"]+)"', ctrl)
+    lab = f'<label for="{m.group(1)}">{label}</label>' if m else f"<span class=\"fld-l\">{label}</span>"
+    rid = f' id="{rid}"' if rid else ""
+    return f'<div class="fld"{rid}>{lab}<div class="fld-c">{ctrl}{f"<p class={chr(34)}note{chr(34)}>{note}</p>" if note else ""}</div></div>'
+
+
+def admin_body():
+    req = '<span class="req">必須</span>'
+    cats = "".join(f'<option value="{v}">{t}</option>' for v, t in [
+        ("", "(なし)"), ("重要|red", "重要(赤)"), ("事務局|green", "事務局"), ("講習|green", "講習"), ("相談|green", "相談"),
+        ("会員向け|green", "会員向け"), ("販売|gold", "販売"), ("その他|gold", "その他")])
+    blocks = [
+        '<h2>資料のアップロード</h2><p>会員エリアのフォルダに資料を載せます。同じ名前のファイルは上書きされます。</p>'
+        + fld("フォルダ", '<select id="f-room"></select>')
+        + fld("ファイル", '<input id="f-input" type="file" multiple>', "PDF・Excel・Word など。複数まとめて選べます。")
+        + '<div class="act"><button id="f-up" class="lux" type="button">アップロード</button></div>'
+        + '<p id="f-status" class="adm-msg" role="status"></p><h3>このフォルダの資料</h3><ul id="f-list" class="file-list"></ul>',
+
+        '<h2>フォームの作成(出欠・アンケート)</h2><p>Google フォームと集計用のスプレッドシートを作り、選んだフォルダに載せます。'
+        '会員はフォルダを開いて、その場から回答できます。</p>'
+        + fld("載せるフォルダ", '<select id="q-room"></select>', "研修会・勉強会は「① 研修会・勉強会」、調査は「① 調査・アンケート」を選びます。")
+        + fld(f"タイトル{req}", '<input id="q-title" type="text" placeholder="例)宅建業法改正セミナー(12月開催)">')
+        + fld("開催日", '<input id="q-date" type="date">', "入れると、会員エリアのカレンダーにも載ります。", rid="q-date-row")
+        + '<div class="act"><button id="q-btn" class="lux" type="button">フォームを作成</button></div>'
+        + '<p id="q-status" class="adm-msg" role="status"></p><ul id="q-result" class="file-list adm-result"></ul>'
+        + '<h3>作成済みのフォーム</h3><ul id="q-list" class="file-list"></ul>',
+
+        '<h2>行事・研修会の予定</h2><p>会員エリアの「協会行事・会議等日程表」「研修会・勉強会」のカレンダーに載せる予定を登録します。'
+        '出欠フォームのある研修会は、上の「フォームの作成」で開催日を入れれば、ここで登録しなくてもカレンダーに載ります。</p>'
+        + fld("カレンダー", '<select id="e-room"></select>')
+        + fld(f"日付{req}", '<input id="e-date" type="date">')
+        + fld("開始時刻", '<input id="e-time" type="text" placeholder="例)14:00">')
+        + fld(f"名称{req}", '<input id="e-title" type="text" placeholder="例)定例幹事会">')
+        + fld("場所", '<input id="e-place" type="text" placeholder="例)支部会議室">')
+        + fld("補足", '<input id="e-note" type="text" placeholder="例)終了後に懇親会あり">')
+        + '<div class="act"><button id="e-btn" class="lux" type="button">予定を登録</button></div>'
+        + '<p id="e-status" class="adm-msg" role="status"></p><h3>登録済みの予定(先月以降)</h3><ul id="e-list" class="file-list"></ul>',
+
+        '<h2>会員名簿</h2><p>エリアページの会員一覧です。住所の変更・脱退・入会の連絡があったら、ここで直すとすぐサイトに反映されます。</p>'
+        + '<div class="m-tools"><select id="m-area" aria-label="エリア"></select><input id="m-q" type="text" placeholder="会社名・代表者・住所で探す" aria-label="名簿を探す">'
+        + '<output id="m-count"></output><button id="m-new" class="dl" type="button">会社を追加</button></div>'
+        + '<p id="m-saved" class="adm-msg" role="status"></p>'
+        + '<form id="m-form" class="m-form" hidden><h3 id="mf-title"></h3>'
+        + fld("エリア", '<select id="mf-area"></select>', "移転でエリアが変わるときは、ここを変えます。")
+        + fld(f"商号又は名称{req}", '<input id="mf-name" type="text">')
+        + fld("代表者名", '<input id="mf-rep" type="text">')
+        + fld("事務所所在地", '<input id="mf-address" type="text" placeholder="例)271-0064 上本郷3185">')
+        + fld("TEL", '<input id="mf-tel" type="text">') + fld("FAX", '<input id="mf-fax" type="text">')
+        + fld("メール", '<input id="mf-email" type="text">')
+        + fld("営業時間", '<input id="mf-hours" type="text" placeholder="例)9:00～18:00">')
+        + fld("定休日", '<input id="mf-holiday" type="text" placeholder="例)水曜 年末年始">')
+        + fld("業種", '<input id="mf-business" type="text" placeholder="例)売買 / 賃貸">')
+        + fld("表示順", '<input id="mf-sort" type="text" inputmode="numeric">', "小さい数ほど上に出ます。今の会社は 10, 20, 30… と10おきです(例: 135 なら 130 と 140 の間)。")
+        + '<p id="m-status" class="adm-msg" role="status"></p>'
+        + '<div class="act"><button class="lux" type="submit">保存する</button><button id="mf-cancel" class="dl" type="button">やめる</button>'
+        + '<button id="mf-del" class="dl del" type="button">名簿から削除</button></div></form>'
+        + '<div class="table-scroll"><table class="adm-table"><thead><tr><th>会社</th><th>所在地・電話</th><th></th></tr></thead><tbody id="m-list"></tbody></table></div>',
+
+        '<h2>お知らせ・宅建ニュース</h2><p>追加した記事は、トップページとお知らせページにすぐ載ります(新しいものが上)。</p>'
+        + fld("載せる場所", '<select id="n-kind"><option value="oshirase">支部からのお知らせ</option><option value="takken">宅建ニュース</option></select>')
+        + fld("日付", '<input id="n-date" type="text" placeholder="2026.11.04">')
+        + fld("分類", f'<select id="n-cat">{cats}</select>', rid="n-cat-row")
+        + fld(f"タイトル{req}", '<input id="n-title" type="text" placeholder="例)事務局臨時休業のお知らせ">')
+        + fld("本文", '<textarea id="n-body" rows="3" placeholder="お知らせページで、タイトルの後ろに表示されます"></textarea>')
+        + '<div class="act"><button id="n-add" class="lux" type="button">追加して公開</button></div>'
+        + '<p id="n-status" class="adm-msg" role="status"></p>'
+        + '<h3>支部からのお知らせ</h3><ul id="n-list-oshirase" class="file-list"></ul><h3>宅建ニュース</h3><ul id="n-list-takken" class="file-list"></ul>',
+    ]
+    login = ('<div class="wrap"><div class="pg no-toc"><div class="pg-body">'
+             '<p id="adm-off" class="alert warn" hidden>接続設定(assets/config.js)が無いため、管理画面を使えません。</p>'
+             '<section id="adm-login" class="blk adm-login" hidden><h2 class="split">事務局ログイン</h2>'
+             '<p>資料・フォーム・予定・会員名簿・お知らせの編集は、事務局のアカウントでログインして行います。</p>'
+             '<form id="adm-login-form">'
+             + fld("メールアドレス", '<input id="adm-email" type="email" autocomplete="username" required>')
+             + fld("パスワード", '<input id="adm-pass" type="password" autocomplete="current-password" required>')
+             + '<p id="adm-login-err" class="adm-msg" role="alert"></p><div class="act"><button class="lux" type="submit">ログイン</button></div></form></section>'
+             '</div></div></div>')
+    modal = ('<div class="cm" role="dialog" aria-modal="true" aria-label="詳細"><div class="cm-panel">'
+             '<div class="cm-top"><h3></h3><button class="cm-close" type="button">Close</button></div><div class="cm-body"></div></div></div>')
+    return (f'<div id="adm" class="adm">{login}<div id="adm-main" hidden>'
+            '<div class="wrap"><div class="adm-bar"><span id="adm-user"></span><button id="adm-logout" class="dl" type="button">ログアウト</button></div></div>'
+            + body_with_toc(blocks) + f"</div></div>{modal}")
 
 
 # ---------------------------------------------------------------------------
@@ -541,7 +632,7 @@ def build_index(titles):
     hs = "".join(f'<figure class="hs{" is-active" if i == 0 else ""}" data-cap="{c}"><img src="{A}assets/img/{f}" alt="{c}" style="object-position:{p}"{"" if i == 0 else lazy}></figure>'
                  for i, (f, c, p) in enumerate(slides))
     bars = "".join("<i></i>" for _ in slides)
-    dl = "".join(f'<li><a href="{link(s, R)}"><span class="num">{i:02d}</span><span><b>{n}</b><small>{st}</small></span><span class="cnt">{c}<em>社</em></span></a></li>'
+    dl = "".join(f'<li><a href="{link(s, R)}"><span class="num">{i:02d}</span><span><b>{n}</b><small>{st}</small></span><span class="cnt"><span data-area-count="{s[5:]}">{c}</span><em>社</em></span></a></li>'
                  for i, (s, n, st, c) in enumerate(area, 1))
     total = sum(int(c) for *_, c in area)
     # 縦書きの添え文は、重ねた小写真に触れない長さ(5文字前後)にする
@@ -584,7 +675,7 @@ def build_index(titles):
   </div>
   <div class="hero-ui">
     <div><p class="hero-cap"><span class="num">01</span><span>本土寺</span></p><div class="hero-bars" aria-hidden="true">{bars}</div></div>
-    <div class="hero-news"><p class="lbl">News</p><a href="{link('news', R)}">{first[0]}　{first[3]}</a></div>
+    <div class="hero-news"><p class="lbl">News</p><a href="{link('news', R)}" data-news-hero>{first[0]}　{first[3]}</a></div>
   </div>
   <span class="hero-scroll" aria-hidden="true"></span>
 </section>
@@ -642,8 +733,8 @@ def build_index(titles):
     <div class="sec-hd shd c"><p class="shd-no" data-rv>04</p><p class="shd-en split" aria-hidden="true">News</p><h2 class="shd-ja split">お知らせ</h2></div>
     <div data-tabs data-rv>
       <div class="tabs" role="tablist"><button class="tab is-on" role="tab" aria-selected="true">支部からのお知らせ</button><button class="tab" role="tab" aria-selected="false">宅建ニュース</button></div>
-      <div class="tabpane"><ul class="nlist">{nrows(news['oshirase'])}</ul></div>
-      <div class="tabpane" hidden><ul class="nlist">{nrows(news['takken'])}</ul></div>
+      <div class="tabpane"><ul class="nlist" data-news="oshirase" data-limit="{len(news['oshirase'])}">{nrows(news['oshirase'])}</ul></div>
+      <div class="tabpane" hidden><ul class="nlist" data-news="takken" data-limit="{len(news['takken'])}">{nrows(news['takken'])}</ul></div>
     </div>
     <p class="news-more" data-rv><a class="more" href="{link('news', R)}">View all<i></i></a></p>
   </div>
@@ -681,7 +772,7 @@ def build_index(titles):
 </section>
 </main>
 """
-    page = head("トップ", R, A, desc_of(src), intro=True) + '<body class="is-home">\n' + header(R, A, "") + main + footer(R, A) + scripts(R)
+    page = head("トップ", R, A, desc_of(src), intro=True) + '<body class="is-home">\n' + header(R, A, "") + main + footer(R, A) + scripts(R, A, sb=True)
     write("index.html", page)
 
 
@@ -697,7 +788,7 @@ def build_simple(slug, en, A_title=None):
     page = (head(ja, "", "../", desc_of(src)) + f'<body class="page-{slug}">\n' + header("", "../", "")
             + "<main>\n" + page_hero(en, "Information", ja, [("ホーム", "index.html"), (ja, "")], None, "", "../")
             + f'<div class="wrap"><div class="pg no-toc"><div class="pg-body">{blk}</div></div></div>'
-            + "</main>\n" + footer("", "../") + scripts(""))
+            + "</main>\n" + footer("", "../") + scripts("", "../"))
     write(f"{slug}.html", page)
 
 

@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif+JP:wght@200;300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.css">
-<link rel="stylesheet" href="assets/c.css?v=22">
+<link rel="stylesheet" href="assets/c.css?v=25">
 <script>
   // 演出の初期状態を描画前に決める(読み込み後に隠すとチラつくため)
   (function () {
@@ -74,11 +74,11 @@
 <div class="wrap"><div class="pg"><aside class="pg-toc" aria-label="このページの目次"><div class="pg-toc-in"><p class="lbl bx">Contents</p><ol><li class="bx"><a href="#s01"><span>01</span>お住まいの<wbr>地域から<wbr>探す</a></li><li class="bx"><a href="#s02"><span>02</span>物件を<wbr>お探しの<wbr>方<wbr>へ</a></li></ol></div></aside><div class="pg-body"><section class="blk" id="s01"><p class="blk-num bx" data-n="01" data-rv>01</p>
       <h2 class="split bx">お住まいの<wbr>地域から<wbr>探す</h2>
       <p class="bx">宅建協会松戸支部の<wbr>会員 336社を、<wbr>5つの<wbr>地区ごとに<wbr>ご紹介しています。<wbr>地区を<wbr>選ぶと、<wbr>その<wbr>地域の<wbr>不動産会社一覧が<wbr>表示されます。</p>
-      <div class="area-grid" style="margin-top:24px;"><a href="area-matsudo.html" class="area-card"><div class="pin"></div><h3 class="bx">松戸・矢切地区</h3><p class="bx">松戸駅・矢切駅 周辺<br><strong>105社</strong></p></a>
-        <a href="area-kitamatsudo.html" class="area-card"><div class="pin"></div><h3 class="bx">北松戸・馬橋地区</h3><p class="bx">北松戸駅・馬橋駅 周辺<br><strong>66社</strong></p></a>
-        <a href="area-kogane.html" class="area-card"><div class="pin"></div><h3 class="bx">小金・新松戸地区</h3><p class="bx">北小金駅・新松戸駅 周辺<br><strong>77社</strong></p></a>
-        <a href="area-keisei.html" class="area-card"><div class="pin"></div><h3 class="bx">京成松戸地区</h3><p class="bx">上本郷駅・みのり台駅 周辺<br><strong>52社</strong></p></a>
-        <a href="area-tokiwadaira.html" class="area-card"><div class="pin"></div><h3 class="bx">常盤平・五香地区</h3><p class="bx">常盤平駅・五香駅 周辺<br><strong>36社</strong></p></a>
+      <div class="area-grid" style="margin-top:24px;"><a href="area-matsudo.html" class="area-card"><div class="pin"></div><h3 class="bx">松戸・矢切地区</h3><p class="bx">松戸駅・矢切駅 周辺<br><strong><span data-area-count="matsudo">105</span>社</strong></p></a>
+        <a href="area-kitamatsudo.html" class="area-card"><div class="pin"></div><h3 class="bx">北松戸・馬橋地区</h3><p class="bx">北松戸駅・馬橋駅 周辺<br><strong><span data-area-count="kitamatsudo">66</span>社</strong></p></a>
+        <a href="area-kogane.html" class="area-card"><div class="pin"></div><h3 class="bx">小金・新松戸地区</h3><p class="bx">北小金駅・新松戸駅 周辺<br><strong><span data-area-count="kogane">77</span>社</strong></p></a>
+        <a href="area-keisei.html" class="area-card"><div class="pin"></div><h3 class="bx">京成松戸地区</h3><p class="bx">上本郷駅・みのり台駅 周辺<br><strong><span data-area-count="keisei">52</span>社</strong></p></a>
+        <a href="area-tokiwadaira.html" class="area-card"><div class="pin"></div><h3 class="bx">常盤平・五香地区</h3><p class="bx">常盤平駅・五香駅 周辺<br><strong><span data-area-count="tokiwadaira">36</span>社</strong></p></a>
       </div>
       <p class="note bx" style="margin-top:18px;">※会員データは<wbr>現行サイトより<wbr>全3<wbr>36社を<wbr>移行済みです。<wbr>掲載内容に<wbr>変更が<wbr>ある<wbr>場合は<wbr>事務局(047-364-6904)まで<wbr>ご連絡ください。</p>
     </section><section class="blk" id="s02"><p class="blk-num bx" data-n="02" data-rv>02</p>
@@ -111,13 +111,16 @@
     <p class="ft-word bx" aria-hidden="true">Takken Matsudo</p>
     <div class="ft-bottom">
       <p class="bx">© 2026 (一社)千葉県宅地建物取引業協会 松戸支部</p>
-      <p class="bx">この<wbr>サイトは<wbr>新デザイン案です(機能は<wbr>動作しません)。 <a href="../index.html">現行の<wbr>サイトを<wbr>見る</a></p>
+      <p class="bx">この<wbr>サイトは<wbr>新デザイン案です。 <a href="../index.html">現行の<wbr>サイトを<wbr>見る</a></p>
     </div>
   </div>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="../assets/config.js?v=25"></script>
+<script src="assets/live.js?v=25"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-<script src="assets/c.js?v=22"></script>
+<script src="assets/c.js?v=25"></script>
 </body>
 </html>
