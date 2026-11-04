@@ -1,0 +1,39 @@
+# Supabase の無料プランは、しばらく使われないと自動で一時停止する。
+# 止まると会員エリアの資料・フォーム・カレンダーが空になるので、週2回データベースへ読み取りに行く。
+# 読み取れないときはこのワークフローが失敗し、リポジトリの持ち主に GitHub から通知メールが届く。
+name: Supabase keepalive
+
+on:
+  schedule:
+    - cron: "17 0 * * 1,4"   # 月・木 9:17(日本時間)
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - .github/workflows/supabase-keepalive.yml
+
+permissions:
+  contents: read
+  actions: write   # 下の「定期実行を止めない」で使う
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: データベースを読み取る
+        run: |
+          URL=$(sed -n 's/.*SUPABASE_URL: "\([^"]*\)".*/\1/p' assets/config.js)
+          KEY=$(sed -n 's/.*SUPABASE_ANON_KEY: "\([^"]*\)".*/\1/p' assets/config.js)
+          BODY=$(curl -sS --fail-with-body --retry 3 --retry-all-errors --max-time 30 \
+            -H "apikey: $KEY" -H "Authorization: Bearer $KEY" \
+            "$URL/rest/v1/members?select=id&limit=1")
+          echo "応答: $BODY"
+          echo "$BODY" | grep -q '"id"'
+
+      # 公開リポジトリの定期実行は、60日間更新がないと GitHub に止められる。実行のたびに有効化し直す
+      - name: 定期実行を止めない
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X PUT "repos/${{ github.repository }}/actions/workflows/supabase-keepalive.yml/enable"
