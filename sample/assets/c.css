@@ -592,7 +592,12 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 .ft-nav li { margin-bottom: 11px; }
 .ft-nav a { font-size: 12.5px; letter-spacing: 0.1em; color: var(--text-d2); transition: color 0.4s; }
 .ft-nav a:hover { color: var(--gold-2); }
-.ft-word { margin-top: 80px; text-align: center; font-family: var(--f-lat); font-weight: 300; font-size: clamp(42px, 9.6vw, 150px); line-height: 1; letter-spacing: 0.12em; text-transform: uppercase; color: transparent; -webkit-text-stroke: 1px rgba(201, 180, 138, 0.22); white-space: nowrap; overflow: hidden; }
+.ft-word { margin-top: 80px; text-align: center; font-family: var(--f-lat); font-weight: 300; font-size: min(8vw, 104px); line-height: 1.1; letter-spacing: 0.12em; padding-left: 0.12em; text-transform: uppercase; color: transparent; -webkit-text-stroke: 1px rgba(201, 180, 138, 0.22); white-space: nowrap; overflow: hidden; }
+/* 英字の帯は枠の幅いっぱいに収める(文字列の幅は文字の大きさの約10.6倍) */
+@supports (font-size: 1cqw) {
+  .ft > .wrap { container-type: inline-size; }
+  .ft-word { font-size: calc(100cqw / 10.9); }
+}
 .ft-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 30px; margin-top: 50px; padding-top: 24px; border-top: 1px solid var(--line-d); font-size: 11px; letter-spacing: 0.1em; color: var(--text-d2); }
 .ft-bottom a { color: var(--text-d); border-bottom: 1px solid var(--gold); }
 .ft-bottom a:hover { color: var(--gold-2); }
