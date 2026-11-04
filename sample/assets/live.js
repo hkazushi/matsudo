@@ -31,6 +31,7 @@
   var AREAS = [["matsudo", "松戸・矢切地区"], ["kitamatsudo", "北松戸・馬橋地区"], ["kogane", "小金・新松戸地区"],
     ["keisei", "京成松戸地区"], ["tokiwadaira", "常盤平・五香地区"]];
   var WD = ["日", "月", "火", "水", "木", "金", "土"];
+  var SKIP_PASS = !!CFG.SKIP_PASSWORDS;   // 確認期間中はパスワードなしで開ける(config.js)
 
   function roomName(id) { for (var i = 0; i < ROOMS.length; i++) if (ROOMS[i][0] === id) return ROOMS[i][1]; return id; }
   function esc(s) {
@@ -120,9 +121,16 @@
       function open() { g.remove(); if (content) content.hidden = false; }
       if (store("get", key) === "ok") { open(); return; }
       var form = $("form", g), input = $("input", form), err = $(".err", g);
+      if (SKIP_PASS) {
+        input.placeholder = "入力は不要です";
+        var note = document.createElement("p");
+        note.className = "note";
+        note.textContent = "確認期間中は、パスワードを入力せずに「入室する」で入れます。";
+        form.parentNode.insertBefore(note, form);
+      }
       form.addEventListener("submit", function (e) {
         e.preventDefault();
-        if (passOk(input.value, g.getAttribute("data-hash"))) {
+        if (SKIP_PASS || passOk(input.value, g.getAttribute("data-hash"))) {
           store("set", key, "ok");
           open();
           window.dispatchEvent(new Event("resize"));   // 演出側(文字の折り返し・スクロール量)を測り直す
@@ -142,14 +150,15 @@
     var M = window.cModal;
     if (!M) return;
     if (hash && store("get", "room_" + room) !== "ok") {
-      var body = M.open(title, '<form class="lockform"><p>このフォルダは個別のパスワードで保護されています。</p>' +
-        '<input type="password" placeholder="フォルダのパスワード" aria-label="フォルダのパスワード" autocomplete="off">' +
+      var body = M.open(title, '<form class="lockform"><p>このフォルダは個別のパスワードで保護されています。' +
+        (SKIP_PASS ? "確認期間中は、入力せずに「開く」で入れます。" : "") + "</p>" +
+        '<input type="password" placeholder="' + (SKIP_PASS ? "入力は不要です" : "フォルダのパスワード") + '" aria-label="フォルダのパスワード" autocomplete="off">' +
         '<p class="err" hidden>パスワードが違います</p><button class="lux" type="submit">開く</button></form>');
       var form = $("form", body), input = $("input", form);
       setTimeout(function () { input.focus(); }, 50);
       form.addEventListener("submit", function (e) {
         e.preventDefault();
-        if (passOk(input.value, hash)) { store("set", "room_" + room, "ok"); f.classList.add("is-open"); openRoom(f); }
+        if (SKIP_PASS || passOk(input.value, hash)) { store("set", "room_" + room, "ok"); f.classList.add("is-open"); openRoom(f); }
         else { $(".err", form).hidden = false; input.value = ""; input.focus(); }
       });
       return;
