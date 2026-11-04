@@ -46,7 +46,8 @@
   function splitText() {
     $$(".split").forEach(function (el) {
       if (el.getAttribute("data-split-done")) return;
-      var html = el.innerHTML.replace(/<wbr\s*\/?>/g, "\u0000");
+      // 文節の区切り(<wbr>)を目印の文字に置き換えてから分割する。NUL(\u0000)は HTML の解析で捨てられるため私用領域の文字を使う
+      var html = el.innerHTML.replace(/<wbr\s*\/?>/g, "\uE000");
       var tmp = document.createElement("div");
       tmp.innerHTML = html;
       var i = 0;
@@ -54,7 +55,7 @@
         Array.prototype.slice.call(node.childNodes).forEach(function (n) {
           if (n.nodeType === 3) {
             var frag = document.createDocumentFragment();
-            n.textContent.split("\u0000").forEach(function (phrase, k, arr) {
+            n.textContent.split("\uE000").forEach(function (phrase, k, arr) {
               if (phrase) {
                 var w = document.createElement("span");
                 w.className = "w";
@@ -82,7 +83,8 @@
     // 文節が1行に収まらない(括弧付きの長い名称など)ときだけ、その文節の中で折り返しを許す
     function relax() {
       $$(".split").forEach(function (el) {
-        var room = el.clientWidth;
+        // 見出しが中身に合わせて広がる配置(flex の子など)もあるため、親の幅と比べて狭い方を使う
+        var room = Math.min(el.clientWidth, el.parentElement ? el.parentElement.clientWidth : el.clientWidth);
         $$(".w", el).forEach(function (w) {
           w.classList.remove("loose");
           if (room > 0 && w.scrollWidth > room) w.classList.add("loose");
