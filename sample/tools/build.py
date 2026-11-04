@@ -23,7 +23,7 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))   # 
 OUT = os.path.join(ROOT, "sample")
 SITE = "sample"          # 公開URLのディレクトリ名
 OLD_SITES = ["sample2"]  # 旧URL。同じページへ転送する
-VER = "26"
+VER = "28"
 SUPABASE_JS = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"
 
 # ---------------------------------------------------------------------------
@@ -418,6 +418,7 @@ def area_detail(b, area):
     """会員一覧の表の前に絞り込み欄を置く。表は live.js が名簿データ(members)で差し替える。
     HTML に残す行は、データが読めなかったときの控え。"""
     b = b.replace('<table class="member-table">', f'<table class="member-table" data-area="{area}">', 1)
+    b = re.sub(r'(<h2[^>]*>[^<]*\()(\d+)(社\)</h2>)', rf'\1<span data-area-count="{area}">\2</span>\3', b, count=1)   # 見出しの社数も名簿に合わせる
     return b.replace('<div class="table-scroll">',
                      '<div class="mt-filter"><input type="search" placeholder="会社名・代表者・住所で絞り込む" aria-label="会員の絞り込み"><output></output></div>\n<div class="table-scroll">', 1)
 
@@ -508,6 +509,8 @@ def build_kaiin(titles):
             return f'<div class="f-icon">{n[0]:02d}</div>'
         gated = re.sub(r'<div class="f-icon[^"]*">.*?</div>', num, gated, flags=re.S)
         gated = re.sub(r'(<div class="alert[^"]*")\s*style="[^"]*"', r"\1", gated)
+        # 新デザインでは、資料の追加・フォームの作成は管理ページに一本化している
+        gated = re.sub(r'※資料の追加・フォームの作成は、事務局アカウントでログインしている場合のみ表示されます.*?</span>', '※資料の追加・フォームの作成は、事務局の管理ページから行います。</span>', gated, flags=re.S)
         for room, pw in room_pass.items():
             gated = gated.replace(f'<div class="folder" data-room="{room}">', f'<div class="folder" data-room="{room}" data-hash="{pass_hash(pw)}">', 1)
         assert gated.count("data-hash=") == len(room_pass), slug

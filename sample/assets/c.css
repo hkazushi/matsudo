@@ -929,7 +929,7 @@ body::after {
 .cal-nav:hover { border-color: var(--ink); }
 .cal-grid { width: 100%; border-collapse: collapse; table-layout: fixed; border-top: 1px solid var(--ink); }
 .cal-grid th { padding: 10px 0; font-family: var(--f-serif); font-weight: 400; font-size: 12px; color: var(--mute); text-align: center; border-bottom: 1px solid var(--line); }
-.cal-grid td { height: 52px; padding: 0; text-align: center; vertical-align: middle; border-bottom: 1px solid var(--line); font-family: var(--f-lat); font-size: 16px; color: var(--ink-2); }
+.cal-grid td { height: 52px; padding: 0; text-align: center; vertical-align: middle; border-bottom: 1px solid var(--line); font-family: var(--f-sans); font-size: 15px; font-weight: 400; color: var(--ink); }
 .cal-grid td.sun { color: var(--red); }
 .cal-grid td.sat { color: #4A6A8A; }
 .cal-grid td > span, .cal-grid td > button { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; width: 40px; height: 40px; line-height: 1; color: inherit; }
@@ -945,7 +945,7 @@ body::after {
 .cal-list li > div { flex: 1 1 240px; }
 .cal-d { flex: 0 0 74px; font-family: var(--f-lat); line-height: 1.2; }
 .cal-d b { display: block; font-weight: 400; font-size: 24px; color: var(--ink); }
-.cal-d small { font-size: 12px; color: var(--mute); letter-spacing: 0.06em; }
+.cal-d small { font-family: var(--f-sans); font-size: 12px; color: var(--ink-2); letter-spacing: 0.04em; }
 .cal-t { font-family: var(--f-serif); font-size: 15px; letter-spacing: 0.08em; line-height: 1.7; }
 .cal-list .note { margin-top: 2px; }
 .cal-none { margin-top: 20px; }
@@ -998,3 +998,6 @@ body::after {
   .cal-grid td > span, .cal-grid td > button { width: 30px; height: 30px; }
   .cal-hd { gap: 6px; }
 }
+
+/* メニューの英字は途中で折り返さない */
+.menu-group a span { white-space: nowrap; }

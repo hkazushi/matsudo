@@ -359,7 +359,13 @@
     if (counts.length) {
       var n = {};
       r.data.forEach(function (m) { n[m.area] = (n[m.area] || 0) + 1; });
-      counts.forEach(function (el) { var a = el.getAttribute("data-area-count"); if (n[a] != null) el.textContent = n[a]; });
+      counts.forEach(function (el) {
+        var a = el.getAttribute("data-area-count");
+        if (n[a] == null) return;
+        el.textContent = n[a];
+        var h = el.closest("[aria-label]");   // 分割された見出しは読み上げ用の文言も合わせる
+        if (h) h.setAttribute("aria-label", h.textContent);
+      });
     }
   }
 
