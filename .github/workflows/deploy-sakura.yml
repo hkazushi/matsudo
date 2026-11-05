@@ -1,0 +1,57 @@
+# main に入った変更を さくらのレンタルサーバ(www/)へ FTPS でアップロードする。
+# 必要な設定(リポジトリの Settings → Secrets and variables → Actions):
+#   Variables: SAKURA_FTP_SERVER(例 takken-matsudo.sakura.ne.jp)/ SAKURA_FTP_USER(例 takken-matsudo)
+#   Secrets  : SAKURA_FTP_PASSWORD(さくらのサーバパスワード)
+# パスワード未登録の間は何もせずに終わる。
+name: Deploy to Sakura
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-sakura
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 設定の確認
+        id: check
+        env:
+          PASS: ${{ secrets.SAKURA_FTP_PASSWORD }}
+          SERVER: ${{ vars.SAKURA_FTP_SERVER }}
+          USER: ${{ vars.SAKURA_FTP_USER }}
+        run: |
+          if [ -z "$PASS" ] || [ -z "$SERVER" ] || [ -z "$USER" ]; then
+            echo "::notice::さくらの接続情報が未登録のため、アップロードを省略しました"
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.check.outputs.ready == 'true'
+
+      - name: さくらへアップロード
+        if: steps.check.outputs.ready == 'true'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ vars.SAKURA_FTP_SERVER }}
+          username: ${{ vars.SAKURA_FTP_USER }}
+          password: ${{ secrets.SAKURA_FTP_PASSWORD }}
+          protocol: ftps
+          server-dir: ./www/
+          # 本番に載せるのは現行サイトだけ。新デザイン案・作業用ファイルは除く
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .github/**
+            **/.DS_Store
+            sample/**
+            sample2/**
+            gas/**
+            supabase/**
+            *.md

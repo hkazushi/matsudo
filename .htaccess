@@ -1,0 +1,3 @@
+# さくらのレンタルサーバ用(Vercel / GitHub Pages では使われない)
+ErrorDocument 404 /404.html
+DirectoryIndex index.html
