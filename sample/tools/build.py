@@ -691,7 +691,7 @@ def build_index(titles):
     <h2 class="ttl split" style="margin-top:34px">確かな取引を、<br>この街のすみずみまで。</h2>
     <div class="concept-body">
       <p data-rv>千葉県宅地建物取引業協会は、昭和42年7月に千葉県知事の許可を得て設立された、県下宅建業界唯一の一般社団法人です。県内の不動産業者の約8割にあたる4,000社が加入しています。</p>
-      <p data-rv style="--d:.15s">松戸支部は335社の会員を擁する大支部です(令和6年3月31日現在)。取引の公正と消費者の保護を大切に、地域の皆さまの住まい探しをお手伝いしています。</p>
+      <p data-rv style="--d:.15s">松戸支部は336社の会員を擁する大支部です。取引の公正と消費者の保護を大切に、地域の皆さまの住まい探しをお手伝いしています。</p>
     </div>
     <span class="gl"></span>
     <a class="lux" href="{link('about', R)}" data-rv>支部案内</a>
