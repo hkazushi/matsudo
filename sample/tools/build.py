@@ -23,7 +23,7 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))   # 
 OUT = os.path.join(ROOT, "sample")
 SITE = "sample"          # 公開URLのディレクトリ名
 OLD_SITES = ["sample2"]  # 旧URL。同じページへ転送する
-VER = "28"
+VER = "29"
 SUPABASE_JS = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"
 
 # ---------------------------------------------------------------------------
@@ -400,6 +400,7 @@ def build_pages(titles):
             blocks = [area_detail(b, slug[5:]) for b in blocks]
         if slug == "area":
             blocks = [area_counts(b) for b in blocks]
+        blocks = [member_total(b) for b in blocks]
         if slug == "contact":
             blocks = [live_form(b) for b in blocks]
         crumbs = [("ホーム", "index.html")]
@@ -409,7 +410,7 @@ def build_pages(titles):
         page = (head(ja, "", "../", desc_of(src)) + f'<body class="page-{slug}">\n' + header("", "../", NAV_OF.get(slug, slug if not slug.startswith("area-") else "area"))
                 + "<main>\n" + page_hero(en, cat, ja, crumbs, photo, pos, "../") + body_with_toc(blocks)
                 + next_pages(rel, "", "../", titles) + ("" if slug == "contact" else contact_band("", "../"))
-                + "</main>\n" + footer("", "../") + scripts("", "../", sb=slug == "news" or slug.startswith("area")))
+                + "</main>\n" + footer("", "../") + scripts("", "../", sb=slug == "news" or slug.startswith("area") or "data-member-total" in "".join(blocks)))
         write(f"{slug}.html", page)
     return warnings
 
@@ -421,6 +422,11 @@ def area_detail(b, area):
     b = re.sub(r'(<h2[^>]*>[^<]*\()(\d+)(社\)</h2>)', rf'\1<span data-area-count="{area}">\2</span>\3', b, count=1)   # 見出しの社数も名簿に合わせる
     return b.replace('<div class="table-scroll">',
                      '<div class="mt-filter"><input type="search" placeholder="会社名・代表者・住所で絞り込む" aria-label="会員の絞り込み"><output></output></div>\n<div class="table-scroll">', 1)
+
+
+def member_total(b):
+    """本文中の会員総数に印を付ける。live.js が名簿の件数で書き換える(名簿の追加・削除に追従させる)。"""
+    return re.sub(r'(松戸支部は、?|会員 ?)(\d+)(社)', r'\1<span data-member-total>\2</span>\3', b)
 
 
 def area_counts(b):
@@ -775,6 +781,7 @@ def build_index(titles):
 </section>
 </main>
 """
+    main = member_total(main)
     page = head("トップ", R, A, desc_of(src), intro=True) + '<body class="is-home">\n' + header(R, A, "") + main + footer(R, A) + scripts(R, A, sb=True)
     write("index.html", page)
 

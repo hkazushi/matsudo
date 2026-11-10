@@ -346,7 +346,12 @@
     return '<tr><td class="mt-name">' + esc(m.name) + "</td><td>" + esc(m.rep) + "</td><td>" + esc(m.address) + "</td><td>" + tel + "</td><td>" + hours + "</td><td>" + esc(m.business) + "</td></tr>";
   }
   async function members() {
-    var table = $("table.member-table[data-area]"), counts = $$("[data-area-count]");
+    var table = $("table.member-table[data-area]"), counts = $$("[data-area-count]"), totals = $$("[data-member-total]");
+    if (totals.length) {   // 本文の会員総数(「336社」など)
+      SB.from("members").select("id", { count: "exact", head: true }).then(function (r) {
+        if (!r.error && r.count) totals.forEach(function (el) { el.textContent = r.count; });
+      });
+    }
     if (!table && !counts.length) return;
     var q = SB.from("members").select(table ? "*" : "area").order("sort").order("id");
     if (table) q = q.eq("area", table.getAttribute("data-area"));
