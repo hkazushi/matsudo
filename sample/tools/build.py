@@ -172,7 +172,7 @@ def head(title, R, A, desc, intro=False):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{esc(title)}｜宅建協会 松戸支部 新デザイン案</title>
+<title>{esc(title)}｜宅建協会 松戸支部</title>
 <meta name="description" content="{esc(desc)}">
 <!-- デザイン検討用ページのため検索結果には出さない -->
 <meta name="robots" content="noindex, nofollow">
