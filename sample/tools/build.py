@@ -280,7 +280,6 @@ def footer(R, A):
     <p class="ft-word" aria-hidden="true">Takken Matsudo</p>
     <div class="ft-bottom">
       <p>© 2026 (一社)千葉県宅地建物取引業協会 松戸支部</p>
-      <p>このサイトは新デザイン案です。 <a href="{A}index.html">現行のサイトを見る</a></p>
     </div>
   </div>
 </footer>
