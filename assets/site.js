@@ -503,4 +503,10 @@
   };
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
+
+  // ---- お問い合わせ送信後の戻り先 ----
+  // FormSubmit は絶対URLが必要。公開先(Vercel / GitHub Pages / さくら)ごとに
+  // 書き換えずに済むよう、表示中のサイトの thanks.html を指す。
+  const next = document.querySelector('form input[name="_next"]');
+  if (next) next.value = new URL("thanks.html", location.href).href;
 })();
